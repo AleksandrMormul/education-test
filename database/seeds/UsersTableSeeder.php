@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -9,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
  */
 class UsersTableSeeder extends Seeder
 {
+    const ADMIN_USER_NAME = 'admin';
+    const ADMIN_USER_EMAIL = 'admin@admin.com';
+    const ADMIN_USER_PASSWORD = 'admin';
     /**
      * Run the database seeds.
      *
@@ -16,40 +20,20 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'name' => 'User1',
-            'email' => 'user1@email.com',
-            'password' => Hash::make('password'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
-        DB::table('users')->insert([
-            'name' => 'user2',
-            'email' => 'user2@email.com',
-            'password' => Hash::make('password'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
-        DB::table('users')->insert([
-            'name' => 'user3',
-            'email' => 'user3@email.com',
-            'password' => Hash::make('password'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
-        DB::table('users')->insert([
-            'name' => 'user4',
-            'email' => 'user4@email.com',
-            'password' => Hash::make('password'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
-        DB::table('users')->insert([
-            'name' => 'user5',
-            'email' => 'user5@email.com',
-            'password' => Hash::make('password'),
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
+        if(!User::where('email',self::ADMIN_USER_EMAIL)->exists())
+        {
+            DB::table('users')->insert([
+                'name' => self::ADMIN_USER_NAME,
+                'email' => self::ADMIN_USER_EMAIL,
+                'password' => Hash::make(self::ADMIN_USER_PASSWORD),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        if(!User::where('email',self::ADMIN_USER_EMAIL)->exists())
+        {
+            factory(App\Models\User::class, 2)->create();
+        }
     }
 }
