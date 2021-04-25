@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
                     'password' => Hash::make(self::ADMIN_USER_PASSWORD)
                 ]
             );
-            factory(App\Models\User::class, 2)->create();
+            factory(User::class, 2)->create();
         }
     }
 }
