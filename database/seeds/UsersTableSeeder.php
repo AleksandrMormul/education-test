@@ -2,7 +2,6 @@
 
 use App\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 /**
@@ -13,6 +12,7 @@ class UsersTableSeeder extends Seeder
     const ADMIN_USER_NAME = 'admin';
     const ADMIN_USER_EMAIL = 'admin@admin.com';
     const ADMIN_USER_PASSWORD = 'admin';
+
     /**
      * Run the database seeds.
      *
@@ -20,19 +20,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        if(!User::where('email',self::ADMIN_USER_EMAIL)->exists())
-        {
-            DB::table('users')->insert([
-                'name' => self::ADMIN_USER_NAME,
-                'email' => self::ADMIN_USER_EMAIL,
-                'password' => Hash::make(self::ADMIN_USER_PASSWORD),
-                'created_at' => date('Y-m-d H:i:s'),
-                'updated_at' => date('Y-m-d H:i:s'),
-            ]);
-        }
-
-        if(!User::where('email',self::ADMIN_USER_EMAIL)->exists())
-        {
+        if (User::where('email', self::ADMIN_USER_EMAIL)->doesntExist()) {
+            User::create(
+                [
+                    'name' => self::ADMIN_USER_NAME,
+                    'email' => self::ADMIN_USER_EMAIL,
+                    'password' => Hash::make(self::ADMIN_USER_PASSWORD)
+                ]
+            );
             factory(App\Models\User::class, 2)->create();
         }
     }
