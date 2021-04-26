@@ -11,7 +11,7 @@
                     <h5 class="card-title">{{ $ad->title }}</h5>
                     <p class="card-text">{{ $ad->description }}</p>
                     <p class="card-text">{{ date('d-m-Y', strtotime($ad->created_at)) }}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="{{'/'.$ad->id}}" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
         </div>
