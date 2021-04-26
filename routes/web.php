@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'AdController@getAllAds');
+Route::get('/{id}', 'AdController@getAd');
 
 Auth::routes();
 
