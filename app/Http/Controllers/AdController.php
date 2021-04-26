@@ -17,6 +17,8 @@ class AdController extends Controller
     public function getAllAds()
     {
         $adService = resolve(AdService::class);
-        return $adService->getAds();
+        return view('layouts/ads', [
+            'ads' => $adService->getAds()
+        ]);
     }
 }
