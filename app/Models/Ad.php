@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Ad extends Model
 {
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -34,4 +34,14 @@ class Ad extends Model
     protected $fillable = [
         'title', 'description'
     ];
+
+    /**
+     * user
+     *
+     * @return void
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
