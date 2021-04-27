@@ -34,7 +34,7 @@ class AdController extends Controller
     public function index()
     {
         return view(
-            'layouts/ads', [
+            'ads/ads', [
             'ads' => $this->_adService->getAds()]
         );
     }
