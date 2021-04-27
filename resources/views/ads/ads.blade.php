@@ -11,7 +11,7 @@
                         <div class="card-body">
                             <p class="card-title">{{ $ad->title }}</p>
                             <p class="card-text">{{ $ad->description }}</p>
-                            <p class="card-text">{{ date('d-m-Y', strtotime($ad->created_at)) }}</p>
+                            <p class="card-text">{{ Carbon\Carbon::parse($ad->created_at)->format('M d Y') }}</p>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
