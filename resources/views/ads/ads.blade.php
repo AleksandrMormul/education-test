@@ -6,7 +6,7 @@
             @foreach ($ads as $ad)
                 <div class="col-4 content">
                     <div class="card">
-                        <img src="{{ $ad->image ?? 'https://img.lovepik.com/element/40030/1478.png_860.png' }}"
+                        <img src="{{ $ad->image_src ?? asset('storage/images/temp.png') }}"
                             class="card-img-top" alt="ad image">
                         <div class="card-body">
                             <p class="card-title">{{ $ad->title }}</p>
