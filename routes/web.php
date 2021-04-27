@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', 'AdController@getAllAds');
-
-Auth::routes();
+Route::resource('/', 'AdController');
 
 Route::get('/home', 'HomeController@index')->name('home');
