@@ -20,6 +20,6 @@ class AdSeeder extends Seeder
             function ($user) {
                 $user->ads()->saveMany(factory(Ad::class, 40)->make());
             }
-        )->toArray();
+        );
     }
 }
