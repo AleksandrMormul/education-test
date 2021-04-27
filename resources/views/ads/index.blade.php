@@ -9,7 +9,7 @@
                         <img src="{{ $ad->image_src ?? asset('storage/images/temp.png') }}"
                             class="card-img-top" alt="ad image">
                         <div class="card-body">
-                            <p class="card-title">{{ $ad->title }}</p>
+                            <h3 class="card-title">{{ $ad->title }}</h3>
                             <p class="card-text">{{ $ad->description }}</p>
                             <p class="card-text">{{ $ad->created_at->format('M d Y') }}</p>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
