@@ -31,7 +31,7 @@ class AdController extends Controller
     {
         $query = $this->_adService->getAds();
         return view(
-            'ads/ads', [
+            'ads/index', [
             'ads' => $query->paginate(15)]
         );
     }
