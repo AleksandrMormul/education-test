@@ -14,7 +14,7 @@ class AddFkAdsTable extends Migration
     public function up()
     {
         Schema::table('ads', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -26,8 +26,7 @@ class AddFkAdsTable extends Migration
     public function down()
     {
         Schema::table('ads', function (Blueprint $table) {
-            $table->dropForeign('ads_user_id_foreign');
-            $table->dropColumn('user_id');
+            $table->dropForeign(['user_id']);
         });
     }
 }
