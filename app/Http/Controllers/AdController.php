@@ -22,10 +22,6 @@ class AdController extends Controller
         $this->_adService = $service;
     }
 
-    /*public function __invoke()
-    {
-
-    }*/
     /**
      * Display a listing of the resource.
      *
@@ -33,9 +29,10 @@ class AdController extends Controller
      */
     public function index()
     {
+        $query = $this->_adService->getAds();
         return view(
             'ads/ads', [
-            'ads' => $this->_adService->getAds()]
+            'ads' => $query->paginate(15)]
         );
     }
 

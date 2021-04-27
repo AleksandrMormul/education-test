@@ -17,6 +17,6 @@ class AdService
      */
     public function getAds()
     {
-        return Ad::paginate(15);
+        return Ad::query();
     }
 }
