@@ -4,10 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-/**
- * CreateAdsTable
- */
-class CreateAdsTable extends Migration
+class AddFkAdsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +13,8 @@ class CreateAdsTable extends Migration
      */
     public function up()
     {
-        Schema::create('ads', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->string('img_src')->nullable();
-            $table->timestamps();
+        Schema::table('ads', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
         });
     }
 
@@ -32,6 +25,9 @@ class CreateAdsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ads');
+        Schema::table('ads', function (Blueprint $table) {
+            $table->dropForeign('ads_user_id_foreign');
+            $table->dropColumn('user_id');
+        });
     }
 }
