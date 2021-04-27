@@ -11,7 +11,7 @@
                         <div class="card-body">
                             <h3 class="card-title">{{ $ad->title }}</h3>
                             <p class="card-text">{{ $ad->description }}</p>
-                            <p class="card-text">{{ $ad->created_at->toDateString() }}</p>
+                            <p class="card-text">{{ optional($ad->created_at)->toDateString() }}</p>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
