@@ -22,6 +22,7 @@ class CreateAdsTable extends Migration
             $table->text('description');
             $table->string('img_src')->nullable();
             $table->timestamps();
+            $table->index(['title']);
         });
     }
 
