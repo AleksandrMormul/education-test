@@ -18,9 +18,10 @@ class CreateAdsTable extends Migration
     {
         Schema::create('ads', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description');
-            $table->foreignId('user_id')->constrained('users');
+            $table->unsignedBigInteger('user_id');
+            $table->string('title')->index();
+            $table->text('description');
+            $table->string('img_src')->nullable();
             $table->timestamps();
         });
     }

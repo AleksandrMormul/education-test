@@ -32,7 +32,18 @@ class Ad extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'description'
+        'title',
+        'description',
+        'user_id',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'user_id' => 'integer',
     ];
 
     /**
@@ -42,6 +53,7 @@ class Ad extends Model
      */
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
+
 }

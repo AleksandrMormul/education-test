@@ -10,7 +10,8 @@ require('laravel-mix-blade-reload');
  | file for the application as well as bundling up all the JS files.
  |
  */
- mix.js('resources/js/app.js', 'public/js')
- .bladeReload();
+
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .copyDirectory('resources/images', 'public/images')
+    .bladeReload();;
