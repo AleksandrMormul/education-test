@@ -1,5 +1,10 @@
 @import 'variables';
+@import 'mixins';
 
 .content {
     padding-bottom: 10px;
+}
+
+.contact-text {
+    @include contact-text
 }
