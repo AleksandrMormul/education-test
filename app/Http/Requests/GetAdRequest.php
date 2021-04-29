@@ -17,18 +17,6 @@ class GetAdRequest extends FormRequest
     }
 
     /**
-     * Prepare the data for validation.
-     *
-     * @return void
-     */
-    protected function prepareForValidation()
-    {
-        $this->merge([
-            'id' => (int)($this->id),
-        ]);
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -36,7 +24,7 @@ class GetAdRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
+            //
         ];
     }
 }

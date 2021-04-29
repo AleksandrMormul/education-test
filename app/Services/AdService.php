@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
-use App\Http\Requests\GetAdRequest;
 use App\Models\Ad;
-use App\Models\User;
+use Illuminate\Database\Query\Builder;
 
 /**
  * AdService
@@ -15,7 +14,7 @@ class AdService
     /**
      * Get all ads
      *
-     * @return Collection
+     * @return Builder
      */
     public function getAds()
     {
@@ -25,11 +24,10 @@ class AdService
     /**
      * Get Ad
      *
-     * @param  mixed $request
-     * @return void
+     * @return Ad
      */
-    public function getAd(GetAdRequest $request)
+    public function getAd(int $id)
     {
-        return Ad::find($request->id)->user();
+        return Ad::with('user')->find($id);
     }
 }
