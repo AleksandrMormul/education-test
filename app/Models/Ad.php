@@ -24,6 +24,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereUserId($value)
  * @mixin \Eloquent
+ * @property string|null $img_src
+ * @property string $country
+ * @property string $latitude
+ * @property string $longitude
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereImgSrc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLatitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLongitude($value)
  */
 class Ad extends Model
 {
