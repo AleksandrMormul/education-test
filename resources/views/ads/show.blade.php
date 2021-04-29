@@ -22,14 +22,19 @@
                             <p class="contact-text">{{ $user->email }}</p>
                         </span>
                         <span class="card-text">Phone number:
-                            <p class="contact-text">{{ $user->phone_number ?? 'The user did not set phone number' }}</p>
+                            <p class="contact-text">{{ $user->phone_number ?: 'The user did not set phone number' }}</p>
                         </span>
                         <span class="card-text">Country:
-                            <p class="contact-text">{{ $ad->country ?? 'The user did not set country' }}</p>
+                            <p class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</p>
                         </span>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="map-container">
+        <iframe style="width:50%; height:220px;overflow:auto; margin-left: 300px"
+            src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_maps')}}&q=47.82863334720865, 35.08344612555284"
+            target="_parent" allowfullscreen="allowfullscreen"></iframe>
     </div>
 @endsection
