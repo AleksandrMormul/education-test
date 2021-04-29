@@ -18,15 +18,15 @@
                         <h3 class="card-title">{{ $ad->title }}</h3>
                         <p class="card-text">{{ $ad->description }}</p>
                         <p class="card-text">{{ optional($ad->created_at)->toDateString() }}</p>
-                        <span class="card-text">Email:
-                            <p class="contact-text">{{ $user->email }}</p>
-                        </span>
-                        <span class="card-text">Phone number:
-                            <p class="contact-text">{{ $user->phone_number ?: 'The user did not set phone number' }}</p>
-                        </span>
-                        <span class="card-text">Country:
-                            <p class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</p>
-                        </span>
+                        <p class="card-text">Email:
+                            <span class="contact-text">{{ $user->email }}</span>
+                        </p>
+                        <p class="card-text">Phone number:
+                            <span class="contact-text">{{ $user->phone_number ?: 'The user did not set phone number' }}</span>
+                        </p>
+                        <p class="card-text">Country:
+                            <span class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</span>
+                        </p>
                     </div>
                 </div>
             </div>
