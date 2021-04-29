@@ -8,11 +8,10 @@
         <a href="{{ url("/ads") }}">Back</a>
     </button>
 
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-4 content">
-                <div class="card">
-                    <img src="{{ $ad->image_src ?? asset('images/temp.png') }}"
+            <div class="col-12 content">
+                    <img class="ad-image" src="{{ $ad->image_src ?? asset('images/temp.png') }}"
                          class="card-img-top" alt="ad image">
                     <div class="card-body">
                         <h3 class="card-title">{{ $ad->title }}</h3>
@@ -27,14 +26,14 @@
                         <p class="card-text">Country:
                             <span class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</span>
                         </p>
+                        <iframe style="width:100%; height:220px;overflow:auto;"
+                                src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_maps')}}&q=47.82863334720865, 35.08344612555284"
+                                target="_parent" allowfullscreen="allowfullscreen"></iframe>
                     </div>
-                </div>
             </div>
         </div>
     </div>
     <div class="map-container">
-        <iframe style="width:50%; height:220px;overflow:auto; margin-left: 300px"
-            src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_maps')}}&q=47.82863334720865, 35.08344612555284"
-            target="_parent" allowfullscreen="allowfullscreen"></iframe>
+
     </div>
 @endsection
