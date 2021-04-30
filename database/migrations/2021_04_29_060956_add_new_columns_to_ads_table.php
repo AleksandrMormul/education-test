@@ -19,8 +19,8 @@ class AddNewColumnsToAdsTable extends Migration
         Schema::table('ads', function (Blueprint $table) {
             $table->string('country', 2)->index()->after('description');
             $table->string('phone_number', 12)->index()->after('description');
-            $table->decimal('latitude')->after('phone_number');
-            $table->decimal('longitude')->after('latitude');
+            $table->decimal('latitude')->nullable()->after('phone_number');
+            $table->decimal('longitude')->nullable()->after('latitude');
         });
     }
 
