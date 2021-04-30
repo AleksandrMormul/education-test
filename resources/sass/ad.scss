@@ -8,23 +8,6 @@
 .contact-text {
     @include contact-text
 }
-#map {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-#map {
-    background: #58B;
-}
-
-.map-container {
-    width: 50px;
-}
-
-.map-content {
-    margin-left: 50px;
-}
 $grid__bp-md: 768;
 .container-img-ad {
     max-width: $grid__bp-md * 1px;
