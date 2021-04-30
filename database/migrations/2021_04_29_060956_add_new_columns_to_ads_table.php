@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class AddGeoColumnsToAdsTable
+ * Class AddNewColumnsToAdsTable
  */
-class AddGeoColumnsToAdsTable extends Migration
+class AddNewColumnsToAdsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,9 +17,10 @@ class AddGeoColumnsToAdsTable extends Migration
     public function up()
     {
         Schema::table('ads', function (Blueprint $table) {
-            $table->string('country');
-            $table->decimal('latitude');
-            $table->decimal('longitude');
+            $table->string('country', 2)->index()->after('description');
+            $table->string('phone_number', 11)->index()->after('description');
+            $table->decimal('latitude')->after('phone_number');
+            $table->decimal('longitude')->after('latitude');
         });
     }
 
