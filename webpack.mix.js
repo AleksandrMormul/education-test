@@ -11,8 +11,11 @@ require('laravel-mix-blade-reload');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
+mix.js(
+    [
+        'resources/js/gmaps/gmaps.js',
+        'resources/js/app.js'
+    ], 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .copyDirectory('resources/images', 'public/images')
-    .copyDirectory('gmaps', 'public/gmaps')
-    .bladeReload();;
+    .bladeReload();
