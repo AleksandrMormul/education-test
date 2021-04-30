@@ -6,7 +6,9 @@
 }
 
 .contact-text {
-    @include contact-text
+    font-size: 14px;
+    line-height: 12px;
+    font-weight: bold;
 }
 $grid__bp-md: 768;
 .container-img-ad {
