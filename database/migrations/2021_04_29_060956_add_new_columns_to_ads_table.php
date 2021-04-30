@@ -17,7 +17,7 @@ class AddNewColumnsToAdsTable extends Migration
     public function up()
     {
         Schema::table('ads', function (Blueprint $table) {
-            $table->string('country', 2)->index()->after('description');
+            $table->string('country_code', 2)->index()->after('description');
             $table->string('phone_number', 12)->index()->after('description');
             $table->decimal('latitude')->nullable()->after('phone_number');
             $table->decimal('longitude')->nullable()->after('latitude');
@@ -32,7 +32,7 @@ class AddNewColumnsToAdsTable extends Migration
     public function down()
     {
         Schema::table('ads', function (Blueprint $table) {
-            $table->dropColumn('country');
+            $table->dropColumn('country_code');
             $table->dropColumn('latitude');
             $table->dropColumn('longitude');
             $table->dropColumn('phone_number');
