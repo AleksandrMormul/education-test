@@ -19,7 +19,7 @@ class AddNewColumnsToAdsTable extends Migration
         Schema::table('ads', function (Blueprint $table) {
             $table->string('country_code', 2)->index()->after('description');
             $table->string('phone_number', 12)->index()->after('description');
-            $table->decimal('latitude')->nullable()->after('phone_number');
+            $table->decimal('latitude', 10, 8)->nullable()->after('phone_number');
             $table->decimal('longitude')->nullable()->after('latitude');
         });
     }
