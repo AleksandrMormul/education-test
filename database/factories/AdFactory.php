@@ -11,7 +11,7 @@ $factory->define(Ad::class, function (Faker $faker) {
     $phoneNumber = $faker->e164PhoneNumber;
     $latitude = $faker->latitude;
     $longitude = $faker->longitude;
-    $country = $faker->countryCode;
+    $countryCode = $faker->countryCode;
 
     return [
         'title' => $title,
@@ -19,6 +19,6 @@ $factory->define(Ad::class, function (Faker $faker) {
         'phone_number' => $phoneNumber,
         'latitude' => $latitude,
         'longitude' => $longitude,
-        'country' => $country
+        'country_code' => $countryCode,
     ];
 });
