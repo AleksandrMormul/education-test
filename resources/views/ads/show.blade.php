@@ -11,9 +11,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 content">
-                    <img class="ad-image" src="{{ $ad->image_src ?? asset('images/temp.png') }}"
-                         class="card-img-top" alt="ad image">
                     <div class="card-body">
+                        <img class="ad-image" src="{{ $ad->image_src ?? asset('images/temp.png') }}"
+                             class="card-img-top" alt="ad image">
                         <h3 class="card-title">{{ $ad->title }}</h3>
                         <p class="card-text">{{ $ad->description }}</p>
                         <p class="card-text">{{ optional($ad->created_at)->toDateString() }}</p>
