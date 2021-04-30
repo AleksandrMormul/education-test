@@ -20,10 +20,10 @@
                         <p>{{ $ad->description }}</p>
                         <p>{{ optional($ad->created_at)->toDateString() }}</p>
                         <p>Email:
-                            <span class="contact-text">{{ $user->email }}</span>
+                            <span class="contact-text">{{ $ad->user->email }}</span>
                         </p>
                         <p>Phone number:
-                            <span class="contact-text">{{ $user->phone_number ?: 'The user did not set phone number' }}</span>
+                            <span class="contact-text">{{ $ad->user->phone_number ?: 'The user did not set phone number' }}</span>
                         </p>
                         <p>Country:
                             <span class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</span>

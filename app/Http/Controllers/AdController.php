@@ -76,12 +76,7 @@ class AdController extends Controller
      */
     public function show(GetAdRequest $request, Ad $ad)
     {
-        return view(
-            'ads/show',
-            [
-                'ad' => $ad,
-                'user' => $ad->user]
-        );
+        return view('ads/show', ['ad' => $ad]);
     }
 
     /**
