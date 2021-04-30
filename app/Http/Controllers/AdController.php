@@ -67,6 +67,11 @@ class AdController extends Controller
         //
     }
 
+    public  function showFormCreateAd()
+    {
+        return view('ads/create');
+    }
+
     /**
      * Display the specified resource.
      *

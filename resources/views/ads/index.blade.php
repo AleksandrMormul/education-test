@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(Auth::check())
+        <a href="{{ url("/ads/create") }}" class="btn btn-primary create-ad-btn">Create Ad</a>
+    @endif
     <div class="container">
         <div class="row">
             @foreach ($ads as $ad)
