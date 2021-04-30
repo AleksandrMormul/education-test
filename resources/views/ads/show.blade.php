@@ -23,12 +23,12 @@
                             <span class="contact-text">{{ $ad->user->email }}</span>
                         </p>
                         <p>Phone number:
-                            <span class="contact-text">{{ $ad->user->phone_number ?: 'The user did not set phone number' }}</span>
+                            <span class="contact-text">{{ $ad->phone_number ?: 'The user did not set phone number' }}</span>
                         </p>
                         <p>Country:
                             <span class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</span>
                         </p>
-                        @if( (float)$ad->latitude !== 0.0 && (float)$ad->lontitude !== 0.0 )
+                        @if( $ad->latitude !== '0.00' && $ad->lontitude !== '0.00' )
                         <iframe style="width:100%; height:220px;overflow:auto;"
                                 src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_api_key')}}&q={{ $ad->latitude }}, {{ $ad->longitude }}"
                                 target="_parent" allowfullscreen="allowfullscreen"></iframe>
