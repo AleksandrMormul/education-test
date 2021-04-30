@@ -26,9 +26,11 @@
                         <p class="card-text">Country:
                             <span class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</span>
                         </p>
+                        @if( (float)$ad->latitude !== 0.0 && (float)$ad->lontitude !== 0.0 )
                         <iframe style="width:100%; height:220px;overflow:auto;"
-                                src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_api_key')}}&q=47.82863334720865, 35.08344612555284"
+                                src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_api_key')}}&q={{ $ad->latitude }}, {{ $ad->longitude }}"
                                 target="_parent" allowfullscreen="allowfullscreen"></iframe>
+                        @endif
                     </div>
             </div>
         </div>
