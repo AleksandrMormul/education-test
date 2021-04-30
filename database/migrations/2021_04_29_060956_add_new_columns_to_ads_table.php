@@ -35,6 +35,7 @@ class AddNewColumnsToAdsTable extends Migration
             $table->dropColumn('country');
             $table->dropColumn('latitude');
             $table->dropColumn('longitude');
+            $table->dropColumn('phone_number');
         });
     }
 }
