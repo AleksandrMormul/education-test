@@ -23,7 +23,7 @@ class AdController extends Controller
     /**
      * __construct
      *
-     * @param mixed $service
+     * @param AdService $service
      * @return void
      */
     public function __construct(AdService $service)
