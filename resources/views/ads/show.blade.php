@@ -26,7 +26,7 @@
                             <span class="contact-text">{{ $ad->phone_number ?: 'The user did not set phone number' }}</span>
                         </p>
                         <p>Country:
-                            <span class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</span>
+                            <span class="contact-text">{{ \Countries::getOne($ad->country, 'en') ?: 'The user did not set country' }}</span>
                         </p>
                         @if( $ad->latitude !== '0.00' && $ad->lontitude !== '0.00' )
                         <iframe style="width:100%; height:220px;overflow:auto;"
