@@ -12,8 +12,10 @@
         <div class="row">
             <div class="col-12 content">
                     <div>
+                        <div class="container-img-ad">
                         <img class="ad-image" src="{{ $ad->image_src ?? asset('images/temp.png') }}"
                              alt="ad image">
+                        </div>
                         <h3>{{ $ad->title }}</h3>
                         <p>{{ $ad->description }}</p>
                         <p>{{ optional($ad->created_at)->toDateString() }}</p>

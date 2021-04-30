@@ -28,8 +28,13 @@
   margin-left: 50px;
 }
 
+.container-img-ad {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
 .ad-image {
-  width: 50%;
+  width: 100%;
   height: auto;
 }
 
