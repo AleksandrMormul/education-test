@@ -11,19 +11,19 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 content">
-                    <div class="card-body">
+                    <div>
                         <img class="ad-image" src="{{ $ad->image_src ?? asset('images/temp.png') }}"
-                             class="card-img-top" alt="ad image">
-                        <h3 class="card-title">{{ $ad->title }}</h3>
-                        <p class="card-text">{{ $ad->description }}</p>
-                        <p class="card-text">{{ optional($ad->created_at)->toDateString() }}</p>
-                        <p class="card-text">Email:
+                             alt="ad image">
+                        <h3>{{ $ad->title }}</h3>
+                        <p>{{ $ad->description }}</p>
+                        <p>{{ optional($ad->created_at)->toDateString() }}</p>
+                        <p>Email:
                             <span class="contact-text">{{ $user->email }}</span>
                         </p>
-                        <p class="card-text">Phone number:
+                        <p>Phone number:
                             <span class="contact-text">{{ $user->phone_number ?: 'The user did not set phone number' }}</span>
                         </p>
-                        <p class="card-text">Country:
+                        <p>Country:
                             <span class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</span>
                         </p>
                         @if( (float)$ad->latitude !== 0.0 && (float)$ad->lontitude !== 0.0 )
@@ -34,8 +34,5 @@
                     </div>
             </div>
         </div>
-    </div>
-    <div class="map-container">
-
     </div>
 @endsection
