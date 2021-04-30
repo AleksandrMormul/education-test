@@ -27,7 +27,7 @@
                             <span class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</span>
                         </p>
                         <iframe style="width:100%; height:220px;overflow:auto;"
-                                src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_maps')}}&q=47.82863334720865, 35.08344612555284"
+                                src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_api_key')}}&q=47.82863334720865, 35.08344612555284"
                                 target="_parent" allowfullscreen="allowfullscreen"></iframe>
                     </div>
             </div>
