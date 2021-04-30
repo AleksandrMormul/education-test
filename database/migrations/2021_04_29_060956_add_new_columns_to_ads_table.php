@@ -20,7 +20,7 @@ class AddNewColumnsToAdsTable extends Migration
             $table->string('country_code', 2)->index()->after('description');
             $table->string('phone_number', 12)->index()->after('description');
             $table->decimal('latitude', 10, 8)->nullable()->after('phone_number');
-            $table->decimal('longitude')->nullable()->after('latitude');
+            $table->decimal('longitude', 11, 8)->nullable()->after('latitude');
         });
     }
 
