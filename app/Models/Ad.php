@@ -45,6 +45,9 @@ class Ad extends Model
         'title',
         'description',
         'user_id',
+        'country_code',
+        'latitude',
+        'longitude',
     ];
 
     /**
@@ -64,6 +67,15 @@ class Ad extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @param $countryCode
+     * @return string
+     */
+    public function getFullNameContry($countryCode)
+    {
+        return \Countries::getOne($countryCode, 'en');
     }
 
 }
