@@ -20,14 +20,4 @@ class AdService
     {
         return Ad::query();
     }
-
-    /**
-     * Get Ad
-     *
-     * @return Ad
-     */
-    public function getAd(int $id)
-    {
-        return Ad::with('user')->find($id);
-    }
 }
