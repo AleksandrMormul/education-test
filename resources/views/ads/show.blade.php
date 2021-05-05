@@ -28,7 +28,7 @@
                         <p>Country:
                             <span class="contact-text">{{ $ad->getFullNameContry($ad->country_code) ?: 'The user did not set country' }}</span>
                         </p>
-                        @if( $ad->latitude && $ad->lontitude  )
+                        @if( $ad->latitude && $ad->longitude )
                         <iframe style="width:100%; height:220px;overflow:auto;"
                                 src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_api_key')}}&q={{ $ad->latitude }}, {{ $ad->longitude }}"
                                 target="_parent" allowfullscreen="allowfullscreen"></iframe>
