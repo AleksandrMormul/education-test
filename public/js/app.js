@@ -41211,55 +41211,18 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var gmaps__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! gmaps */ "./node_modules/gmaps/gmaps.js");
 /* harmony import */ var gmaps__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(gmaps__WEBPACK_IMPORTED_MODULE_0__);
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr && (typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]); if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e2) { throw _e2; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e3) { didErr = true; err = _e3; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 
 
 window.onload = function () {
-  var formElement = document.getElementById("adForm");
-  var formData = new FormData(formElement);
   var markers = [];
   var map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
     div: '#map',
     zoom: 5,
     lat: -12.043333,
-    lng: -77.028333,
-    click: function click(e) {
-      var coord = e.latLng.toJSON();
-      formData.append('lat', coord.lat);
-      formData.append('lng', coord.lng);
-
-      var _iterator = _createForOfIteratorHelper(formData.entries()),
-          _step;
-
-      try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {//console.log(key, value);
-
-          var _step$value = _slicedToArray(_step.value, 2),
-              key = _step$value[0],
-              value = _step$value[1];
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
-      }
-    }
+    lng: -77.028333
   });
   map.addListener('click', function (e) {
-    var coord = e.latLng.toJSON(); //console.log('strart create marker for this coor', coord)
+    var coord = e.latLng.toJSON();
 
     if (markers.length === 0) {
       var marker = map.addMarker({
@@ -41268,7 +41231,6 @@ window.onload = function () {
       });
       markers.push(marker);
     } else if (markers.length === 1) {
-      console.log('start delete marker....');
       markers[0].setMap(null);
       markers.shift();
 
@@ -41279,35 +41241,24 @@ window.onload = function () {
 
       markers.push(_marker);
     }
-
-    console.log(markers.length);
   });
   document.getElementById('btnSubmit').addEventListener('click', function () {
-    console.log('//////////************************//////////////////');
-
-    var _iterator2 = _createForOfIteratorHelper(formData.entries()),
-        _step2;
-
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {//console.log(key, value);
-
-        var _step2$value = _slicedToArray(_step2.value, 2),
-            key = _step2$value[0],
-            value = _step2$value[1];
-      }
-      /*var request = new XMLHttpRequest();
-      request.open("POST", "/ads");
-      request.send(formData);*/
-      //formElement.submit();
-      //formElement.onsubmit();
-      //let form = $('.create-ad-from');
-      //form.submit();
-
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
+    var formElement = document.getElementById("adForm");
+    var formData = new FormData(formElement);
+    var request = new XMLHttpRequest();
+    var coord = markers[0].getPosition();
+    var inputLat = document.createElement("input");
+    inputLat.type = "hidden";
+    inputLat.name = "lat";
+    inputLat.value = coord.lat();
+    var inputLng = document.createElement("input");
+    inputLng.type = "hidden";
+    inputLng.name = "lng";
+    inputLng.value = coord.lng();
+    request.open("POST", "/ads");
+    formElement.appendChild(inputLat);
+    formElement.appendChild(inputLng);
+    request.send(formData);
   });
 };
 

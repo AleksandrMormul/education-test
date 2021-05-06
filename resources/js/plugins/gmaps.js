@@ -1,7 +1,5 @@
 import GMaps from 'gmaps';
 window.onload = function () {
-    const formElement = document.getElementById("adForm");
-    const formData = new FormData(formElement);
     let markers = [];
 
    let map = new GMaps({
@@ -9,14 +7,6 @@ window.onload = function () {
         zoom: 5,
         lat: -12.043333,
         lng: -77.028333,
-        click: function (e) {
-            const coord = e.latLng.toJSON();
-            formData.append('lat', coord.lat);
-            formData.append('lng', coord.lng);
-            for (const [key, value] of formData.entries()) {
-                //console.log(key, value);
-            }
-        },
     });
     map.addListener('click', function(e) {
         const coord = e.latLng.toJSON();
@@ -37,19 +27,24 @@ window.onload = function () {
         }
     });
 
-
     document.getElementById('btnSubmit').addEventListener('click',function() {
-       console.log('//////////************************//////////////////')
-        for (const [key, value] of formData.entries()) {
-            //console.log(key, value);
-        }
-        /*var request = new XMLHttpRequest();
+        const formElement = document.getElementById("adForm");
+        const formData = new FormData(formElement);
+        const request = new XMLHttpRequest();
+        const coord = markers[0].getPosition();
+        const inputLat = document.createElement("input");
+        inputLat.type = "hidden";
+        inputLat.name = "lat";
+        inputLat.value = coord.lat();
+        const inputLng = document.createElement("input");
+        inputLng.type = "hidden";
+        inputLng.name = "lng";
+        inputLng.value = coord.lng();
+
         request.open("POST", "/ads");
-        request.send(formData);*/
-        //formElement.submit();
-        //formElement.onsubmit();
-        //let form = $('.create-ad-from');
-        //form.submit();
+        formElement.appendChild(inputLat)
+        formElement.appendChild(inputLng)
+        request.send(formData);
     });
 }
 
