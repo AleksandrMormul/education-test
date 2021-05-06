@@ -15,5 +15,4 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .copyDirectory('resources/images', 'public/images')
     .copyDirectory('resources/images/flags', 'public/images/flags')
-    .copyDirectory('gmaps', 'public/gmaps')
     .bladeReload();
