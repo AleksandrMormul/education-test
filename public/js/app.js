@@ -41230,7 +41230,8 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 window.onload = function () {
   var formElement = document.getElementById("adForm");
   var formData = new FormData(formElement);
-  new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
+  var markers = [];
+  var map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
     div: '#map',
     zoom: 5,
     lat: -12.043333,
@@ -41244,12 +41245,11 @@ window.onload = function () {
           _step;
 
       try {
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {//console.log(key, value);
+
           var _step$value = _slicedToArray(_step.value, 2),
               key = _step$value[0],
               value = _step$value[1];
-
-          console.log(key, value);
         }
       } catch (err) {
         _iterator.e(err);
@@ -41258,6 +41258,30 @@ window.onload = function () {
       }
     }
   });
+  map.addListener('click', function (e) {
+    var coord = e.latLng.toJSON(); //console.log('strart create marker for this coor', coord)
+
+    if (markers.length === 0) {
+      var marker = map.addMarker({
+        lat: coord.lat,
+        lng: coord.lng
+      });
+      markers.push(marker);
+    } else if (markers.length === 1) {
+      console.log('start delete marker....');
+      markers[0].setMap(null);
+      markers.shift();
+
+      var _marker = map.addMarker({
+        lat: coord.lat,
+        lng: coord.lng
+      });
+
+      markers.push(_marker);
+    }
+
+    console.log(markers.length);
+  });
   document.getElementById('btnSubmit').addEventListener('click', function () {
     console.log('//////////************************//////////////////');
 
@@ -41265,12 +41289,11 @@ window.onload = function () {
         _step2;
 
     try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {//console.log(key, value);
+
         var _step2$value = _slicedToArray(_step2.value, 2),
             key = _step2$value[0],
             value = _step2$value[1];
-
-        console.log(key, value);
       }
       /*var request = new XMLHttpRequest();
       request.open("POST", "/ads");
@@ -41329,13 +41352,8 @@ input.addEventListener('change', function () {
 /*!*******************************************!*\
   !*** ./resources/js/plugins/validator.js ***!
   \*******************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _phoneMask__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./phoneMask */ "./resources/js/plugins/phoneMask.js");
-
+/*! no static exports found */
+/***/ (function(module, exports) {
 
 (function () {
   'use strict';
@@ -41344,8 +41362,6 @@ __webpack_require__.r(__webpack_exports__);
     var form = $('.create-ad-from'); // On form submit take action, like an AJAX call
 
     $(form).submit(function (e) {
-      console.log('subm');
-
       if (this.checkValidity() == false) {
         $(this).addClass('was-validated');
         e.preventDefault();
@@ -41366,18 +41382,6 @@ __webpack_require__.r(__webpack_exports__);
 
         case 'email':
           validateEmail($(this));
-          break;
-
-        case 'checkbox':
-          validateCheckBox($(this));
-          break;
-
-        case 'select-one':
-          validateSelectOne($(this));
-          break;
-
-        case 'select-multiple':
-          validateSelectMultiple($(this));
           break;
 
         default:
