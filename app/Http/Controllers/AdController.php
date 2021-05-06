@@ -53,7 +53,7 @@ class AdController extends Controller
      */
     public function create()
     {
-        //
+        return view('ads/create');
     }
 
     /**
@@ -65,11 +65,6 @@ class AdController extends Controller
     public function store(Request $request)
     {
         //
-    }
-
-    public  function showFormCreateAd()
-    {
-        return view('ads/create');
     }
 
     /**

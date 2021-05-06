@@ -16,7 +16,5 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::resource('ads', 'AdController');
-// Render create form for ad
-Route::get('ads/create', 'AdController@showFormCreateAd')->middleware('auth')->name('create');
 
 Route::get('/home', 'HomeController@index')->name('home');
