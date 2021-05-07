@@ -96,6 +96,6 @@ class AdService
     private function saveFile(UploadedFile $file, string $fileName): void
     {
         $userId = Auth::id();
-        Storage::disk(Config::get('filesystems.default'))->putFileAs('/' . $userId, $file, $fileName);
+        Storage::disk(Config::get('filesystems.default'))->putFileAs('/public/' . $userId, $file, $fileName);
     }
 }
