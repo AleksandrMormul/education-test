@@ -43,29 +43,49 @@ class AdService
     public function createAd(CreateAdRequest $request): void
     {
         include(app_path('/Common/convertCountry.php'));
-        $fileName = null;
-        $latitude = null;
-        $longitude = null;
-        if ($request->adFile) {
-            $file = $request->adFile;
-            $fileName = $file->getClientOriginalName();
-            $this->saveFile($file, $fileName);
-        }
-        if ($request->lat && $request->lng) {
-            $longitude = $request->lng;
-            $latitude = $request->lat;
-        }
+        $coordination = $this->prepareCoordination($request);
         Ad::create([
             'title' => $request->title,
             'user_id' => Auth::id(),
             'description' => $request->description,
             'phone_number' => $request->phone,
-            'endDate' => $request->endDate,
-            'img_src' => $fileName,
+            'end_date' => $request->endDate,
+            'img_src' => $this->prepareFile($request),
             'country_code' => countryNameToISO3166($request->country, Lang::getLocale()),
-            'latitude' => $latitude,
-            'longitude' => $longitude,
+            'latitude' => $coordination['lat'],
+            'longitude' => $coordination['lng'],
         ]);
+    }
+
+    /**
+     * @param $request
+     * @return array|null[]
+     */
+    private function prepareCoordination($request): array
+    {
+        $latitude = null;
+        $longitude = null;
+        if ($request->lat && $request->lng) {
+            $longitude = $request->lng;
+            $latitude = $request->lat;
+        }
+        return ['lat' => $latitude, 'lng' => $longitude];
+    }
+
+    /**
+     * @param $request
+     * @return string|null
+     */
+    private function prepareFile($request): ?string
+    {
+        $fileName = null;
+        if ($request->adFile) {
+            $file = $request->adFile;
+            $fileName = $file->getClientOriginalName();
+            $this->saveFile($file, $fileName);
+        }
+
+        return $fileName;
     }
 
     /**
