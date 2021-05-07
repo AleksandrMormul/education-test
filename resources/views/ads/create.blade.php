@@ -48,6 +48,14 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" name="country" class="form-control" required>
+            <div class="valid-feedback"/>
+            <div class="invalid-feedback">
+                This field is required!
+            </div>
+        </div>
+        <div class="form-group">
             <label for="adFile">Select files for ad</label>
             <input type="file" class="form-control-file" id="adFile" name="adFile">
         </div>

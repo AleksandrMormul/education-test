@@ -39,6 +39,8 @@ class CreateAdRequest extends FormRequest
             'phone' => 'required|string',
             'email' => 'required|email:rfc,dns',
             'endDate' => 'required|string',
+            'country' => 'required|string',
+            //'adFile' => 'file|nullable',
         ];
     }
 }
