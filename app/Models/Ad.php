@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Lang;
  * @mixin \Eloquent
  * @property string|null $img_src
  * @property string $country_code
+ * @property string $phone_number
  * @property string $latitude
  * @property string $longitude
  * @property-read \App\Models\User $user
@@ -46,7 +47,9 @@ class Ad extends Model
         'title',
         'description',
         'user_id',
+        'phone_number',
         'country_code',
+        'img_src',
         'latitude',
         'longitude',
     ];
@@ -58,7 +61,7 @@ class Ad extends Model
      */
     protected $casts = [
         'user_id' => 'integer',
-       'latitude' => 'decimal:8',
+        'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
     ];
 

@@ -11,7 +11,10 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property string phone
  * @property string email
  * @property string endDate
+ * @property string country
  * @property \File adFile
+ * @property numeric lat
+ * @property numeric lng
  * @package App\Http\Requests
  */
 class CreateAdRequest extends FormRequest
@@ -40,7 +43,9 @@ class CreateAdRequest extends FormRequest
             'email' => 'required|email:rfc,dns',
             'endDate' => 'required|string',
             'country' => 'required|string',
-            //'adFile' => 'file|nullable',
+            'lat' => 'numeric|nullable',
+            'lng' => 'numeric|nullable',
+            'adFile' => 'file|nullable',
         ];
     }
 }

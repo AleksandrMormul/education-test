@@ -8,6 +8,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -41,20 +42,29 @@ class AdService
      */
     public function createAd(CreateAdRequest $request): void
     {
+        include(app_path('/Common/convertCountry.php'));
         $fileName = null;
+        $latitude = null;
+        $longitude = null;
         if ($request->adFile) {
             $file = $request->adFile;
             $fileName = $file->getClientOriginalName();
             $this->saveFile($file, $fileName);
         }
+        if ($request->lat && $request->lng) {
+            $longitude = $request->lng;
+            $latitude = $request->lat;
+        }
         Ad::create([
             'title' => $request->title,
+            'user_id' => Auth::id(),
             'description' => $request->description,
-            'phone' => $request->phone,
+            'phone_number' => $request->phone,
             'endDate' => $request->endDate,
             'img_src' => $fileName,
-            /*'latitude' => $latitude,
-            'longitude' => $longitude,*/
+            'country_code' => countryNameToISO3166($request->country, Lang::getLocale()),
+            'latitude' => $latitude,
+            'longitude' => $longitude,
         ]);
     }
 
