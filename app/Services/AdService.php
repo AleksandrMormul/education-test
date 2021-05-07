@@ -40,11 +40,11 @@ class AdService
     /**
      * @param CreateAdRequest $request
      */
-    public function createAd(CreateAdRequest $request): void
+    public function createAd(CreateAdRequest $request)
     {
         include(app_path('/Common/convertCountry.php'));
         $coordination = $this->prepareCoordination($request);
-        Ad::create([
+        $ad = Ad::create([
             'title' => $request->title,
             'user_id' => Auth::id(),
             'description' => $request->description,
@@ -55,6 +55,7 @@ class AdService
             'latitude' => $coordination['lat'],
             'longitude' => $coordination['lng'],
         ]);
+        return $ad->id;
     }
 
     /**

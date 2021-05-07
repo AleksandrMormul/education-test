@@ -70,9 +70,9 @@ class AdController extends Controller
      */
     public function store(CreateAdRequest $request)
     {
-        $this->adService->createAd($request);
+        $adId = $this->adService->createAd($request);
 
-        return redirect('ads');
+        return redirect(route('ads.show', $adId));
     }
 
     /**
