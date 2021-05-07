@@ -38,7 +38,7 @@ class CreateAdRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string|max:1000',
             'phone' => 'required|string',
             'email' => 'required|email:rfc,dns',
             'endDate' => 'required|string',
