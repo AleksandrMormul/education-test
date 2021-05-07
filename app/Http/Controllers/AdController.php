@@ -28,7 +28,7 @@ class AdController extends Controller
     /**
      * __construct
      *
-     * @param mixed $service
+     * @param AdService $service
      * @return void
      */
     public function __construct(AdService $service)
@@ -84,12 +84,7 @@ class AdController extends Controller
      */
     public function show(GetAdRequest $request, Ad $ad)
     {
-        return view(
-            'ads/show',
-            [
-                'ad' => $ad,
-                'user' => $ad->user]
-        );
+        return view('ads/show', ['ad' => $ad]);
     }
 
     /**

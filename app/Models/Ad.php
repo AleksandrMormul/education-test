@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Lang;
 
 /**
  * App\Models\Ad
@@ -25,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereUserId($value)
  * @mixin \Eloquent
  * @property string|null $img_src
- * @property string $country
+ * @property string $country_code
  * @property string $latitude
  * @property string $longitude
  * @property-read \App\Models\User $user
@@ -45,6 +46,9 @@ class Ad extends Model
         'title',
         'description',
         'user_id',
+        'country_code',
+        'latitude',
+        'longitude',
     ];
 
     /**
@@ -54,6 +58,8 @@ class Ad extends Model
      */
     protected $casts = [
         'user_id' => 'integer',
+       'latitude' => 'decimal:8',
+        'longitude' => 'decimal:8',
     ];
 
     /**
@@ -64,6 +70,15 @@ class Ad extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @param $countryCode
+     * @return string
+     */
+    public function getFullNameContryAttribute()
+    {
+        return \Countries::getOne($this->country_code, Lang::getLocale());
     }
 
 }

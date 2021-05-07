@@ -18,10 +18,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- Google Maps -->
-{{--    <script src="http://maps.google.com/maps/api/js?key={{ config('app.google_maps')}}"></script>
-<!--<script src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_maps')}}"></script>-->--}}
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>

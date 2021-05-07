@@ -8,9 +8,17 @@ use Faker\Generator as Faker;
 $factory->define(Ad::class, function (Faker $faker) {
     $title = $faker->sentence(2);
     $description = $faker->sentence(10);
+    $phoneNumber = $faker->e164PhoneNumber;
+    $latitude = $faker->latitude;
+    $longitude = $faker->longitude;
+    $countryCode = $faker->countryCode;
 
     return [
         'title' => $title,
-        'description' => $description
+        'description' => $description,
+        'phone_number' => $phoneNumber,
+        'latitude' => $latitude,
+        'longitude' => $longitude,
+        'country_code' => $countryCode,
     ];
 });

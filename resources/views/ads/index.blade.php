@@ -15,7 +15,7 @@
                             <h3 class="card-title">{{ $ad->title }}</h3>
                             <p class="card-text">{{ $ad->description }}</p>
                             <p class="card-text">{{ optional($ad->created_at)->toDateString() }}</p>
-                            <a href="{{ url("/ads/$ad->id") }}" class="btn btn-primary">Show details</a>
+                            <a href="{{ route('ads.show', $ad->id) }}" class="btn btn-primary">Show details</a>
                         </div>
                     </div>
                 </div>

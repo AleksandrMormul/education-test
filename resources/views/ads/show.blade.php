@@ -5,35 +5,36 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"></path>
         </svg>
-        <a href="{{ url("/ads") }}">Back</a>
+        <a href="{{ url()->previous() }}">Back</a>
     </button>
 
     <div class="container-fluid">
+        <h2>{{ $ad->title }}</h2>
         <div class="row">
             <div class="col-12 content">
-                    <div class="card-body">
+                    <div>
+                        <div class="container-img-ad">
                         <img class="ad-image" src="{{ $ad->image_src ?? asset('images/temp.png') }}"
-                             class="card-img-top" alt="ad image">
-                        <h3 class="card-title">{{ $ad->title }}</h3>
-                        <p class="card-text">{{ $ad->description }}</p>
-                        <p class="card-text">{{ optional($ad->created_at)->toDateString() }}</p>
-                        <p class="card-text">Email:
-                            <span class="contact-text">{{ $user->email }}</span>
+                             alt="ad image">
+                        </div>
+                        <p>{{ $ad->description }}</p>
+                        <p>{{ optional($ad->created_at)->toDateString() }}</p>
+                        <p>Email:
+                            <span class="contact-text">{{ $ad->user->email }}</span>
                         </p>
-                        <p class="card-text">Phone number:
-                            <span class="contact-text">{{ $user->phone_number ?: 'The user did not set phone number' }}</span>
+                        <p>Phone number:
+                            <span class="contact-text">{{ $ad->phone_number ?: 'The user did not set phone number' }}</span>
                         </p>
-                        <p class="card-text">Country:
-                            <span class="contact-text">{{ $ad->country ?: 'The user did not set country' }}</span>
+                        <p>Country:
+                            <span class="contact-text">{{ $ad->getFullNameContryAttribute() ?: 'The user did not set country' }}</span>
                         </p>
+                        @if( $ad->latitude && $ad->longitude )
                         <iframe style="width:100%; height:220px;overflow:auto;"
-                                src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_maps')}}&q=47.82863334720865, 35.08344612555284"
+                                src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_api_key')}}&q={{ $ad->latitude }}, {{ $ad->longitude }}"
                                 target="_parent" allowfullscreen="allowfullscreen"></iframe>
+                        @endif
                     </div>
             </div>
         </div>
-    </div>
-    <div class="map-container">
-
     </div>
 @endsection
