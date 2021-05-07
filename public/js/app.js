@@ -41255,7 +41255,7 @@ window.onload = function () {
     inputLng.type = "hidden";
     inputLng.name = "lng";
     inputLng.value = coord.lng();
-    request.open("POST", "/ads");
+    request.open("POST", "{!! route('ads.store') !!}");
     formElement.appendChild(inputLat);
     formElement.appendChild(inputLng);
     request.send(formData);
