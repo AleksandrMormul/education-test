@@ -41,17 +41,30 @@ class AdService
      */
     public function createAd(CreateAdRequest $request): void
     {
-        $file = $request->adFile;
-        $this->saveFile($file);
+        $fileName = null;
+        if ($request->adFile) {
+            $file = $request->adFile;
+            $fileName = $file->getClientOriginalName();
+            $this->saveFile($file, $fileName);
+        }
+        Ad::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'phone' => $request->phone,
+            'endDate' => $request->endDate,
+            'img_src' => $fileName,
+            /*'latitude' => $latitude,
+            'longitude' => $longitude,*/
+        ]);
     }
 
     /**
      * @param UploadedFile $file
+     * @param string $fileName
      */
-    private function saveFile(UploadedFile $file): void
+    private function saveFile(UploadedFile $file, string $fileName): void
     {
         $userId = Auth::id();
-        $fileName = $file->getClientOriginalName();
         Storage::disk(Config::get('filesystems.default'))->putFileAs('/' . $userId, $file, $fileName);
     }
 }
