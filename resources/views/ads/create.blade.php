@@ -5,6 +5,16 @@
     <script src="http://maps.google.com/maps/api/js?key={{ config('app.google_maps')}}"></script>
     <form class="create-ad-from" id="adForm" novalidate method="post" action="{{ route('ads.store') }}" enctype="multipart/form-data">
         @csrf
+        @if($errors->any())
+            <div class="alert alert-danger">
+                <p><strong>Opps Something went wrong</strong></p>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <div class="form-group">
             <label for="title">Title</label>
             <input type="text" name="title" class="form-control" required>
