@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateAdRequest;
 use App\Http\Requests\GetAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
@@ -59,12 +60,15 @@ class AdController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param CreateAdRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(CreateAdRequest $request)
     {
-        //
+
+        $this->adService->createAd($request);
+
+        return redirect('ads');
     }
 
     /**

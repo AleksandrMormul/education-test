@@ -3,7 +3,7 @@
 @section('content')
     <!-- Google Maps -->
     <script src="http://maps.google.com/maps/api/js?key={{ config('app.google_maps')}}"></script>
-    <form class="create-ad-from" id="adForm" novalidate method="post" action="{{ route('ads.store') }}">
+    <form class="create-ad-from" id="adForm" novalidate method="post" action="{{ route('ads.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="title">Title</label>
