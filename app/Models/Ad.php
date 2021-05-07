@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Lang;
  * @property string $phone_number
  * @property string $latitude
  * @property string $longitude
+ * @property \Illuminate\Support\Carbon end_date
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereCountry($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereImgSrc($value)
@@ -50,6 +51,7 @@ class Ad extends Model
         'phone_number',
         'country_code',
         'img_src',
+        'end_date',
         'latitude',
         'longitude',
     ];
