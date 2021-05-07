@@ -14,12 +14,9 @@
             <div class="col-12 content">
                     <div>
                         <div class="container-img-ad">
-                            @if($ad->img_src)
-                                <img class="ad-image" src="{{ asset('storage/'. $ad->user_id .'/'. $ad->img_src)}}"
+                            <img class="ad-image" src="{{$ad->img_src ? asset('storage/'. $ad->user_id .'/'. $ad->img_src) : asset('images/temp.png') }}"
                                 alt="ad image">
-                            @endif
-                                <img class="ad-image" src="{{ asset('images/temp.png') }}"
-                                     alt="ad image">
+
                         </div>
                         <p>{{ $ad->description }}</p>
                         <p>{{ optional($ad->created_at)->toDateString() }}</p>
