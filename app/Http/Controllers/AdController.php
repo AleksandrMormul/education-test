@@ -6,8 +6,12 @@ use App\Http\Requests\CreateAdRequest;
 use App\Http\Requests\GetAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 
 /**
  * Class AdController
@@ -44,7 +48,8 @@ class AdController extends Controller
             'ads/index',
             [
                 'ads' => $query->paginate(15)
-            ]);
+            ]
+        );
     }
 
     /**
@@ -61,11 +66,10 @@ class AdController extends Controller
      * Store a newly created resource in storage.
      *
      * @param CreateAdRequest $request
-     * @return Response
+     * @return Application|RedirectResponse|Redirector
      */
     public function store(CreateAdRequest $request)
     {
-
         $this->adService->createAd($request);
 
         return redirect('ads');
@@ -76,7 +80,7 @@ class AdController extends Controller
      *
      * @param GetAdRequest $request
      * @param  Ad  $ad
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function show(GetAdRequest $request, Ad $ad)
     {
