@@ -79,6 +79,15 @@
                 </div>
             @endif
 
+            <div class="content">
+                <div class="title m-b-md">
+                    {{ config('app.name') }}
+                </div>
+
+                <div class="links">
+                    <a href="{!! route('ads.index') !!}">Ads</a>
+                </div>
+            </div>
         </div>
     </body>
 </html>

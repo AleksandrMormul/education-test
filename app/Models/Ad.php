@@ -10,35 +10,34 @@ use Illuminate\Support\Facades\Lang;
  * App\Models\Ad
  *
  * @property int $id
+ * @property int $user_id
  * @property string $title
  * @property string $description
- * @property int $user_id
+ * @property string $phone_number
+ * @property mixed|null $latitude
+ * @property mixed|null $longitude
+ * @property string $country_code
+ * @property string|null $img_src
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $full_name_country
+ * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Ad newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ad newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ad query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereCountryCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereEndDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereImgSrc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLatitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLongitude($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad wherePhoneNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereUserId($value)
  * @mixin \Eloquent
- * @property string|null $img_src
- * @property string $country_code
- * @property string $latitude
- * @property string $longitude
- * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereCountry($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereImgSrc($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLatitude($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLongitude($value)
- * @property string $phone_number
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereCountryCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereEndDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad wherePhoneNumber($value)
- * @property-read string $full_name_country
  */
 class Ad extends Model
 {
