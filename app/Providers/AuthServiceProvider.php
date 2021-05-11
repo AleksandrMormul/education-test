@@ -24,7 +24,21 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        $this->defineAdmin();
+        $this->defineAutoDiscover();
+    }
 
-        //
+    private function defineAutoDiscover()
+    {
+        Gate::guessPolicyNamesUsing(function ($class) {
+            return str_replace("\\Models\\", "\\Policies\\", $class) . 'Policy';
+        });
+    }
+
+    private function defineAdmin()
+    {
+        Gate::before(function ($user) {
+            return $user->hasRole('admin') ? true : null;
+        });
     }
 }

@@ -18,6 +18,7 @@ class AdSeeder extends Seeder
     {
         factory(User::class, 5)->create()->each(
             function ($user) {
+                $user->assignRole('author');
                 $user->ads()->saveMany(factory(Ad::class, 40)->make());
             }
         );

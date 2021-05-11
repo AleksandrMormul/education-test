@@ -21,13 +21,13 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         if (User::where('email', self::ADMIN_USER_EMAIL)->doesntExist()) {
-            User::create(
+           User::create(
                 [
                     'name' => self::ADMIN_USER_NAME,
                     'email' => self::ADMIN_USER_EMAIL,
                     'password' => Hash::make(self::ADMIN_USER_PASSWORD)
                 ]
-            );
+            )->assignRole('admin');
             factory(User::class, 2)->create();
         }
     }
