@@ -11874,6 +11874,28 @@ a.text-dark:focus {
   padding-bottom: 10px;
 }
 
+.card {
+  height: 100%;
+}
+
+.asd {
+  position: relative;
+}
+
+.btn-container {
+  /*width: 100%;
+  height: 30px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;*/
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
 .contact-text {
   font-size: 14px;
   line-height: 12px;
@@ -11916,5 +11938,11 @@ a.text-dark:focus {
   .iti__flag {
     background-image: url(/images/flags@2x.png?d429a5777afaf2fc349652e812e9bb11);
   }
+}
+
+.gmap {
+  width: 50%;
+  height: 220px;
+  overflow: auto;
 }
 

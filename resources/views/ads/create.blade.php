@@ -69,7 +69,7 @@
             <label for="adFile">Select files for ad</label>
             <input type="file" class="form-control-file" id="adFile" name="adFile">
         </div>
-        <div style=" width: 400px;height: 400px;" id="map"></div>
+        <div class="gmap" id="map"></div>
         <button type="submit"  id="btnSubmit" class="btn btn-primary">Submit</button>
     </form>
 @endsection
