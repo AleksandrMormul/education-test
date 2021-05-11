@@ -3,3 +3,17 @@
 .content {
     padding-bottom: 10px;
 }
+
+.contact-text {
+    font-size: 14px;
+    line-height: 12px;
+    font-weight: bold;
+}
+.container-img-ad {
+    max-width: $grid__bp-md * 1px;
+    margin: 0 auto;
+}
+.ad-image {
+    width: 100%;
+    height: auto;
+}

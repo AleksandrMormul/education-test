@@ -14,4 +14,4 @@ require('laravel-mix-blade-reload');
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .copyDirectory('resources/images', 'public/images')
-    .bladeReload();;
+    .bladeReload();

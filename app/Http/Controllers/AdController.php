@@ -2,44 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetAdRequest;
+use App\Models\Ad;
 use App\Services\AdService;
-
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
+/**
+ * Class AdController
+ * @package App\Http\Controllers
+ */
 class AdController extends Controller
 {
 
-    private $_adService;
+    /**
+     * @var AdService|mixed
+     */
+    private $adService;
 
     /**
      * __construct
      *
-     * @param  mixed $service
+     * @param AdService $service
      * @return void
      */
     public function __construct(AdService $service)
     {
-        $this->_adService = $service;
+        $this->adService = $service;
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function index()
     {
-        $query = $this->_adService->getAds();
+        $query = $this->adService->getAds();
         return view(
-            'ads/index', [
-            'ads' => $query->paginate(15)]
-        );
+            'ads/index',
+            [
+                'ads' => $query->paginate(15)
+            ]);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -49,8 +59,8 @@ class AdController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
      */
     public function store(Request $request)
     {
@@ -60,19 +70,20 @@ class AdController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param GetAdRequest $request
+     * @param  Ad  $ad
+     * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function show($id)
+    public function show(GetAdRequest $request, Ad $ad)
     {
-        //
+        return view('ads/show', ['ad' => $ad]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function edit($id)
     {
@@ -82,9 +93,9 @@ class AdController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -94,8 +105,8 @@ class AdController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
     public function destroy($id)
     {

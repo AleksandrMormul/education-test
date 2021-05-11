@@ -1,5 +1,25 @@
 @import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 
+.content {
+  padding-bottom: 10px;
+}
+
+.contact-text {
+  font-size: 14px;
+  line-height: 12px;
+  font-weight: bold;
+}
+
+.container-img-ad {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.ad-image {
+  width: 100%;
+  height: auto;
+}
+
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors

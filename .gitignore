@@ -13,3 +13,7 @@ yarn-error.log
 .vs/
 .DS_Store/
 .idea/
+tools/php-cs-fixer/vendor/
+_ide_*.php
+.php*.php
+.php_*.cache
