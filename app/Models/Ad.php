@@ -34,6 +34,11 @@ use Illuminate\Support\Facades\Lang;
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereImgSrc($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLatitude($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLongitude($value)
+ * @property string $phone_number
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereCountryCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad wherePhoneNumber($value)
+ * @property-read string $full_name_country
  */
 class Ad extends Model
 {
@@ -58,7 +63,7 @@ class Ad extends Model
      */
     protected $casts = [
         'user_id' => 'integer',
-       'latitude' => 'decimal:8',
+        'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
     ];
 
@@ -73,12 +78,10 @@ class Ad extends Model
     }
 
     /**
-     * @param $countryCode
      * @return string
      */
-    public function getFullNameContryAttribute()
+    public function getFullNameCountryAttribute()
     {
         return \Countries::getOne($this->country_code, Lang::getLocale());
     }
-
 }
