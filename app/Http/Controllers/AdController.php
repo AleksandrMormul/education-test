@@ -90,12 +90,12 @@ class AdController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return Response
+     * @param Ad  $ad
+     * @return Renderable
      */
-    public function edit($id)
+    public function edit( Ad $ad): Renderable
     {
-        //
+        return view('ads.edit', ['ad' => $ad]);
     }
 
     /**
