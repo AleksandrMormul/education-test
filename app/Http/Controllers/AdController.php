@@ -93,7 +93,7 @@ class AdController extends Controller
      * @param Ad  $ad
      * @return Renderable
      */
-    public function edit( Ad $ad): Renderable
+    public function edit(Ad $ad): Renderable
     {
         return view('ads.edit', ['ad' => $ad]);
     }

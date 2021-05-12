@@ -41211,35 +41211,55 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var gmaps__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! gmaps */ "./node_modules/gmaps/gmaps.js");
 /* harmony import */ var gmaps__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(gmaps__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _phoneMask__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./phoneMask */ "./resources/js/plugins/phoneMask.js");
+
 
 
 window.onload = function () {
   var markers = [];
-  var map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
-    div: '#map',
-    zoom: 5,
-    lat: -12.043333,
-    lng: -77.028333
-  });
+  var map;
+
+  if (typeof isEdit !== 'undefined') {
+    map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
+      div: '#map',
+      zoom: 5,
+      lat: lat,
+      lng: lng
+    });
+    var marker = map.addMarker({
+      lat: lat,
+      lng: lng
+    });
+    markers.push(marker);
+  } else {
+    map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
+      div: '#map',
+      zoom: 5,
+      lat: -12.043333,
+      lng: -77.028333
+    });
+  }
+
   map.addListener('click', function (e) {
     var coord = e.latLng.toJSON();
 
     if (markers.length === 0) {
-      var marker = map.addMarker({
-        lat: coord.lat,
-        lng: coord.lng
-      });
-      markers.push(marker);
-    } else if (markers.length === 1) {
-      markers[0].setMap(null);
-      markers.shift();
-
       var _marker = map.addMarker({
         lat: coord.lat,
         lng: coord.lng
       });
 
       markers.push(_marker);
+    } else if (markers.length === 1) {
+      markers[0].setMap(null);
+      markers.shift();
+
+      var _marker2 = map.addMarker({
+        lat: coord.lat,
+        lng: coord.lng
+      });
+
+      markers.push(_marker2);
     }
   });
   document.getElementById('btnSubmit').addEventListener('click', function () {
@@ -41247,6 +41267,10 @@ window.onload = function () {
     var formData = new FormData(formElement);
     var request = new XMLHttpRequest();
     var coord = markers[0].getPosition();
+    var fullPhoneNumber = document.createElement("input");
+    fullPhoneNumber.type = "hidden";
+    fullPhoneNumber.name = "fullPhoneNumber";
+    fullPhoneNumber.value = Object(_phoneMask__WEBPACK_IMPORTED_MODULE_1__["default"])();
     var inputLat = document.createElement("input");
     inputLat.type = "hidden";
     inputLat.name = "lat";
@@ -41257,6 +41281,7 @@ window.onload = function () {
     inputLng.value = coord.lng();
     request.open("POST", "{!! route('ads.store') !!}");
     formElement.appendChild(inputLat);
+    formElement.appendChild(fullPhoneNumber);
     formElement.appendChild(inputLng);
     request.send(formData);
   });
@@ -41268,26 +41293,45 @@ window.onload = function () {
 /*!*******************************************!*\
   !*** ./resources/js/plugins/phoneMask.js ***!
   \*******************************************/
-/*! no exports provided */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return getNumber; });
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-tel-input */ "./node_modules/intl-tel-input/index.js");
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_tel_input__WEBPACK_IMPORTED_MODULE_0__);
 
 var input = document.getElementById('phone');
 var phoneInput = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(input, {
-  utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/utils.js',
-  allowDropdown: true
+  formatOnDisplay: true,
+  hiddenInput: "full_number",
+  utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/utils.js'
 });
-/*export default function validationPhoneNumber() {*/
+/*input.addEventListener("change", resetIntlTelInput);
+
+function resetIntlTelInput() {
+    console.log('adsasasd')
+    if (typeof intlTelInputUtils !== 'undefined') { // utils are lazy loaded, so must check
+        let currentText = phoneInput.getNumber(intlTelInputUtils.numberFormat.E164);
+        if (typeof currentText === 'string') { // sometimes the currentText is an object :)
+            phoneInput.setNumber(currentText); // will autoformat because of formatOnDisplay=true
+        }
+    }
+}*/
+
+if (typeof isEdit !== 'undefined') {
+  console.log(phoneNumber);
+  phoneInput.setNumber(phoneNumber);
+}
 
 var errorMap = ['Invalid number', 'Invalid country code', 'Too short', 'Too long', 'Invalid number'];
 var error = document.querySelector('.phone-error');
 error.style.display = 'none';
 input.addEventListener('change', function () {
+  //console.log(phoneInput.getNumber())
   if (phoneInput.isValidNumber()) {
+    //input.value = phoneInput.getNumber().toString();
     error.style.display = 'none';
   } else {
     var errorCode = phoneInput.getValidationError();
@@ -41296,6 +41340,9 @@ input.addEventListener('change', function () {
     error.innerHTML = errorMap[errorCode];
   }
 });
+function getNumber() {
+  return phoneInput.getNumber().toString();
+}
 
 /***/ }),
 

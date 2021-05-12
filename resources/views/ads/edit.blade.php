@@ -2,7 +2,13 @@
 
 @section('content')
     <!-- Google Maps -->
-    <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_maps')}}"></script>
+    <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_api_key')}}"></script>
+    <script>
+        const phoneNumber ='{{ $ad->phone_number }}';
+        const lat = {{ $ad->latitude }};
+        const lng = {{ $ad->longitude }};
+        const isEdit = true;
+    </script>
     <form class="create-ad-from" id="adForm" novalidate method="post" action="{{ route('ads.store') }}" enctype="multipart/form-data">
         @csrf
         @if($errors->any())
@@ -33,7 +39,7 @@
         </div>
         <div class="form-group">
             <label for="phone">Phone</label>
-            <input type="number" class="form-control" id="phone" name="phone" required value="{{ $ad->phone_number }}">
+            <input type="tel" class="form-control" id="phone" name="phone" required>
             <div class="alert phone-error" style="display: none"></div>
             <div class="valid-feedback"/>
             <div class="invalid-feedback">
@@ -42,7 +48,7 @@
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required name="email" value="{{ $ad->email }}">
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required name="email" value="{{ $ad->user->email }}">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             <div class="valid-feedback"/>
             <div class="invalid-feedback">
@@ -51,7 +57,8 @@
         </div>
         <div class="form-group">
             <label for="endDate">End date</label>
-            <input type="date" class="form-control" id="endDate" required name="endDate" min="{{ Carbon\Carbon::today()->toDateString()}}" value="{{ $ad->end_date }}">
+            <input type="date" class="form-control" id="endDate" required name="endDate" min="{{ Carbon\Carbon::today()->toDateString()}}"
+                   value="{{ $ad->end_date->format('Y-m-d') }}">
             <div class="valid-feedback"/>
             <div class="invalid-feedback">
                 This field is required!

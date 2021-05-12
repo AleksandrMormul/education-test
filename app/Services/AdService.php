@@ -48,7 +48,7 @@ class AdService
             'title' => $request->title,
             'user_id' => Auth::id(),
             'description' => $request->description,
-            'phone_number' => $request->phone,
+            'phone_number' => $request->fullPhoneNumber,
             'end_date' => $request->endDate,
             'img_src' => $this->prepareFile($request),
             'country_code' => countryNameToISO3166($request->country, Lang::getLocale()),
