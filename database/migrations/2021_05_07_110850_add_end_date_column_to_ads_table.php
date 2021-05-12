@@ -14,7 +14,7 @@ class AddEndDateColumnToAdsTable extends Migration
     public function up()
     {
         Schema::table('ads', function (Blueprint $table) {
-            $table->string('end_date')->after('img_src');
+            $table->date('end_date')->after('img_src');
         });
     }
 
