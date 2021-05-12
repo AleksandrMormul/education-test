@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Lang;
  * @property mixed|null $longitude
  * @property string $country_code
  * @property string|null $img_src
- * @property string $end_date
+ * @property \Illuminate\Support\Carbon $end_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read string $full_name_country
@@ -68,6 +68,7 @@ class Ad extends Model
         'user_id' => 'integer',
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
+        'end_date' => 'date'
     ];
 
     /**
