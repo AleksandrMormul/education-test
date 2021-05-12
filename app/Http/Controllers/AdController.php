@@ -34,6 +34,8 @@ class AdController extends Controller
     public function __construct(AdService $service)
     {
         $this->adService = $service;
+
+        $this->authorizeResource(Ad::class, 'ad');
     }
 
     /**
