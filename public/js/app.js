@@ -41262,7 +41262,8 @@ window.onload = function () {
       markers.push(_marker2);
     }
   });
-  document.getElementById('btnSubmit').addEventListener('click', function () {
+
+  function prepareData() {
     var formElement = document.getElementById("adForm");
     var formData = new FormData(formElement);
     var request = new XMLHttpRequest();
@@ -41284,6 +41285,16 @@ window.onload = function () {
     formElement.appendChild(fullPhoneNumber);
     formElement.appendChild(inputLng);
     request.send(formData);
+  }
+
+  if (typeof isEdit === 'undefined') {
+    document.getElementById('btnSubmit').addEventListener('click', function () {
+      prepareData();
+    });
+  }
+
+  document.getElementById('btnSave').addEventListener('click', function () {
+    prepareData();
   });
 };
 
@@ -41308,20 +41319,8 @@ var phoneInput = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(input, {
   hiddenInput: "full_number",
   utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/utils.js'
 });
-/*input.addEventListener("change", resetIntlTelInput);
-
-function resetIntlTelInput() {
-    console.log('adsasasd')
-    if (typeof intlTelInputUtils !== 'undefined') { // utils are lazy loaded, so must check
-        let currentText = phoneInput.getNumber(intlTelInputUtils.numberFormat.E164);
-        if (typeof currentText === 'string') { // sometimes the currentText is an object :)
-            phoneInput.setNumber(currentText); // will autoformat because of formatOnDisplay=true
-        }
-    }
-}*/
 
 if (typeof isEdit !== 'undefined') {
-  console.log(phoneNumber);
   phoneInput.setNumber(phoneNumber);
 }
 
@@ -41329,9 +41328,7 @@ var errorMap = ['Invalid number', 'Invalid country code', 'Too short', 'Too long
 var error = document.querySelector('.phone-error');
 error.style.display = 'none';
 input.addEventListener('change', function () {
-  //console.log(phoneInput.getNumber())
   if (phoneInput.isValidNumber()) {
-    //input.value = phoneInput.getNumber().toString();
     error.style.display = 'none';
   } else {
     var errorCode = phoneInput.getValidationError();

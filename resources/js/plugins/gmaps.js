@@ -42,7 +42,7 @@ window.onload = function () {
         }
     });
 
-    document.getElementById('btnSubmit').addEventListener('click',function() {
+    function prepareData() {
         const formElement = document.getElementById("adForm");
         const formData = new FormData(formElement);
         const request = new XMLHttpRequest();
@@ -65,6 +65,15 @@ window.onload = function () {
         formElement.appendChild(fullPhoneNumber)
         formElement.appendChild(inputLng)
         request.send(formData);
+    }
+
+    if(typeof isEdit === 'undefined') {
+        document.getElementById('btnSubmit').addEventListener('click', function () {
+            prepareData();
+        });
+    }
+    document.getElementById('btnSave').addEventListener('click',function() {
+        prepareData();
     });
 }
 

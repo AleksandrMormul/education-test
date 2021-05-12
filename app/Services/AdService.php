@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Requests\CreateAdRequest;
 use App\Models\Ad;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -97,5 +98,27 @@ class AdService
     {
         $userId = Auth::id();
         Storage::disk(Config::get('filesystems.default'))->putFileAs('/public/' . $userId, $file, $fileName);
+    }
+
+    /**
+     * @param CreateAdRequest $request
+     * @return mixed
+     */
+    public function updateAd(Request $request, $id)
+    {
+        include(app_path('/Common/convertCountry.php'));
+        $coordination = $this->prepareCoordination($request);
+        $ad = Ad::where('id', '=', $id);
+        $ad->update([
+            'title' => $request->title,
+            'user_id' => Auth::id(),
+            'description' => $request->description,
+            'phone_number' => $request->full_number,
+            'end_date' => $request->endDate,
+            'img_src' => $request->adFile ? $this->prepareFile($request) : $ad->first()->img_src,
+            'country_code' => countryNameToISO3166($request->country, Lang::getLocale()),
+            'latitude' => $coordination['lat'],
+            'longitude' => $coordination['lng'],
+        ]);
     }
 }

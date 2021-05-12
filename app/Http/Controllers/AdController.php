@@ -107,7 +107,8 @@ class AdController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->adService->updateAd($request, $id);
+        return redirect(route('ads.show', $id));
     }
 
     /**

@@ -9,7 +9,8 @@
         const lng = {{ $ad->longitude }};
         const isEdit = true;
     </script>
-    <form class="create-ad-from" id="adForm" novalidate method="post" action="{{ route('ads.store') }}" enctype="multipart/form-data">
+    <form class="create-ad-from" id="adForm" novalidate method="post" action="{{ route('ads.update', $ad->id) }}" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="put" />
         @csrf
         @if($errors->any())
             <div class="alert alert-danger">
@@ -74,9 +75,10 @@
         </div>
         <div class="form-group">
             <label for="adFile">Select files for ad</label>
-            <input type="file" class="form-control-file" id="adFile" name="adFile" value="{{ $ad->img_src }}">
+            <input type="file" class="form-control-file" id="adFile" name="adFile"
+                   value="{{  Storage::url($ad->img_src) }}">
         </div>
         <div class="gmap" id="map"></div>
-        <button type="submit"  id="btnSubmit" class="btn btn-primary">Submit</button>
+        <button type="submit"  id="btnSave" class="btn btn-primary">Save</button>
     </form>
 @endsection
