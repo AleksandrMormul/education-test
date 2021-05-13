@@ -7,6 +7,9 @@
         </svg>
         <a href="{{ url()->previous() }}">Back</a>
     </button>
+    @can('update', $ad)
+     <a href="{{ route('ads.edit', $ad->id) }}" class="btn btn-link btn-edit-ad">Edit</a>
+    @endcan
 
     <div class="container-fluid">
         <h2>{{ $ad->title }}</h2>

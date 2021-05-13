@@ -8,7 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * Class CreateAdRequest
  * @property string title
  * @property string description
- * @property string phone
+ * @property string fullPhoneNumber
  * @property string email
  * @property string endDate
  * @property string country
@@ -39,7 +39,7 @@ class CreateAdRequest extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string|max:1000',
-            'phone' => 'required|string',
+            'fullPhoneNumber' => 'required|string',
             'email' => 'required|email:rfc,dns',
             'endDate' => 'required|string',
             'country' => 'required|string',

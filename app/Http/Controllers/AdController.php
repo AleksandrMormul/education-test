@@ -34,6 +34,8 @@ class AdController extends Controller
     public function __construct(AdService $service)
     {
         $this->adService = $service;
+
+        $this->authorizeResource(Ad::class, 'ad');
     }
 
     /**
@@ -90,24 +92,26 @@ class AdController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return Response
+     * @param Ad  $ad
+     * @return Renderable
      */
-    public function edit($id)
+    public function edit(Ad $ad): Renderable
     {
-        //
+        return view('ads.edit', ['ad' => $ad]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
+     * @param CreateAdRequest $request
+     * @param Ad $ad
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateAdRequest $request, Ad $ad)
     {
-        //
+        $adId = $ad->id;
+        $this->adService->updateAd($request, $adId);
+        return redirect(route('ads.show', $adId));
     }
 
     /**
