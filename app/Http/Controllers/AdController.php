@@ -103,14 +103,15 @@ class AdController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
+     * @param CreateAdRequest $request
+     * @param Ad $ad
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateAdRequest $request, Ad $ad)
     {
-        $this->adService->updateAd($request, $id);
-        return redirect(route('ads.show', $id));
+        $adId = $ad->id;
+        $this->adService->updateAd($request, $adId);
+        return redirect(route('ads.show', $adId));
     }
 
     /**

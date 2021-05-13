@@ -102,9 +102,10 @@ class AdService
 
     /**
      * @param CreateAdRequest $request
+     * @param int $id
      * @return mixed
      */
-    public function updateAd(Request $request, $id)
+    public function updateAd(CreateAdRequest $request, int $id)
     {
         include(app_path('/Common/convertCountry.php'));
         $coordination = $this->prepareCoordination($request);
