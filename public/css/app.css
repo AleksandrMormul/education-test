@@ -11874,6 +11874,13 @@ a.text-dark:focus {
   padding-bottom: 10px;
 }
 
+.btn-edit-ad {
+  position: absolute;
+  right: 0;
+  font-size: 30px;
+  margin-right: 25px;
+}
+
 .card {
   height: 100%;
 }
