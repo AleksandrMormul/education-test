@@ -27,7 +27,7 @@ class UsersTableSeeder extends Seeder
                     'email' => self::ADMIN_USER_EMAIL,
                     'password' => Hash::make(self::ADMIN_USER_PASSWORD)
                 ]
-            )->assignRole('admin');
+            );
             factory(User::class, 2)->create();
         }
     }
