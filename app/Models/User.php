@@ -93,7 +93,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-       $this->checkRole(self::ROLE_ADMIN);
+        return $this->checkRole(self::ROLE_ADMIN);
     }
 
     /**
@@ -101,7 +101,7 @@ class User extends Authenticatable
      */
     public function isAuthor(): bool
     {
-        $this->checkRole(self::ROLE_AUTHOR);
+        return $this->checkRole(self::ROLE_AUTHOR);
     }
 
     /**

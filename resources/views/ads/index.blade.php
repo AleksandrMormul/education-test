@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="{{ route("ads.create") }}" class="btn btn-primary create-ad-btn">Create Ad</a>
+    @can('create', \App\Models\Ad::class)
+        <a href="{{ route("ads.create") }}" class="btn btn-primary create-ad-btn">Create Ad</a>
+    @endcan
         <div class="container">
             <div class="row">
                 @foreach ($ads as $ad)
