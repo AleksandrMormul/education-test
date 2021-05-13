@@ -40,5 +40,8 @@
                     </div>
             </div>
         </div>
+        @can('delete', $ad)
+            <a href="{{ route('ads.destroy', $ad->id) }}" class="btn btn-delete-ad">Delete</a>
+        @endcan
     </div>
 @endsection

@@ -11874,6 +11874,25 @@ a.text-dark:focus {
   padding-bottom: 10px;
 }
 
+.btn-edit-ad {
+  position: absolute;
+  right: 0;
+  font-size: 30px;
+  margin-right: 25px;
+}
+
+.btn-delete-ad {
+  color: #ae1c17;
+  position: absolute;
+  right: 0;
+  font-size: 30px;
+  margin-right: 25px;
+}
+
+.btn-delete-ad:hover {
+  color: #e3342f;
+}
+
 .card {
   height: 100%;
 }
