@@ -13,7 +13,7 @@ class AdPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  User  $user
+     * @param User $user
      * @return bool
      */
     public function viewAny(User $user)
@@ -24,8 +24,8 @@ class AdPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param  User  $user
-     * @param  Ad  $ad
+     * @param User $user
+     * @param Ad $ad
      * @return mixed
      */
     public function view(User $user, Ad $ad)
@@ -36,24 +36,25 @@ class AdPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  User  $user
+     * @param User $user
      * @return mixed
      */
     public function create(User $user)
     {
-        return true;
+        if ($user->isAdmin() || $user->isAuthor()) {
+            return true;
+        }
     }
 
     /**
      * Determine whether the user can update the model.
      *
-     * @param User  $user
-     * @param  Ad  $ad
+     * @param User $user
+     * @param Ad $ad
      * @return mixed
      */
     public function update(User $user, Ad $ad)
     {
         return $user->id === $ad->user_id;
     }
-
 }
