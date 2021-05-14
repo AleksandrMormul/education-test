@@ -34,8 +34,6 @@ class AdController extends Controller
     public function __construct(AdService $service)
     {
         $this->adService = $service;
-
-        $this->authorizeResource(Ad::class, 'ad');
     }
 
     /**
@@ -61,6 +59,7 @@ class AdController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Ad::class);
         return view('ads/create');
     }
 
@@ -72,6 +71,7 @@ class AdController extends Controller
      */
     public function store(CreateAdRequest $request)
     {
+        $this->authorize('store', Ad::class);
         $adId = $this->adService->createAd($request);
 
         return redirect(route('ads.show', $adId));
@@ -97,6 +97,7 @@ class AdController extends Controller
      */
     public function edit(Ad $ad): Renderable
     {
+        $this->authorize('edit', Ad::class);
         return view('ads.edit', ['ad' => $ad]);
     }
 
@@ -109,6 +110,7 @@ class AdController extends Controller
      */
     public function update(CreateAdRequest $request, Ad $ad)
     {
+        $this->authorize('update', Ad::class);
         $adId = $ad->id;
         $this->adService->updateAd($request, $adId);
         return redirect(route('ads.show', $adId));
