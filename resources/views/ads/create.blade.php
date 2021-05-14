@@ -72,7 +72,7 @@
                 @error('country')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <div class="valid-feedback"/>
+                <div class="valid-feedback"></div>
                 <div class="invalid-feedback">
                     This field is required!
                 </div>
