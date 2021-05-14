@@ -7,6 +7,7 @@ use App\Http\Requests\Ad\GetAdRequest;
 use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
+use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -45,10 +46,11 @@ class AdController extends Controller
     public function index()
     {
         $query = $this->adService->getAds();
+        $now = Carbon::now()->addDay()->toDateString();
         return view(
             'ads/index',
             [
-                'ads' => $query->paginate(15)
+                'ads' => $query->where('end_date', '>=', $now)->paginate(15),
             ]
         );
     }
@@ -71,7 +73,6 @@ class AdController extends Controller
      */
     public function store(StoreAdRequest $request)
     {
-
         $adId = $this->adService->createAd($request->prepareRequest());
 
         return redirect(route('ads.show', $adId));
