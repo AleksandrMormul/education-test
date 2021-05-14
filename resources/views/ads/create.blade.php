@@ -3,6 +3,8 @@
 @section('content')
     <!-- Google Maps -->
     <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_api_key')}}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <div>
         <form class="create-ad-from" id="adForm" novalidate method="post" action="{{ route('ads.store') }}"
               enctype="multipart/form-data">
@@ -47,7 +49,11 @@
             </div>
             <div class="form-group">
                 <label for="country">Country</label>
-                <input type="text" name="country" class="@error('country') is-invalid @enderror form-control" required>
+                <select type="text" name="country" class="@error('country') is-invalid @enderror form-control" required>
+                    @foreach( $countries as $country)
+                        <option>{{ $country }}</option>
+                    @endforeach
+                </select>
                 @error('country')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

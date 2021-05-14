@@ -3,6 +3,8 @@
 @section('content')
     <!-- Google Maps -->
     <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_api_key')}}"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         const phoneNumber ='{{ $ad->phone_number }}';
         const lat = {{ $ad->latitude }};
@@ -51,7 +53,13 @@
         </div>
         <div class="form-group">
             <label for="country">Country</label>
-            <input type="text" name="country" class="@error('country') is-invalid @enderror form-control" required value="{{ $ad->full_name_country }}">
+            <select type="text" id="adSelectCountry" name="country" class="@error('country') is-invalid @enderror form-control" required  value="{{ $ad->full_name_country }}">
+            @foreach( $countries as $country)
+                <option>{{ $country }}</option>
+            @endforeach
+                <script>
+                    $('#adSelectCountry').val(@json($ad->full_name_country));
+                </script>
             @error('country')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror

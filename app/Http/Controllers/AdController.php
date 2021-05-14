@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Ad\StoreAdRequest;
 use App\Http\Requests\Ad\GetAdRequest;
+use App\Http\Requests\Ad\StoreAdRequest;
 use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
+use App\Services\CountryService;
 use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 /**
  * Class AdController
@@ -41,7 +43,7 @@ class AdController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function index()
     {
@@ -62,7 +64,8 @@ class AdController extends Controller
      */
     public function create()
     {
-        return view('ads/create');
+        $counties = CountryService::getAllCountry();
+        return view('ads/create', ['countries' => $counties]);
     }
 
     /**
@@ -82,7 +85,7 @@ class AdController extends Controller
      * Display the specified resource.
      *
      * @param GetAdRequest $request
-     * @param  Ad  $ad
+     * @param Ad $ad
      * @return Renderable
      */
     public function show(GetAdRequest $request, Ad $ad)
@@ -98,7 +101,11 @@ class AdController extends Controller
      */
     public function edit(Ad $ad): Renderable
     {
-        return view('ads.edit', ['ad' => $ad]);
+        $counties = CountryService::getAllCountry();
+        return view('ads.edit', [
+            'ad' => $ad,
+            'countries' => $counties,
+        ]);
     }
 
     /**
