@@ -17,9 +17,9 @@
 }
 .iti {
     width: 100%;
-}
-.iti__flag {
-    background-image: url("../images/flags/flags.png");
+    &__flag {
+        background-image: url("../images/flags/flags.png");
+    }
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
