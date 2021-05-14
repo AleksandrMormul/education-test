@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CreateAdRequest;
+use App\Http\Requests\Ad\StoreAdRequest;
 use App\Models\Ad;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
@@ -40,9 +39,9 @@ class AdService
     }
 
     /**
-     * @param CreateAdRequest $request
+     * @param StoreAdRequest $request
      */
-    public function createAd(CreateAdRequest $request)
+    public function createAd(StoreAdRequest $request)
     {
         $coordination = $this->prepareCoordination($request);
         $ad = Ad::create([
@@ -101,11 +100,11 @@ class AdService
     }
 
     /**
-     * @param CreateAdRequest $request
+     * @param StoreAdRequest $request
      * @param int $id
      * @return mixed
      */
-    public function updateAd(CreateAdRequest $request, int $id)
+    public function updateAd(StoreAdRequest $request, int $id)
     {
         include(app_path('/Common/convertCountry.php'));
         $coordination = $this->prepareCoordination($request);
@@ -117,7 +116,7 @@ class AdService
             'phone_number' => $request->full_number,
             'end_date' => $request->endDate,
             'img_src' => $request->adFile ? $this->prepareFile($request) : $ad->first()->img_src,
-            'country_code' => countryNameToISO3166($request->country, Lang::getLocale()),
+            'country_code' => Countries::where('name.common', $request->country)->first()->iso_3166_1_alpha2,
             'latitude' => $coordination['lat'],
             'longitude' => $coordination['lng'],
         ]);

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateAdRequest;
-use App\Http\Requests\GetAdRequest;
+use App\Http\Requests\Ad\StoreAdRequest;
+use App\Http\Requests\Ad\GetAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 
@@ -66,10 +65,10 @@ class AdController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param CreateAdRequest $request
+     * @param StoreAdRequest $request
      * @return Application|RedirectResponse|Redirector
      */
-    public function store(CreateAdRequest $request)
+    public function store(StoreAdRequest $request)
     {
         $this->authorize('store', Ad::class);
         $adId = $this->adService->createAd($request);
@@ -104,11 +103,11 @@ class AdController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param CreateAdRequest $request
+     * @param StoreAdRequest $request
      * @param Ad $ad
      * @return Response
      */
-    public function update(CreateAdRequest $request, Ad $ad)
+    public function update(StoreAdRequest $request, Ad $ad)
     {
         $this->authorize('update', Ad::class);
         $adId = $ad->id;

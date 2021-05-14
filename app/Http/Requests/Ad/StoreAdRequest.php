@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Ad;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class CreateAdRequest
+ * Class StoreAdRequest
  * @property string title
  * @property string description
  * @property string fullPhoneNumber
@@ -15,9 +15,9 @@ use Illuminate\Foundation\Http\FormRequest;
  * @property \File adFile
  * @property numeric lat
  * @property numeric lng
- * @package App\Http\Requests
+ * @package App\Http\Requests\Ad
  */
-class CreateAdRequest extends FormRequest
+class StoreAdRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
