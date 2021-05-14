@@ -13,10 +13,6 @@
                 @error('title')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <div class="valid-feedback"/>
-                <div class="invalid-feedback">
-                    This field is required!
-                </div>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
@@ -24,10 +20,6 @@
                 @error('description')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <div class="valid-feedback"/>
-                <div class="invalid-feedback">
-                    This field is required! Minimum length 100
-                </div>
             </div>
             <div class="form-group">
                 <label for="phone">Phone</label>
@@ -36,10 +28,7 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 <div class="alert phone-error" style="display: none"></div>
-                <div class="valid-feedback"/>
-                <div class="invalid-feedback">
-                    This field is required!
-                </div>
+
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
@@ -47,12 +36,6 @@
                 @error('email')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <small id="adEmailHelp" class="form-text text-muted">We'll never share your email with anyone
-                    else.</small>
-                <div class="valid-feedback"/>
-                <div class="invalid-feedback">
-                    This field is required!
-                </div>
             </div>
             <div class="form-group">
                 <label for="endDate">End date</label>
@@ -61,10 +44,6 @@
                 @error('endDate')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <div class="valid-feedback"/>
-                <div class="invalid-feedback">
-                    This field is required!
-                </div>
             </div>
             <div class="form-group">
                 <label for="country">Country</label>
@@ -72,10 +51,6 @@
                 @error('country')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
-                <div class="valid-feedback"></div>
-                <div class="invalid-feedback">
-                    This field is required!
-                </div>
             </div>
             <div class="form-group">
                 <label for="adFile">Select files for ad</label>
