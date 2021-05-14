@@ -1,5 +1,5 @@
 import GMaps from 'gmaps';
-import getNumber from './phoneMask';
+import prepareData  from './prepareData';
 
     let markers = [];
     let map;
@@ -42,39 +42,14 @@ import getNumber from './phoneMask';
         }
     });
 
-    function prepareData() {
-        const formElement = document.getElementById("adForm");
-        const formData = new FormData(formElement);
-        const request = new XMLHttpRequest();
-        const coord = markers[0].getPosition();
-        const fullPhoneNumber = document.createElement("input");
-        fullPhoneNumber.type = "hidden";
-        fullPhoneNumber.name = "fullPhoneNumber";
-        fullPhoneNumber.value = getNumber();
-        const inputLat = document.createElement("input");
-        inputLat.type = "hidden";
-        inputLat.name = "lat";
-        inputLat.value = coord.lat();
-        const inputLng = document.createElement("input");
-        inputLng.type = "hidden";
-        inputLng.name = "lng";
-        inputLng.value = coord.lng();
-
-        request.open("POST", "{!! route('ads.store') !!}");
-        formElement.appendChild(inputLat)
-        formElement.appendChild(fullPhoneNumber)
-        formElement.appendChild(inputLng)
-        request.send(formData);
-    }
-
-    if(typeof isEdit === 'undefined') {
-        document.getElementById('adBtnSubmit').addEventListener('click', function () {
-            prepareData();
-        });
-    }
-    document.getElementById('adBtnSave').addEventListener('click',function() {
-        prepareData();
+$(document).ready(function() {
+    $("#adBtnSubmit").click(function(){
+        prepareData(markers);
     });
+    $("#adBtnSave").click(function(){
+        prepareData(markers);
+    });
+});
 
 
 
