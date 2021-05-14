@@ -2,16 +2,18 @@
 
 @import "~intl-tel-input/build/css/intlTelInput.css";
 
-.create-ad-btn {
-    position: absolute;
-    right: 0;
-    margin-right: 25px;
+.create-ad {
+    &-btn {
+        position: absolute;
+        right: 0;
+        margin-right: 25px;
+    }
+    &-from {
+        margin-left: 25px;
+    }
 }
 .form-control {
     width: 50%;
-}
-.create-ad-from {
-    margin-left: 25px;
 }
 .iti {
     width: 100%;

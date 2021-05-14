@@ -11876,12 +11876,12 @@ a.text-dark:focus {
   margin-right: 25px;
 }
 
-.form-control {
-  width: 50%;
-}
-
 .create-ad-from {
   margin-left: 25px;
+}
+
+.form-control {
+  width: 50%;
 }
 
 .iti {
