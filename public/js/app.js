@@ -41288,12 +41288,12 @@ window.onload = function () {
   }
 
   if (typeof isEdit === 'undefined') {
-    document.getElementById('btnSubmit').addEventListener('click', function () {
+    document.getElementById('adBtnSubmit').addEventListener('click', function () {
       prepareData();
     });
   }
 
-  document.getElementById('btnSave').addEventListener('click', function () {
+  document.getElementById('adBtnSave').addEventListener('click', function () {
     prepareData();
   });
 };
@@ -41313,7 +41313,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-tel-input */ "./node_modules/intl-tel-input/index.js");
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_tel_input__WEBPACK_IMPORTED_MODULE_0__);
 
-var input = document.getElementById('phone');
+var input = document.getElementById('adPhone');
 var phoneInput = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(input, {
   formatOnDisplay: true,
   hiddenInput: "fullPhoneNumber",

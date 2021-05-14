@@ -68,11 +68,11 @@ window.onload = function () {
     }
 
     if(typeof isEdit === 'undefined') {
-        document.getElementById('btnSubmit').addEventListener('click', function () {
+        document.getElementById('adBtnSubmit').addEventListener('click', function () {
             prepareData();
         });
     }
-    document.getElementById('btnSave').addEventListener('click',function() {
+    document.getElementById('adBtnSave').addEventListener('click',function() {
         prepareData();
     });
 }

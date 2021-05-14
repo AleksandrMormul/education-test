@@ -40,7 +40,7 @@
         </div>
         <div class="form-group">
             <label for="phone">Phone</label>
-            <input type="tel" class="form-control" id="phone" name="phone" required>
+            <input type="tel" class="form-control" id="adPhone" name="phone" required>
             <div class="alert phone-error" style="display: none"></div>
             <div class="valid-feedback"/>
             <div class="invalid-feedback">
@@ -49,8 +49,8 @@
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required name="email" value="{{ $ad->user->email }}">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <input type="email" class="form-control" id="adEmail" aria-describedby="emailHelp" required name="email" value="{{ $ad->user->email }}">
+            <small id="adEmailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             <div class="valid-feedback"/>
             <div class="invalid-feedback">
                 This field is required!
@@ -58,7 +58,7 @@
         </div>
         <div class="form-group">
             <label for="endDate">End date</label>
-            <input type="date" class="form-control" id="endDate" required name="endDate" min="{{ Carbon\Carbon::today()->toDateString()}}"
+            <input type="date" class="form-control" id="adEndDate" required name="endDate" min="{{ Carbon\Carbon::today()->toDateString()}}"
                    value="{{ $ad->end_date->format('Y-m-d') }}">
             <div class="valid-feedback"/>
             <div class="invalid-feedback">
@@ -78,7 +78,7 @@
             <input type="file" class="form-control-file" id="adFile" name="adFile"
                    value="{{  Storage::url($ad->img_src) }}">
         </div>
-        <div class="gmap" id="map"></div>
-        <button type="submit"  id="btnSave" class="btn btn-primary">Save</button>
+        <div class="gmap" id="adMap"></div>
+        <button type="submit"  id="adBtnSave" class="btn btn-primary">Save</button>
     </form>
 @endsection
