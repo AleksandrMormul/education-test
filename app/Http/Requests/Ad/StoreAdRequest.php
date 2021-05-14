@@ -42,7 +42,7 @@ class StoreAdRequest extends FormRequest
             'title' => 'required|string',
             'description' => 'required|string|max:1000',
             'fullPhoneNumber' => 'required|string',
-            'email' => 'required|email:rfc,dns',
+            'email' => 'required|email:rfc',
             'endDate' => 'required|string',
             'country' => 'required|string',
             'lat' => 'numeric|nullable',
