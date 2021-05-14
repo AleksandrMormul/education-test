@@ -19,8 +19,8 @@ window.onload = function () {
        map = new GMaps({
             div: '#map',
             zoom: 5,
-            lat: -12.043333,
-            lng: -77.028333,
+            lat: 50.431759,
+            lng: 30.517023,
         });
     }
     map.addListener('click', function(e) {

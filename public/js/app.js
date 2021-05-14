@@ -41235,8 +41235,8 @@ window.onload = function () {
     map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
       div: '#map',
       zoom: 5,
-      lat: -12.043333,
-      lng: -77.028333
+      lat: 50.431759,
+      lng: 30.517023
     });
   }
 
