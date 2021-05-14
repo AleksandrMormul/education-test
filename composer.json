@@ -15,7 +15,8 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
-        "monarobase/country-list": "^3.2"
+        "monarobase/country-list": "^3.2",
+        "pragmarx/countries": "^0.7.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",

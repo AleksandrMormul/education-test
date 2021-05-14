@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
+use PragmaRX\Countries\Package\Countries;
 
 /**
  * AdService
@@ -43,7 +44,6 @@ class AdService
      */
     public function createAd(CreateAdRequest $request)
     {
-        include(app_path('/Common/convertCountry.php'));
         $coordination = $this->prepareCoordination($request);
         $ad = Ad::create([
             'title' => $request->title,
@@ -52,7 +52,7 @@ class AdService
             'phone_number' => $request->fullPhoneNumber,
             'end_date' => $request->endDate,
             'img_src' => $this->prepareFile($request),
-            'country_code' => countryNameToISO3166($request->country, Lang::getLocale()),
+            'country_code' => Countries::where('name.common', $request->country)->first()->iso_3166_1_alpha2,
             'latitude' => $coordination['lat'],
             'longitude' => $coordination['lng'],
         ]);

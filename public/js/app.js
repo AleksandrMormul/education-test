@@ -41316,7 +41316,7 @@ __webpack_require__.r(__webpack_exports__);
 var input = document.getElementById('phone');
 var phoneInput = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(input, {
   formatOnDisplay: true,
-  hiddenInput: "full_number",
+  hiddenInput: "fullPhoneNumber",
   utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/utils.js'
 });
 
