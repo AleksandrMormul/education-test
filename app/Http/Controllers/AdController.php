@@ -70,8 +70,9 @@ class AdController extends Controller
      */
     public function store(StoreAdRequest $request)
     {
-        $this->authorize('store', Ad::class);
-        $adId = $this->adService->createAd($request);
+        $this->authorize('create', Ad::class);
+
+        $adId = $this->adService->createAd($request->prepareRequest());
 
         return redirect(route('ads.show', $adId));
     }
@@ -96,7 +97,7 @@ class AdController extends Controller
      */
     public function edit(Ad $ad): Renderable
     {
-        $this->authorize('edit', Ad::class);
+        $this->authorize('update', Ad::class);
         return view('ads.edit', ['ad' => $ad]);
     }
 

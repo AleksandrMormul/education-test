@@ -8,7 +8,6 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 use PragmaRX\Countries\Package\Countries;
 
@@ -39,22 +38,17 @@ class AdService
     }
 
     /**
-     * @param StoreAdRequest $request
+     * @param array $storeData
+     * @return int|mixed
      */
-    public function createAd(StoreAdRequest $request)
+    public function createAd(array $storeData)
     {
-        $coordination = $this->prepareCoordination($request);
-        $ad = Ad::create([
-            'title' => $request->title,
-            'user_id' => Auth::id(),
-            'description' => $request->description,
-            'phone_number' => $request->fullPhoneNumber,
-            'end_date' => $request->endDate,
-            'img_src' => $this->prepareFile($request),
-            'country_code' => Countries::where('name.common', $request->country)->first()->iso_3166_1_alpha2,
-            'latitude' => $coordination['lat'],
-            'longitude' => $coordination['lng'],
-        ]);
+        if (isset($storeData['img_src'])) {
+            $fileName = $this->prepareFile($storeData['img_src']);
+            $storeData['img_src'] = $fileName;
+            $storeData['user_id'] = Auth::id();
+        }
+        $ad = Ad::create($storeData);
         return $ad->id;
     }
 
@@ -63,29 +57,24 @@ class AdService
      * @return array|null[]
      */
     private function prepareCoordination($request): array
-    {
-        $latitude = null;
-        $longitude = null;
-        if ($request->lat && $request->lng) {
-            $longitude = $request->lng;
-            $latitude = $request->lat;
-        }
-        return ['lat' => $latitude, 'lng' => $longitude];
-    }
+     {
+         $latitude = null;
+         $longitude = null;
+         if ($request->lat && $request->lng) {
+             $longitude = $request->lng;
+             $latitude = $request->lat;
+         }
+         return ['lat' => $latitude, 'lng' => $longitude];
+     }
 
     /**
-     * @param $request
+     * @param $file
      * @return string|null
      */
-    private function prepareFile($request): ?string
+    private function prepareFile($file): ?string
     {
-        $fileName = null;
-        if ($request->adFile) {
-            $file = $request->adFile;
-            $fileName = $file->getClientOriginalName();
-            $this->saveFile($file, $fileName);
-        }
-
+        $fileName = $file->getClientOriginalName();
+        $this->saveFile($file, $fileName);
         return $fileName;
     }
 
@@ -113,7 +102,7 @@ class AdService
             'title' => $request->title,
             'user_id' => Auth::id(),
             'description' => $request->description,
-            'phone_number' => $request->full_number,
+            'phone_number' => $request->fullPhoneNumber,
             'end_date' => $request->endDate,
             'img_src' => $request->adFile ? $this->prepareFile($request) : $ad->first()->img_src,
             'country_code' => Countries::where('name.common', $request->country)->first()->iso_3166_1_alpha2,
