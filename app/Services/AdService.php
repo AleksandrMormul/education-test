@@ -122,4 +122,14 @@ class AdService
             'longitude' => $coordination['lng'],
         ]);
     }
+
+    /**
+     * @param int $adId
+     * @return int
+     */
+    public function deleteAd(int $adId): int
+    {
+        //TODO
+        return Ad::destroy($adId);
+    }
 }

@@ -40,8 +40,26 @@
                     </div>
             </div>
         </div>
+            <form method="POST" id="delete-ad" action="{{ route('ads.destroy', $ad->id) }}">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="DELETE">
+            </form>
         @can('delete', $ad)
-            <a href="{{ route('ads.destroy', $ad->id) }}" class="btn btn-delete-ad">Delete</a>
+            <button onclick="confirmDelete()" class="btn btn-delete-ad">Delete</button>
         @endcan
     </div>
+@endsection
+
+@section('footer-js')
+{{--    <script>--}}
+{{--        function confirmDelete()--}}
+{{--        {--}}
+{{--            const result = confirm('Are you sure you want to delete this ad?');--}}
+{{--            console.log('sdfs')--}}
+{{--            if(result){--}}
+{{--                event.preventDefault();--}}
+{{--                document.getElementById('delete-ad').submit();--}}
+{{--            }--}}
+{{--        }--}}
+{{--    </script>--}}
 @endsection

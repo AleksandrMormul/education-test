@@ -41153,6 +41153,8 @@ __webpack_require__(/*! ./plugins/gmaps */ "./resources/js/plugins/gmaps.js");
 
 __webpack_require__(/*! ./plugins/validator */ "./resources/js/plugins/validator.js");
 
+__webpack_require__(/*! ./plugins/deleteValidation */ "./resources/js/plugins/deleteValidation.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -41197,6 +41199,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/plugins/deleteValidation.js":
+/*!**************************************************!*\
+  !*** ./resources/js/plugins/deleteValidation.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function confirmDelete() {
+  var result = confirm('Are you sure you want to delete this ad?');
+  console.log('sdfs');
+
+  if (result) {
+    event.preventDefault();
+    document.getElementById('delete-ad').submit();
+  }
+}
+
+window.confirmDelete = confirmDelete();
 
 /***/ }),
 

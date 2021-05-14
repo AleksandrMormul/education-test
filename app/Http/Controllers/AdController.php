@@ -117,11 +117,14 @@ class AdController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param Ad $ad
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Ad $ad)
     {
-        //
+        //dd(1);
+        //TODO
+        $this->adService->deleteAd($ad->id);
+        return redirect(route('ads.index'));
     }
 }
