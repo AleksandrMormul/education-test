@@ -7,19 +7,12 @@
         <form class="create-ad-from" id="adForm" novalidate method="post" action="{{ route('ads.store') }}"
               enctype="multipart/form-data">
             @csrf
-            @if($errors->any())
-                <div class="alert alert-danger">
-                    <p><strong>Opps Something went wrong</strong></p>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" name="title" class="form-control" required>
+                <input type="text" name="title" class="@error('title') is-invalid @enderror form-control" required>
+                @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <div class="valid-feedback"/>
                 <div class="invalid-feedback">
                     This field is required!
@@ -27,7 +20,10 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="form-control" rows="3" required name="description" minlength="100"></textarea>
+                <textarea class="@error('description') is-invalid @enderror form-control" rows="3" required name="description" minlength="100"></textarea>
+                @error('description')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <div class="valid-feedback"/>
                 <div class="invalid-feedback">
                     This field is required! Minimum length 100
@@ -35,7 +31,10 @@
             </div>
             <div class="form-group">
                 <label for="phone">Phone</label>
-                <input type="number" class="form-control" id="phone" name="phone" required>
+                <input type="tel" class="@error('phone') is-invalid @enderror  form-control" id="adPhone" name="phone" required>
+                @error('phone')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <div class="alert phone-error" style="display: none"></div>
                 <div class="valid-feedback"/>
                 <div class="invalid-feedback">
@@ -44,8 +43,11 @@
             </div>
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" required name="email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                <input type="email" class="@error('email') is-invalid @enderror form-control" id="adEmail" aria-describedby="emailHelp" required name="email">
+                @error('email')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                <small id="adEmailHelp" class="form-text text-muted">We'll never share your email with anyone
                     else.</small>
                 <div class="valid-feedback"/>
                 <div class="invalid-feedback">
@@ -54,8 +56,11 @@
             </div>
             <div class="form-group">
                 <label for="endDate">End date</label>
-                <input type="date" class="form-control" id="endDate" required name="endDate"
+                <input type="date" class="@error('endDate') is-invalid @enderror form-control" id="adEndDate" required name="endDate"
                        min="{{ Carbon\Carbon::today()->toDateString()}}">
+                @error('endDate')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <div class="valid-feedback"/>
                 <div class="invalid-feedback">
                     This field is required!
@@ -63,7 +68,10 @@
             </div>
             <div class="form-group">
                 <label for="country">Country</label>
-                <input type="text" name="country" class="form-control" required>
+                <input type="text" name="country" class="@error('country') is-invalid @enderror form-control" required>
+                @error('country')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
                 <div class="valid-feedback"/>
                 <div class="invalid-feedback">
                     This field is required!
@@ -73,8 +81,8 @@
                 <label for="adFile">Select files for ad</label>
                 <input type="file" class="form-control-file" id="adFile" name="adFile">
             </div>
-            <div class="gmap" id="map"></div>
-            <button type="submit" id="btnSubmit" class="btn btn-primary">Submit</button>
+            <div class="gmap" id="adMap"></div>
+            <button type="submit" id="adBtnSubmit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 @endsection

@@ -1,6 +1,6 @@
 import intlTelInput from 'intl-tel-input';
 
-    const input = document.getElementById('phone');
+    const input = document.getElementById('adPhone');
     const phoneInput = intlTelInput(input, ({
         formatOnDisplay: true,
         hiddenInput: "fullPhoneNumber",
