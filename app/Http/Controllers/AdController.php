@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Ad\StoreAdRequest;
 use App\Http\Requests\Ad\GetAdRequest;
+use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
 use Illuminate\Contracts\Foundation\Application;
@@ -102,11 +103,11 @@ class AdController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param StoreAdRequest $request
      * @param Ad $ad
+     * @param UpdateAdRequest $request
      * @return Response
      */
-    public function update(Ad $ad, StoreAdRequest $request)
+    public function update(Ad $ad, UpdateAdRequest $request)
     {
         $adId = $ad->id;
         $this->adService->updateAd($request->prepareRequest(), $ad);
