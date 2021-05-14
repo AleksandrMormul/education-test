@@ -1,11 +1,11 @@
 import GMaps from 'gmaps';
 import getNumber from './phoneMask';
-window.onload = function () {
+
     let markers = [];
     let map;
     if(typeof isEdit !== 'undefined') {
         map = new GMaps({
-            div: '#map',
+            div: '#adMap',
             zoom: 5,
             lat: lat,
             lng: lng,
@@ -17,7 +17,7 @@ window.onload = function () {
         markers.push(marker);
     } else {
        map = new GMaps({
-            div: '#map',
+            div: '#adMap',
             zoom: 5,
             lat: 50.431759,
             lng: 30.517023,
@@ -75,6 +75,6 @@ window.onload = function () {
     document.getElementById('adBtnSave').addEventListener('click',function() {
         prepareData();
     });
-}
+
 
 
