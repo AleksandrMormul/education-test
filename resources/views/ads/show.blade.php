@@ -17,7 +17,7 @@
             <div class="col-12 content">
                     <div>
                         <div class="container-img-ad">
-                            <img class="ad-image" src="{{$ad->img_src ? asset('storage/'. $ad->user_id .'/'. $ad->img_src) : asset('images/temp.png') }}"
+                            <img class="ad-image" src="{{ $ad->full_image_path }}"
                                 alt="ad image">
 
                         </div>

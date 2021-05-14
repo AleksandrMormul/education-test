@@ -88,4 +88,12 @@ class Ad extends Model
     {
         return \Countries::getOne($this->country_code, Lang::getLocale());
     }
+
+    /**
+     * @return string
+     */
+    public function getFullImagePathAttribute()
+    {
+        return $this->img_src ? asset('storage/' . $this->user_id . '/' . $this->img_src) : asset('images/temp.png');
+    }
 }
