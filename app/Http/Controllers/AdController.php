@@ -33,6 +33,7 @@ class AdController extends Controller
     public function __construct(AdService $service)
     {
         $this->adService = $service;
+        $this->authorizeResource(Ad::class, 'ad');
     }
 
     /**
@@ -58,7 +59,6 @@ class AdController extends Controller
      */
     public function create()
     {
-        $this->authorize('create', Ad::class);
         return view('ads/create');
     }
 
@@ -70,7 +70,6 @@ class AdController extends Controller
      */
     public function store(StoreAdRequest $request)
     {
-        $this->authorize('create', Ad::class);
 
         $adId = $this->adService->createAd($request->prepareRequest());
 
@@ -92,12 +91,11 @@ class AdController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Ad  $ad
+     * @param Ad $ad
      * @return Renderable
      */
     public function edit(Ad $ad): Renderable
     {
-        $this->authorize('update', Ad::class);
         return view('ads.edit', ['ad' => $ad]);
     }
 
@@ -108,11 +106,10 @@ class AdController extends Controller
      * @param Ad $ad
      * @return Response
      */
-    public function update(StoreAdRequest $request, Ad $ad)
+    public function update(Ad $ad, StoreAdRequest $request)
     {
-        $this->authorize('update', Ad::class);
         $adId = $ad->id;
-        $this->adService->updateAd($request, $adId);
+        $this->adService->updateAd($request->prepareRequest(), $ad);
         return redirect(route('ads.show', $adId));
     }
 

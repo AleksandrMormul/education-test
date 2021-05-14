@@ -2,14 +2,12 @@
 
 namespace App\Services;
 
-use App\Http\Requests\Ad\StoreAdRequest;
 use App\Models\Ad;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
-use PragmaRX\Countries\Package\Countries;
 
 /**
  * AdService
@@ -53,21 +51,6 @@ class AdService
     }
 
     /**
-     * @param $request
-     * @return array|null[]
-     */
-    private function prepareCoordination($request): array
-     {
-         $latitude = null;
-         $longitude = null;
-         if ($request->lat && $request->lng) {
-             $longitude = $request->lng;
-             $latitude = $request->lat;
-         }
-         return ['lat' => $latitude, 'lng' => $longitude];
-     }
-
-    /**
      * @param $file
      * @return string|null
      */
@@ -89,25 +72,17 @@ class AdService
     }
 
     /**
-     * @param StoreAdRequest $request
-     * @param int $id
-     * @return mixed
+     * @param array $storeData
+     * @param Ad $ad
+     * @return void
      */
-    public function updateAd(StoreAdRequest $request, int $id)
+    public function updateAd(array $storeData, Ad $ad)
     {
-        include(app_path('/Common/convertCountry.php'));
-        $coordination = $this->prepareCoordination($request);
-        $ad = Ad::where('id', '=', $id);
-        $ad->update([
-            'title' => $request->title,
-            'user_id' => Auth::id(),
-            'description' => $request->description,
-            'phone_number' => $request->fullPhoneNumber,
-            'end_date' => $request->endDate,
-            'img_src' => $request->adFile ? $this->prepareFile($request) : $ad->first()->img_src,
-            'country_code' => Countries::where('name.common', $request->country)->first()->iso_3166_1_alpha2,
-            'latitude' => $coordination['lat'],
-            'longitude' => $coordination['lng'],
-        ]);
+        if (isset($storeData['img_src'])) {
+            $fileName = $this->prepareFile($storeData['img_src']);
+            $storeData['img_src'] = $fileName;
+            $storeData['user_id'] = Auth::id();
+        }
+        $ad->update($storeData);
     }
 }
