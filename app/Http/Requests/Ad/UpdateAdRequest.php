@@ -41,7 +41,7 @@ class UpdateAdRequest extends FormRequest
             'description' => 'required|string|max:1000',
             'phone_number' => 'required|string',
             'email' => 'required|email:rfc',
-            'end_date' => 'required|date|after:yesterday',
+            'end_date' => 'required|date|after_or_equal:today',
             'country_code' => 'required|string|max:2',
             'latitude' => 'required|numeric|between:-90,90',
             'longitude' => 'required|numeric|between:-180,180',
