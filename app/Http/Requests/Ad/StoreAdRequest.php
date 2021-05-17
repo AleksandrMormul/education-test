@@ -43,11 +43,11 @@ class StoreAdRequest extends FormRequest
             'description' => 'required|string|max:1000',
             'fullPhoneNumber' => 'required|string',
             'email' => 'required|email:rfc',
-            'endDate' => 'required|string',
+            'endDate' => 'required|date|after:yesterday',
             'country' => 'required|string',
-            'lat' => 'numeric|nullable',
-            'lng' => 'numeric|nullable',
-            'adFile' => 'file|nullable',
+            'lat' => 'required|numeric|between:-90,90',
+            'lng' => 'required|numeric|between:-180,180',
+            'adFile' => 'file|nullable|mimes:jpeg,png|max:10240',
         ];
     }
 

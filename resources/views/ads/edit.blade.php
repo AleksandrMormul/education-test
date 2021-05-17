@@ -3,8 +3,11 @@
 @section('content')
     <!-- Google Maps -->
     <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_api_key')}}"></script>
+    <!-- Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- JS-Datepicker -->
+    <script src="https://unpkg.com/js-datepicker"></script>
     <script>
         const phoneNumber ='{{ $ad->phone_number }}';
         const lat = {{ $ad->latitude }};
@@ -45,7 +48,7 @@
         </div>
         <div class="form-group">
             <label for="endDate">End date</label>
-            <input type="date" class="@error('endDate') is-invalid @enderror form-control" id="adEndDate" required name="endDate" min="{{ Carbon\Carbon::today()->toDateString()}}"
+            <input class="@error('endDate') is-invalid @enderror form-control" id="adEndDate" required name="endDate"
                    value="{{ $ad->end_date->format('Y-m-d') }}">
             @error('endDate')
             <div class="alert alert-danger">{{ $message }}</div>

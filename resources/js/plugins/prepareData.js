@@ -22,5 +22,5 @@ export default function prepareData(markers) {
     formElement.appendChild(inputLat)
     formElement.appendChild(fullPhoneNumber)
     formElement.appendChild(inputLng)
-    request.send(formData);
+            request.send(formData);
 }
