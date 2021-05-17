@@ -54,11 +54,15 @@
             </div>
             <div class="form-group">
                 <label for="country">Country</label>
-                <select type="text" name="country_code" class="@error('country') is-invalid @enderror form-control" required>
+                <div>
+                    <select type="text" name="country_code"
+                        class="@error('country') is-invalid @enderror form-control countrySelect" required>
                     @foreach( $countries as $code=>$country)
+                        <option></option>
                         <option value="{{ $code }}">{{ $country }}</option>
                     @endforeach
-                </select>
+                    </select>
+                </div>
                 @error('country_code')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

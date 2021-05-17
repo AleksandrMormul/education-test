@@ -2,4 +2,6 @@ require('./bootstrap');
 require('./plugins/phoneMask');
 require('./plugins/gmaps');
 require('./plugins/datepicker');
-//require('./plugins/validator');
+require('select2');
+require('select2/src/scss/core.scss');
+require('./plugins/selectCountry');
