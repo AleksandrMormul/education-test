@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\Ad;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
  */
 class AdService
 {
+
+    const DEFAULT_IMAGE = 'temp.png';
 
     /**
      * Get all ads
@@ -41,22 +43,18 @@ class AdService
      */
     public function createAd(array $storeData)
     {
-        if (isset($storeData['img_src'])) {
-            $fileName = $this->prepareFile($storeData['img_src']);
-            $storeData['img_src'] = $fileName;
-            $storeData['user_id'] = Auth::id();
-        }
+        $storeData['user_id'] = Auth::id();
         $ad = Ad::create($storeData);
         return $ad->id;
     }
 
     /**
-     * @param $file
+     * @param UploadedFile $file
      * @return string|null
      */
-    private function prepareFile($file): ?string
+    public function storeAdImage(UploadedFile $file): ?string
     {
-        $fileName = $file->getClientOriginalName();
+        $fileName = uniqid(rand(), true) . '.' . $file->getClientOriginalExtension();
         $this->saveFile($file, $fileName);
         return $fileName;
     }
@@ -67,8 +65,7 @@ class AdService
      */
     private function saveFile(UploadedFile $file, string $fileName): void
     {
-        $userId = Auth::id();
-        Storage::disk(Config::get('filesystems.default'))->putFileAs('/public/' . $userId, $file, $fileName);
+        Storage::disk(Config::get('filesystems.default'))->putFileAs('/public/ads', $file, $fileName);
     }
 
     /**
@@ -78,11 +75,23 @@ class AdService
      */
     public function updateAd(array $storeData, Ad $ad)
     {
-        if (isset($storeData['img_src'])) {
-            $fileName = $this->prepareFile($storeData['img_src']);
-            $storeData['img_src'] = $fileName;
-            $storeData['user_id'] = Auth::id();
-        }
+        $storeData['user_id'] = Auth::id();
         $ad->update($storeData);
+    }
+
+    /**
+     * @return string
+     */
+    public function getImagePath(): string
+    {
+        return asset('storage/ads/');
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultImage(): string
+    {
+        return asset('images/' . self::DEFAULT_IMAGE);
     }
 }

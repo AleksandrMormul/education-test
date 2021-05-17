@@ -1,13 +1,16 @@
 @extends('layouts.app')
 
-@section('content')
+@push('scripts')
     <!-- Google Maps -->
     <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_api_key')}}"></script>
-    <!-- Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <!-- JS-Datepicker -->
     <script src="https://unpkg.com/js-datepicker"></script>
+    <script>
+        let endDate = new Date('@php echo today()->toDateString() @endphp');
+    </script>
+@endpush
+
+@section('content')
     <div>
         <form class="create-ad-from" id="adForm" novalidate method="post" action="{{ route('ads.store') }}"
               enctype="multipart/form-data">
@@ -28,8 +31,8 @@
             </div>
             <div class="form-group">
                 <label for="phone">Phone</label>
-                <input type="tel" class="@error('phone') is-invalid @enderror  form-control" id="adPhone" name="phone" required>
-                @error('phone')
+                <input type="tel" class="@error('phone_number') is-invalid @enderror  form-control" id="adPhone" name="phone_number" required>
+                @error('phone_number')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
                 <div class="alert phone-error" style="display: none"></div>
@@ -44,28 +47,31 @@
             </div>
             <div class="form-group">
                 <label for="endDate">End date</label>
-                <input  class="@error('endDate') is-invalid @enderror form-control" id="adEndDate" required name="endDate">
-                @error('endDate')
+                <input  class="@error('end_date') is-invalid @enderror form-control" id="adEndDate" required name="end_date">
+                @error('end_date')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="form-group">
                 <label for="country">Country</label>
-                <select type="text" name="country" class="@error('country') is-invalid @enderror form-control" required>
-                    @foreach( $countries as $country)
-                        <option>{{ $country }}</option>
+                <select type="text" name="country_code" class="@error('country') is-invalid @enderror form-control" required>
+                    @foreach( $countries as $code=>$country)
+                        <option value="{{ $code }}">{{ $country }}</option>
                     @endforeach
                 </select>
-                @error('country')
+                @error('country_code')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="form-group">
                 <label for="adFile">Select files for ad</label>
-                <input type="file" class="form-control-file" id="adFile" name="adFile">
+                <input type="file" class="@error('ad_file') is-invalid @enderror form-control-file" id="adFile" name="ad_file">
+                @error('ad_file')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="gmap" id="adMap"></div>
-            <button type="submit" id="adBtnSubmit" class="btn btn-primary">Submit</button>
+            <button type="submit" id="adBtnSubmit" class="btn btn-primary btnSubmit">Submit</button>
         </form>
     </div>
 @endsection

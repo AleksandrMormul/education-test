@@ -24,7 +24,9 @@
 }
 
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .iti__flag {background-image: url("../images/flags/flags@2x.png");}
+    .iti__flag {
+        background-image: url("../images/flags/flags@2x.png");
+    }
 }
 
 .gmap {
@@ -74,4 +76,11 @@
 .ad-image {
     width: 100%;
     height: auto;
+}
+.alert {
+    margin-top: 10px;
+    width: 50%;
+}
+.btnSubmit {
+    margin-top: 10px;
 }

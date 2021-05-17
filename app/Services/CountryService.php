@@ -17,6 +17,6 @@ class CountryService
      */
     public static function getAllCountry()
     {
-        return json_decode(Countries::getList(Lang::getLocale(), 'json'), true);
+        return Countries::getList(Lang::getLocale());
     }
 }

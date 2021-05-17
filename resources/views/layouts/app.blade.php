@@ -74,6 +74,7 @@
                 </div>
             </div>
         </nav>
+        @stack('scripts')
 
         <main class="py-4">
             @yield('content')

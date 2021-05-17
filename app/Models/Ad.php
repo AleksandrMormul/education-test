@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Services\AdService;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Lang;
@@ -21,8 +23,10 @@ use Illuminate\Support\Facades\Lang;
  * @property \Illuminate\Support\Carbon $end_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $full_image_path
  * @property-read string $full_name_country
  * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Ad adByDate()
  * @method static \Illuminate\Database\Eloquent\Builder|Ad newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ad newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Ad query()
@@ -81,6 +85,13 @@ class Ad extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function scopeAdByDate($query)
+    {
+        $now = Carbon::now()->addDay()->toDateString();
+        return $query->where('end_date', '>=', $now)
+            ->orderBy('end_date', 'asc');
+    }
+
     /**
      * @return string
      */
@@ -92,8 +103,13 @@ class Ad extends Model
     /**
      * @return string
      */
-    public function getFullImagePathAttribute()
+    public function getFullImagePathAttribute(): string
     {
-        return $this->img_src ? asset('storage/' . $this->user_id . '/' . $this->img_src) : asset('images/temp.png');
+        $adService = resolve(AdService::class);
+        if ($this->img_src) {
+            return $adService->getImagePath() . '/' . $this->img_src;
+        } else {
+            return $adService->getDefaultImage();
+        }
     }
 }

@@ -8,7 +8,6 @@ use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
 use App\Services\CountryService;
-use Carbon\Carbon;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -48,11 +47,11 @@ class AdController extends Controller
     public function index()
     {
         $query = $this->adService->getAds();
-        $now = Carbon::now()->addDay()->toDateString();
+
         return view(
             'ads/index',
             [
-                'ads' => $query->where('end_date', '>=', $now)->paginate(15),
+                'ads' => $query->adByDate()->paginate(15),
             ]
         );
     }
@@ -76,7 +75,22 @@ class AdController extends Controller
      */
     public function store(StoreAdRequest $request)
     {
-        $adId = $this->adService->createAd($request->prepareRequest());
+        $imgSrcName = null;
+        $lat = null;
+        $lng = null;
+        if ($request->file('ad_file')) {
+            $imgSrcName = $this->adService->storeAdImage($request->file('ad_file'));
+        }
+        if ($request->latitude && $request->longitude) {
+            $lat = $request->latitude;
+            $lng = $request->longitude;
+        }
+        $adData = $request->getPayload();
+        $adId = $this->adService->createAd(array_merge($adData, [
+            'img_src' => $imgSrcName,
+            'latitude' => $lat,
+            'longitude' => $lng,
+        ]));
 
         return redirect(route('ads.show', $adId));
     }
@@ -113,12 +127,27 @@ class AdController extends Controller
      *
      * @param Ad $ad
      * @param UpdateAdRequest $request
-     * @return Response
+     * @return Application|RedirectResponse|Redirector
      */
     public function update(Ad $ad, UpdateAdRequest $request)
     {
         $adId = $ad->id;
-        $this->adService->updateAd($request->prepareRequest(), $ad);
+        $imgSrcName = null;
+        $lat = null;
+        $lng = null;
+        if ($request->file('ad_file')) {
+            $imgSrcName = $this->adService->storeAdImage($request->file('ad_file'));
+        }
+        if ($request->latitude && $request->longitude) {
+            $lat = $request->latitude;
+            $lng = $request->longitude;
+        }
+        $adData = $request->getPayload();
+        $this->adService->updateAd(array_merge($adData, [
+            'img_src' => $imgSrcName,
+            'latitude' => $lat,
+            'longitude' => $lng,
+        ]), $ad);
         return redirect(route('ads.show', $adId));
     }
 
