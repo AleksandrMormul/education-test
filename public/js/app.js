@@ -41224,7 +41224,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var js_datepicker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_datepicker__WEBPACK_IMPORTED_MODULE_0__);
 
 js_datepicker__WEBPACK_IMPORTED_MODULE_0___default()('#adEndDate', {
-  minDate: new Date(),
+  minDate: typeof endDate !== 'undefined' ? endDate :
+  /*new Date()*/
+  new Date('2021-06-01'),
   formatter: function formatter(input, date, instance) {
     var currentMonth = date.getMonth() + 1;
 
@@ -41371,15 +41373,15 @@ function prepareData(markers) {
   var coord = markers[0].getPosition();
   var fullPhoneNumber = document.createElement("input");
   fullPhoneNumber.type = "hidden";
-  fullPhoneNumber.name = "fullPhoneNumber";
+  fullPhoneNumber.name = "phone_number";
   fullPhoneNumber.value = Object(_phoneMask__WEBPACK_IMPORTED_MODULE_0__["default"])();
   var inputLat = document.createElement("input");
   inputLat.type = "hidden";
-  inputLat.name = "lat";
+  inputLat.name = "latitude";
   inputLat.value = coord.lat();
   var inputLng = document.createElement("input");
   inputLng.type = "hidden";
-  inputLng.name = "lng";
+  inputLng.name = "longitude";
   inputLng.value = coord.lng();
   request.open("POST", "http://localhost/ads");
   formElement.appendChild(inputLat);

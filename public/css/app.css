@@ -12265,3 +12265,12 @@ a.text-dark:focus {
   height: auto;
 }
 
+.alert {
+  margin-top: 10px;
+  width: 50%;
+}
+
+.btnSubmit {
+  margin-top: 10px;
+}
+
