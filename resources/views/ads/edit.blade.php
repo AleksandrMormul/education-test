@@ -59,12 +59,12 @@
         </div>
         <div class="form-group">
             <label for="country">Country</label>
-            <select type="text" id="adSelectCountry" name="country" class="@error('country_code') is-invalid @enderror form-control" required  value="{{ $ad->full_name_country }}">
-            @foreach( $countries as $country)
-                <option>{{ $country }}</option>
+            <select type="text" id="adSelectCountry" name="country_code" class="@error('country_code') is-invalid @enderror form-control" required>
+            @foreach( $countries as $code => $country)
+                <option value="{{ $code }}">{{ $country }}</option>
             @endforeach
                 <script>
-                    $('#adSelectCountry').val(@json($ad->full_name_country));
+                    $('#adSelectCountry').val(@json($ad->country_code));
                 </script>
             @error('country_code')
                 <div class="alert alert-danger">{{ $message }}</div>

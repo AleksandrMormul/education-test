@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests\Ad;
 
-use File;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
-use PragmaRX\Countries\Package\Countries;
 
 /**
  * Class StoreAdRequest
