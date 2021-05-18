@@ -51,7 +51,7 @@ class AdController extends Controller
         return view(
             'ads/index',
             [
-                'ads' => $query->adByDate()->paginate(15),
+                'ads' => $query->paginate(15),
             ]
         );
     }
@@ -63,8 +63,8 @@ class AdController extends Controller
      */
     public function create()
     {
-        $counties = CountryService::getAllCountry();
-        return view('ads/create', ['countries' => $counties]);
+        $countries = CountryService::getAllCountry();
+        return view('ads/create', ['countries' => $countries]);
     }
 
     /**
@@ -115,21 +115,21 @@ class AdController extends Controller
      */
     public function edit(Ad $ad): Renderable
     {
-        $counties = CountryService::getAllCountry();
+        $countries = CountryService::getAllCountry();
         return view('ads.edit', [
             'ad' => $ad,
-            'countries' => $counties,
+            'countries' => $countries,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Ad $ad
      * @param UpdateAdRequest $request
+     * @param Ad $ad
      * @return Application|RedirectResponse|Redirector
      */
-    public function update(Ad $ad, UpdateAdRequest $request)
+    public function update(UpdateAdRequest $request, Ad $ad)
     {
         $adId = $ad->id;
         $imgSrcName = null;
@@ -143,11 +143,11 @@ class AdController extends Controller
             $lng = $request->longitude;
         }
         $adData = $request->getPayload();
-        $this->adService->updateAd(array_merge($adData, [
+        $this->adService->updateAd($ad, array_merge($adData, [
             'img_src' => $imgSrcName,
             'latitude' => $lat,
             'longitude' => $lng,
-        ]), $ad);
+        ]));
         return redirect(route('ads.show', $adId));
     }
 

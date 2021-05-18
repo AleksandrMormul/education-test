@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Models\Ad;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 
@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Storage;
  */
 class AdService
 {
+    public const DEFAULT_IMAGE_FILENAME = 'temp.png';
 
-    const DEFAULT_IMAGE = 'temp.png';
+    public const ADS_IMAGES_PATH = 'ads';
+
+    public const COMMON_IMAGES_PATH = 'images';
 
     /**
      * Get all ads
@@ -24,7 +27,7 @@ class AdService
      */
     public function getAds()
     {
-        return Ad::query();
+        return Ad::query()->visibleForDate();
     }
 
     /**
@@ -54,44 +57,60 @@ class AdService
      */
     public function storeAdImage(UploadedFile $file): ?string
     {
-        $fileName = uniqid(rand(), true) . '.' . $file->getClientOriginalExtension();
-        $this->saveFile($file, $fileName);
-        return $fileName;
+//        $fileName = $file->hashName();
+        /*$fileName = $file->store(self::ADS_IMAGES_PATH, [
+            'disk' => 'public',
+        ]);*/
+        $filePathName = Storage::disk('public')->putFile(self::ADS_IMAGES_PATH, $file);
+        $fileName = $this->getSavedFileName($filePathName);
+        return is_string($fileName) ? $fileName : null;
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string $fileName
-     */
-    private function saveFile(UploadedFile $file, string $fileName): void
-    {
-        Storage::disk(Config::get('filesystems.default'))->putFileAs('/public/ads', $file, $fileName);
-    }
-
-    /**
-     * @param array $storeData
      * @param Ad $ad
+     * @param array $storeData
      * @return void
      */
-    public function updateAd(array $storeData, Ad $ad)
+    public function updateAd(Ad $ad, array $storeData)
     {
         $storeData['user_id'] = Auth::id();
         $ad->update($storeData);
     }
 
     /**
+     *
+     * @param Ad $ad
      * @return string
      */
-    public function getImagePath(): string
+    public function getImageUrl(Ad $ad): string
     {
-        return asset('storage/ads/');
+        if ($ad->img_src) {
+            return asset('storage/' . self::ADS_IMAGES_PATH . '/' . $ad->img_src);
+        } else {
+            return $this->getDefaultImageUrl();
+        }
     }
 
     /**
      * @return string
      */
-    public function getDefaultImage(): string
+    public function getDefaultImageUrl(): string
     {
-        return asset('images/' . self::DEFAULT_IMAGE);
+        return asset(self::COMMON_IMAGES_PATH . '/' . self::DEFAULT_IMAGE_FILENAME);
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return false|string
+     */
+    private function generateMd5Filename(UploadedFile $file)
+    {
+        return md5_file($file);
+    }
+
+    private function getSavedFileName(string $filePathName)
+    {
+        $temp = explode('/', $filePathName);
+        return $temp[1];
     }
 }
