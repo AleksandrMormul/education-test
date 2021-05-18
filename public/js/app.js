@@ -48009,7 +48009,8 @@ __webpack_require__(/*! ./plugins/phoneMask */ "./resources/js/plugins/phoneMask
 
 __webpack_require__(/*! ./plugins/gmaps */ "./resources/js/plugins/gmaps.js");
 
-__webpack_require__(/*! ./plugins/datepicker */ "./resources/js/plugins/datepicker.js");
+__webpack_require__(/*! ./plugins/datepicker */ "./resources/js/plugins/datepicker.js"); //require('js-datepicker/src/datepicker.scss');
+
 
 __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js");
 

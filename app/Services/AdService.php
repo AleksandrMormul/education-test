@@ -57,12 +57,8 @@ class AdService
      */
     public function storeAdImage(UploadedFile $file): ?string
     {
-//        $fileName = $file->hashName();
-        /*$fileName = $file->store(self::ADS_IMAGES_PATH, [
-            'disk' => 'public',
-        ]);*/
         $filePathName = Storage::disk('public')->putFile(self::ADS_IMAGES_PATH, $file);
-        $fileName = $this->getSavedFileName($filePathName);
+        $fileName = basename($filePathName);
         return is_string($fileName) ? $fileName : null;
     }
 
@@ -97,20 +93,5 @@ class AdService
     public function getDefaultImageUrl(): string
     {
         return asset(self::COMMON_IMAGES_PATH . '/' . self::DEFAULT_IMAGE_FILENAME);
-    }
-
-    /**
-     * @param UploadedFile $file
-     * @return false|string
-     */
-    private function generateMd5Filename(UploadedFile $file)
-    {
-        return md5_file($file);
-    }
-
-    private function getSavedFileName(string $filePathName)
-    {
-        $temp = explode('/', $filePathName);
-        return $temp[1];
     }
 }

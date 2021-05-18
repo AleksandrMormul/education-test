@@ -55,8 +55,8 @@
                 <div>
                     <select type="text" name="country_code"
                         class="@error('country') is-invalid @enderror form-control countrySelect" required>
-                    @foreach( $countries as $code=>$country)
                         <option></option>
+                    @foreach( $countries as $code=>$country)
                         <option value="{{ $code }}">{{ $country }}</option>
                     @endforeach
                     </select>
