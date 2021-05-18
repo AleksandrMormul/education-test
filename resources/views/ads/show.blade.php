@@ -17,9 +17,8 @@
             <div class="col-12 content">
                     <div>
                         <div class="container-img-ad">
-                            <img class="ad-image" src="{{ $ad->full_image_path }}"
+                            <img class="ad-image" src="{{ $ad->image_url }}"
                                 alt="ad image">
-
                         </div>
                         <p>{{ $ad->description }}</p>
                         <p>{{ optional($ad->created_at)->toDateString() }}</p>

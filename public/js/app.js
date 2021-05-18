@@ -48015,7 +48015,7 @@ __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js");
 
 __webpack_require__(/*! select2/src/scss/core.scss */ "./node_modules/select2/src/scss/core.scss");
 
-__webpack_require__(/*! ./plugins/selectCountry */ "./resources/js/plugins/selectCountry.js"); //require('./plugins/validator');
+__webpack_require__(/*! ./plugins/selectCountry */ "./resources/js/plugins/selectCountry.js");
 
 /***/ }),
 
@@ -48077,9 +48077,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var js_datepicker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_datepicker__WEBPACK_IMPORTED_MODULE_0__);
 
 js_datepicker__WEBPACK_IMPORTED_MODULE_0___default()('#adEndDate', {
-  minDate: typeof endDate !== 'undefined' ? endDate :
-  /*new Date()*/
-  new Date('2021-06-01'),
+  minDate: typeof endDate !== 'undefined' ? endDate : new Date(),
   formatter: function formatter(input, date, instance) {
     var currentMonth = date.getMonth() + 1;
 
@@ -48110,7 +48108,7 @@ __webpack_require__.r(__webpack_exports__);
 var markers = [];
 var map;
 
-if (typeof isEdit !== 'undefined') {
+if (typeof isEdit !== 'undefined' && lat && lng) {
   map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
     div: '#adMap',
     zoom: 5,

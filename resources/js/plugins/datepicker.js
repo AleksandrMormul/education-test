@@ -1,7 +1,7 @@
 import datepicker from 'js-datepicker';
 
 datepicker('#adEndDate', {
-    minDate: (typeof endDate !== 'undefined') ? endDate : /*new Date()*/ new Date('2021-06-01'),
+    minDate: (typeof endDate !== 'undefined') ? endDate : new Date(),
     formatter: (input, date, instance) => {
         let currentMonth = date.getMonth() + 1;
         if (currentMonth < 10) {

@@ -3,7 +3,7 @@ import prepareData  from './prepareData';
 
     let markers = [];
     let map;
-    if(typeof isEdit !== 'undefined') {
+    if(typeof isEdit !== 'undefined' && lat && lng) {
         map = new GMaps({
             div: '#adMap',
             zoom: 5,

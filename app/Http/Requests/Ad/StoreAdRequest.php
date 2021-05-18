@@ -60,6 +60,8 @@ class StoreAdRequest extends FormRequest
             'phone_number',
             'end_date',
             'country_code',
+            'latitude',
+            'longitude',
         ]);
     }
 }

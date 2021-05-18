@@ -3,15 +3,10 @@
 @push('scripts')
     <!-- Google Maps -->
     <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_api_key')}}"></script>
-    <!-- Select2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <!-- JS-Datepicker -->
-    <script src="https://unpkg.com/js-datepicker"></script>
     <script>
         const phoneNumber ='{{ $ad->phone_number }}';
-        const lat = {{ $ad->latitude }};
-        const lng = {{ $ad->longitude }};
+        const lat = {{ $ad->latitude ?: 'null' }};
+        const lng = {{ $ad->longitude ?: 'null' }};
         const isEdit = true;
     </script>
 @endpush
@@ -59,10 +54,12 @@
         </div>
         <div class="form-group">
             <label for="country">Country</label>
-            <select type="text" id="adSelectCountry" name="country_code" class="@error('country_code') is-invalid @enderror form-control" required>
+            <div>
+            <select type="text" id="adSelectCountry" name="country_code" class="@error('country_code') is-invalid @enderror form-control countrySelect" required>
             @foreach( $countries as $code => $country)
                 <option value="{{ $code }}">{{ $country }}</option>
             @endforeach
+            </div>
                 <script>
                     $('#adSelectCountry').val(@json($ad->country_code));
                 </script>

@@ -3,8 +3,6 @@
 @push('scripts')
     <!-- Google Maps -->
     <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_api_key')}}"></script>
-    <!-- JS-Datepicker -->
-    <script src="https://unpkg.com/js-datepicker"></script>
     <script>
         let endDate = new Date('@php echo today()->toDateString() @endphp');
     </script>
