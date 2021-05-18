@@ -43,8 +43,8 @@ class UpdateAdRequest extends FormRequest
             'email' => 'required|email:rfc',
             'end_date' => 'required|date|after_or_equal:today',
             'country_code' => 'required|string|max:2',
-            'latitude' => 'required|numeric|between:-90,90',
-            'longitude' => 'required|numeric|between:-180,180',
+            'latitude' => 'numeric|between:-90,90',
+            'longitude' => 'numeric|between:-180,180',
             'adFile' => 'file|nullable|mimes:jpeg,png|max:10240',
         ];
     }
