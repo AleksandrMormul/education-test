@@ -1,11 +1,11 @@
 import GMaps from 'gmaps';
-import getNumber from './phoneMask';
-window.onload = function () {
+import prepareData  from './prepareData';
+
     let markers = [];
     let map;
-    if(typeof isEdit !== 'undefined') {
+    if(typeof isEdit !== 'undefined' && lat && lng) {
         map = new GMaps({
-            div: '#map',
+            div: '#adMap',
             zoom: 5,
             lat: lat,
             lng: lng,
@@ -17,10 +17,10 @@ window.onload = function () {
         markers.push(marker);
     } else {
        map = new GMaps({
-            div: '#map',
+            div: '#adMap',
             zoom: 5,
-            lat: -12.043333,
-            lng: -77.028333,
+            lat: 50.431759,
+            lng: 30.517023,
         });
     }
     map.addListener('click', function(e) {
@@ -42,39 +42,14 @@ window.onload = function () {
         }
     });
 
-    function prepareData() {
-        const formElement = document.getElementById("adForm");
-        const formData = new FormData(formElement);
-        const request = new XMLHttpRequest();
-        const coord = markers[0].getPosition();
-        const fullPhoneNumber = document.createElement("input");
-        fullPhoneNumber.type = "hidden";
-        fullPhoneNumber.name = "fullPhoneNumber";
-        fullPhoneNumber.value = getNumber();
-        const inputLat = document.createElement("input");
-        inputLat.type = "hidden";
-        inputLat.name = "lat";
-        inputLat.value = coord.lat();
-        const inputLng = document.createElement("input");
-        inputLng.type = "hidden";
-        inputLng.name = "lng";
-        inputLng.value = coord.lng();
-
-        request.open("POST", "{!! route('ads.store') !!}");
-        formElement.appendChild(inputLat)
-        formElement.appendChild(fullPhoneNumber)
-        formElement.appendChild(inputLng)
-        request.send(formData);
-    }
-
-    if(typeof isEdit === 'undefined') {
-        document.getElementById('btnSubmit').addEventListener('click', function () {
-            prepareData();
-        });
-    }
-    document.getElementById('btnSave').addEventListener('click',function() {
-        prepareData();
+$(document).ready(function() {
+    $("#adBtnSubmit").click(function(){
+        prepareData(markers);
     });
-}
+    $("#adBtnSave").click(function(){
+        prepareData(markers);
+    });
+});
+
 
 

@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use App\Services\AdService;
+use Countries;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Lang;
 
 /**
@@ -18,27 +23,29 @@ use Illuminate\Support\Facades\Lang;
  * @property mixed|null $longitude
  * @property string $country_code
  * @property string|null $img_src
- * @property \Illuminate\Support\Carbon $end_date
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon $end_date
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property-read string $full_name_country
+ * @property-read string $image_url
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|Ad newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ad newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Ad query()
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereCountryCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereEndDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereImgSrc($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLatitude($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereLongitude($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad wherePhoneNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Ad whereUserId($value)
- * @mixin \Eloquent
+ * @method static Builder|Ad newModelQuery()
+ * @method static Builder|Ad newQuery()
+ * @method static Builder|Ad query()
+ * @method static Builder|Ad visibleForDate()
+ * @method static Builder|Ad whereCountryCode($value)
+ * @method static Builder|Ad whereCreatedAt($value)
+ * @method static Builder|Ad whereDescription($value)
+ * @method static Builder|Ad whereEndDate($value)
+ * @method static Builder|Ad whereId($value)
+ * @method static Builder|Ad whereImgSrc($value)
+ * @method static Builder|Ad whereLatitude($value)
+ * @method static Builder|Ad whereLongitude($value)
+ * @method static Builder|Ad wherePhoneNumber($value)
+ * @method static Builder|Ad whereTitle($value)
+ * @method static Builder|Ad whereUpdatedAt($value)
+ * @method static Builder|Ad whereUserId($value)
+ * @mixin Eloquent
  */
 class Ad extends Model
 {
@@ -81,11 +88,26 @@ class Ad extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function scopeVisibleForDate($query)
+    {
+        $now = today()->toDateString();
+        return $query->where('end_date', '>=', $now);
+    }
+
     /**
      * @return string
      */
     public function getFullNameCountryAttribute()
     {
-        return \Countries::getOne($this->country_code, Lang::getLocale());
+        return Countries::getOne($this->country_code, Lang::getLocale());
+    }
+
+    /**
+     * @return string
+     */
+    public function getImageUrlAttribute(): string
+    {
+        $adService = resolve(AdService::class);
+        return $adService->getImageUrl($this);
     }
 }

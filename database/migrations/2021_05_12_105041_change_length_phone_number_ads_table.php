@@ -14,7 +14,7 @@ class ChangeLengthPhoneNumberAdsTable extends Migration
     public function up()
     {
         Schema::table('ads', function ($table) {
-            $table->string('phone_number', 20)->change();
+            $table->string('phone_number', 15)->change();
         });
     }
 

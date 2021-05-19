@@ -13,10 +13,10 @@ class AdPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param User $user
+     * @param User|null $user
      * @return bool
      */
-    public function viewAny(User $user)
+    public function viewAny(?User $user)
     {
         return true;
     }
@@ -24,11 +24,11 @@ class AdPolicy
     /**
      * Determine whether the user can view the model.
      *
-     * @param User $user
+     * @param User|null $user
      * @param Ad $ad
      * @return mixed
      */
-    public function view(User $user, Ad $ad)
+    public function view(?User $user, Ad $ad)
     {
         return true;
     }
@@ -50,7 +50,7 @@ class AdPolicy
      * Determine whether the user can update the model.
      *
      * @param User $user
-     * @param Ad $ad
+     * @param  Ad $ad
      * @return mixed
      */
     public function update(User $user, Ad $ad)

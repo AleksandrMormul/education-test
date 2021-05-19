@@ -2,14 +2,10 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CreateAdRequest;
 use App\Models\Ad;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -17,6 +13,11 @@ use Illuminate\Support\Facades\Storage;
  */
 class AdService
 {
+    public const DEFAULT_IMAGE_FILENAME = 'temp.png';
+
+    public const ADS_IMAGES_PATH = 'ads';
+
+    public const COMMON_IMAGES_PATH = 'images';
 
     /**
      * Get all ads
@@ -25,7 +26,7 @@ class AdService
      */
     public function getAds()
     {
-        return Ad::query();
+        return Ad::query()->visibleForDate();
     }
 
     /**
@@ -39,87 +40,57 @@ class AdService
     }
 
     /**
-     * @param CreateAdRequest $request
+     * @param array $storeData
+     * @return int|mixed
      */
-    public function createAd(CreateAdRequest $request)
+    public function createAd(array $storeData)
     {
-        include(app_path('/Common/convertCountry.php'));
-        $coordination = $this->prepareCoordination($request);
-        $ad = Ad::create([
-            'title' => $request->title,
-            'user_id' => Auth::id(),
-            'description' => $request->description,
-            'phone_number' => $request->fullPhoneNumber,
-            'end_date' => $request->endDate,
-            'img_src' => $this->prepareFile($request),
-            'country_code' => countryNameToISO3166($request->country, Lang::getLocale()),
-            'latitude' => $coordination['lat'],
-            'longitude' => $coordination['lng'],
-        ]);
+        $storeData['user_id'] = Auth::id();
+        $ad = Ad::create($storeData);
         return $ad->id;
     }
 
     /**
-     * @param $request
-     * @return array|null[]
-     */
-    private function prepareCoordination($request): array
-    {
-        $latitude = null;
-        $longitude = null;
-        if ($request->lat && $request->lng) {
-            $longitude = $request->lng;
-            $latitude = $request->lat;
-        }
-        return ['lat' => $latitude, 'lng' => $longitude];
-    }
-
-    /**
-     * @param $request
+     * @param UploadedFile $file
      * @return string|null
      */
-    private function prepareFile($request): ?string
+    public function storeAdImage(UploadedFile $file): ?string
     {
-        $fileName = null;
-        if ($request->adFile) {
-            $file = $request->adFile;
-            $fileName = $file->getClientOriginalName();
-            $this->saveFile($file, $fileName);
+        $filePathName = Storage::disk('public')->putFile(self::ADS_IMAGES_PATH, $file);
+        $fileName = basename($filePathName);
+        return is_string($fileName) ? $fileName : null;
+    }
+
+    /**
+     * @param Ad $ad
+     * @param array $storeData
+     * @return void
+     */
+    public function updateAd(Ad $ad, array $storeData)
+    {
+        $storeData['user_id'] = Auth::id();
+        $ad->update($storeData);
+    }
+
+    /**
+     *
+     * @param Ad $ad
+     * @return string
+     */
+    public function getImageUrl(Ad $ad): string
+    {
+        if ($ad->img_src) {
+            return asset('storage/' . self::ADS_IMAGES_PATH . '/' . $ad->img_src);
+        } else {
+            return $this->getDefaultImageUrl();
         }
-
-        return $fileName;
     }
 
     /**
-     * @param UploadedFile $file
-     * @param string $fileName
+     * @return string
      */
-    private function saveFile(UploadedFile $file, string $fileName): void
+    public function getDefaultImageUrl(): string
     {
-        $userId = Auth::id();
-        Storage::disk(Config::get('filesystems.default'))->putFileAs('/public/' . $userId, $file, $fileName);
-    }
-
-    /**
-     * @param CreateAdRequest $request
-     * @param int $id
-     * @return mixed
-     */
-    public function updateAd(CreateAdRequest $request, int $id)
-    {
-        include(app_path('/Common/convertCountry.php'));
-        $coordination = $this->prepareCoordination($request);
-        $ad = Ad::where('id', '=', $id);
-        $ad->update([
-            'title' => $request->title,
-            'user_id' => Auth::id(),
-            'description' => $request->description,
-            'phone_number' => $request->full_number,
-            'end_date' => $request->endDate,
-            'img_src' => $request->adFile ? $this->prepareFile($request) : $ad->first()->img_src,
-            'country_code' => countryNameToISO3166($request->country, Lang::getLocale()),
-            'latitude' => $coordination['lat'],
-            'longitude' => $coordination['lng'],
-        ]);
+        return asset(self::COMMON_IMAGES_PATH . '/' . self::DEFAULT_IMAGE_FILENAME);
     }
 }

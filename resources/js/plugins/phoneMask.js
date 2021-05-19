@@ -1,9 +1,9 @@
 import intlTelInput from 'intl-tel-input';
 
-    const input = document.getElementById('phone');
+    const input = document.getElementById('adPhone');
     const phoneInput = intlTelInput(input, ({
         formatOnDisplay: true,
-        hiddenInput: "full_number",
+        hiddenInput: "fullPhoneNumber",
         utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/utils.js',
     }));
 
