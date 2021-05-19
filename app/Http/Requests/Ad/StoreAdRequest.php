@@ -39,7 +39,7 @@ class StoreAdRequest extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string|max:1000',
-            'phone_number' => 'required|string',
+            'phone_number' => 'required|string|regex:/\(?\+[0-9]{1,3}\)? ?-?[0-9]{1,3} ?-?[0-9]{3,5} ?-?[0-9]{4}( ?-?[0-9]{3})? ?(\w{1,10}\s?\d{1,6})?/',
             'email' => 'required|email:rfc',
             'end_date' => 'required|date|after_or_equal:today',
             'country_code' => 'required|string|max:2',
