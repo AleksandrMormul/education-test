@@ -11,6 +11,7 @@ use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\User
@@ -24,11 +25,11 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int|null $role_id
- * @property-read Collection|\App\Models\Ad[] $ads
+ * @property-read Collection|Ad[] $ads
  * @property-read int|null $ads_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\Role $roles
+ * @property-read Role|null $roles
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
@@ -47,9 +48,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    const ROLE_ADMIN = 'admin';
-    const ROLE_AUTHOR = 'author';
-    const ROLE_USER = 'user';
+    public const ROLE_ADMIN = 'admin';
+    public const ROLE_AUTHOR = 'author';
     /**
      * The attributes that are mass assignable.
      *
@@ -81,9 +81,9 @@ class User extends Authenticatable
     /**
      * Ads
      *
-     * @return mixed
+     * @return HasMany
      */
-    public function ads()
+    public function ads(): HasMany
     {
         return $this->hasMany(Ad::class);
     }
@@ -121,7 +121,7 @@ class User extends Authenticatable
     /**
      * @return BelongsTo
      */
-    public function roles()
+    public function roles(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
