@@ -59,6 +59,7 @@ class StoreAdRequest extends FormRequest
             'description',
             'phone_number',
             'end_date',
+            'email',
             'country_code',
             'latitude',
             'longitude',

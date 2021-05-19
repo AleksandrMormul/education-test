@@ -76,20 +76,12 @@ class AdController extends Controller
     public function store(StoreAdRequest $request)
     {
         $imgSrcName = null;
-        $lat = null;
-        $lng = null;
         if ($request->file('ad_file')) {
             $imgSrcName = $this->adService->storeAdImage($request->file('ad_file'));
-        }
-        if ($request->latitude && $request->longitude) {
-            $lat = $request->latitude;
-            $lng = $request->longitude;
         }
         $adData = $request->getPayload();
         $adId = $this->adService->createAd(array_merge($adData, [
             'img_src' => $imgSrcName,
-            'latitude' => $lat,
-            'longitude' => $lng,
         ]));
 
         return redirect(route('ads.show', $adId));
@@ -133,20 +125,12 @@ class AdController extends Controller
     {
         $adId = $ad->id;
         $imgSrcName = null;
-        $lat = null;
-        $lng = null;
         if ($request->file('ad_file')) {
             $imgSrcName = $this->adService->storeAdImage($request->file('ad_file'));
-        }
-        if ($request->latitude && $request->longitude) {
-            $lat = $request->latitude;
-            $lng = $request->longitude;
         }
         $adData = $request->getPayload();
         $this->adService->updateAd($ad, array_merge($adData, [
             'img_src' => $imgSrcName,
-            'latitude' => $lat,
-            'longitude' => $lng,
         ]));
         return redirect(route('ads.show', $adId));
     }

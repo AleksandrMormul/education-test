@@ -6,7 +6,6 @@ use App\Models\Ad;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 
 /**
