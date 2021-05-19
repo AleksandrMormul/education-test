@@ -4,7 +4,7 @@
     <!-- Google Maps -->
     <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_api_key')}}"></script>
     <script>
-        let endDate = new Date('@php echo today()->toDateString() @endphp');
+        const endDate = new Date('@php echo today()->toDateString() @endphp');
         $(document).ready(function() {
             const oldValue = '{{ old('country_code') }}';
             if(oldValue !== '') {
@@ -29,7 +29,7 @@
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea class="@error('description') is-invalid @enderror form-control" value="{{ old('description') }}" rows="3" required name="description" minlength="100"></textarea>
+                <textarea class="@error('description') is-invalid @enderror form-control" rows="3" required name="description" minlength="100">{{ old('description') }}</textarea>
                 @error('description')
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror

@@ -125,7 +125,7 @@ class AdController extends Controller
     {
         $adId = $ad->id;
         $imgSrcName = null;
-        if ($request->file('ad_file')) {
+        if ($request->hasFile('ad_file')) {
             $imgSrcName = $this->adService->storeAdImage($request->file('ad_file'));
         }
         $adData = $request->getPayload();
