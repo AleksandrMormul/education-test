@@ -3,6 +3,10 @@
 
 // Variables
 @import 'variables';
-@import 'ad';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+// DatePicker
+@import '~js-datepicker/src/datepicker';
+
+// SCSS
+@import 'ad';

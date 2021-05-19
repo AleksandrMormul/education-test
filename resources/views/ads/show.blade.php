@@ -7,6 +7,9 @@
         </svg>
         <a href="{{ url()->previous() }}">Back</a>
     </button>
+    @can('update', $ad)
+     <a href="{{ route('ads.edit', $ad->id) }}" class="btn btn-link btn-edit-ad">Edit</a>
+    @endcan
 
     <div class="container-fluid">
         <h2>{{ $ad->title }}</h2>
@@ -14,8 +17,8 @@
             <div class="col-12 content">
                     <div>
                         <div class="container-img-ad">
-                        <img class="ad-image" src="{{ $ad->image_src ?? asset('images/temp.png') }}"
-                             alt="ad image">
+                            <img class="ad-image" src="{{ $ad->image_url }}"
+                                alt="ad image">
                         </div>
                         <p>{{ $ad->description }}</p>
                         <p>{{ optional($ad->created_at)->toDateString() }}</p>

@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\GetAdRequest;
+use App\Http\Requests\Ad\GetAdRequest;
+use App\Http\Requests\Ad\StoreAdRequest;
+use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
-use Illuminate\Http\Request;
+use App\Services\CountryService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
+use Illuminate\View\View;
 
 /**
  * Class AdController
@@ -29,21 +36,24 @@ class AdController extends Controller
     public function __construct(AdService $service)
     {
         $this->adService = $service;
+        $this->authorizeResource(Ad::class, 'ad');
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function index()
     {
         $query = $this->adService->getAds();
+
         return view(
             'ads/index',
             [
-                'ads' => $query->paginate(15)
-            ]);
+                'ads' => $query->paginate(15),
+            ]
+        );
     }
 
     /**
@@ -53,26 +63,36 @@ class AdController extends Controller
      */
     public function create()
     {
-        //
+        $countries = CountryService::getAllCountry();
+        return view('ads/create', ['countries' => $countries]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return Response
+     * @param StoreAdRequest $request
+     * @return Application|RedirectResponse|Redirector
      */
-    public function store(Request $request)
+    public function store(StoreAdRequest $request)
     {
-        //
+        $imgSrcName = null;
+        if ($request->file('ad_file')) {
+            $imgSrcName = $this->adService->storeAdImage($request->file('ad_file'));
+        }
+        $adData = $request->getPayload();
+        $adId = $this->adService->createAd(array_merge($adData, [
+            'img_src' => $imgSrcName,
+        ]));
+
+        return redirect(route('ads.show', $adId));
     }
 
     /**
      * Display the specified resource.
      *
      * @param GetAdRequest $request
-     * @param  Ad  $ad
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @param Ad $ad
+     * @return Renderable
      */
     public function show(GetAdRequest $request, Ad $ad)
     {
@@ -82,24 +102,37 @@ class AdController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
-     * @return Response
+     * @param Ad $ad
+     * @return Renderable
      */
-    public function edit($id)
+    public function edit(Ad $ad): Renderable
     {
-        //
+        $countries = CountryService::getAllCountry();
+        return view('ads.edit', [
+            'ad' => $ad,
+            'countries' => $countries,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
-     * @param int $id
-     * @return Response
+     * @param UpdateAdRequest $request
+     * @param Ad $ad
+     * @return Application|RedirectResponse|Redirector
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAdRequest $request, Ad $ad)
     {
-        //
+        $adId = $ad->id;
+        $imgSrcName = null;
+        if ($request->hasFile('ad_file')) {
+            $imgSrcName = $this->adService->storeAdImage($request->file('ad_file'));
+        }
+        $adData = $request->getPayload();
+        $this->adService->updateAd($ad, array_merge($adData, [
+            'img_src' => $imgSrcName,
+        ]));
+        return redirect(route('ads.show', $adId));
     }
 
     /**

@@ -24,6 +24,9 @@
     },
     "dependencies": {
         "gmaps": "^0.4.25",
-        "laravel-mix-blade-reload": "^2.0.0"
+        "intl-tel-input": "^17.0.12",
+        "js-datepicker": "^5.18.0",
+        "laravel-mix-blade-reload": "^2.0.0",
+        "select2": "*"
     }
 }

@@ -12,6 +12,7 @@ $factory->define(Ad::class, function (Faker $faker) {
     $latitude = $faker->latitude;
     $longitude = $faker->longitude;
     $countryCode = $faker->countryCode;
+    $endDate = $faker->dateTimeBetween('now', '+1 years');
 
     return [
         'title' => $title,
@@ -20,5 +21,6 @@ $factory->define(Ad::class, function (Faker $faker) {
         'latitude' => $latitude,
         'longitude' => $longitude,
         'country_code' => $countryCode,
+        'end_date' => $endDate,
     ];
 });
