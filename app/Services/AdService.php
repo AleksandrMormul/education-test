@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Ad;
+use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\UploadedFile;
@@ -116,5 +117,13 @@ class AdService
             return true;
         }
         return false;
+    }
+
+    public function deleteFavorite(int $adId)
+    {
+        $user = User::find(Auth::id());
+        $favorite = $user->favorite(Ad::class, $adId);
+        //dd($favorite);
+        Favorite::destroy($favorite[0]->id);
     }
 }

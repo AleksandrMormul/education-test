@@ -18,16 +18,36 @@
             });
         </script>
     <script>
+
         $(document).on('click','.heart',function(){
-            $.ajax({
-                type:"POST",
-                url:"http://localhost/favorites",
-                data:{
-                    id: {{ $ad->id }},
-                    '_token':$('input[name=_token]').val()
-                },
-            });
-            $(this).toggleClass("fas far");
+
+            console.log({!! json_encode($isFavorite) !!})
+            if ({!! json_encode(!$isFavorite) !!}) {
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost/favorites",
+                    data: {
+                        id: {{ $ad->id }},
+                        '_token': $('input[name=_token]').val()
+                    },
+                });
+                $(this).toggleClass("fas");
+            }
+        })
+        $(document).on('click','.heart',function(){
+
+            console.log({!! json_encode($isFavorite) !!})
+            if ({!! json_encode($isFavorite) !!}) {
+                $.ajax({
+                    type: "DELETE",
+                    url: "http://localhost/favorites/" + '{{ $ad->id }}',
+                    data:{
+                        '_token':$('input[name=_token]').val(),
+                        id: {{ $ad->id }},
+                    },
+                });
+                $(this).toggleClass("far");
+            }
         })
     </script>
 @endpush

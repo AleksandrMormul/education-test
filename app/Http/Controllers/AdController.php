@@ -99,6 +99,7 @@ class AdController extends Controller
     public function show(GetAdRequest $request, Ad $ad): Renderable
     {
         $isFavorite = $this->adService->isFavorite($ad->id);
+       // dd($isFavorite);
         return view('ads/show', [
             'ad' => $ad,
             'isFavorite' => $isFavorite,
@@ -164,6 +165,16 @@ class AdController extends Controller
     public function storeFavorite(Request $request)
     {
         $ad = Ad::find($request->input('id'));
+        //TODO check if user added to favorite
         $ad->addFavorite();
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function destroyFavorite(Request $request)
+    {
+        $ad = Ad::find($request->input('id'));
+        $this->adService->deleteFavorite($ad->id);
     }
 }
