@@ -4,7 +4,6 @@
     @can('create', \App\Models\Ad::class)
         <a href="{{ route("ads.create") }}" class="btn btn-primary create-ad-btn">Create Ad</a>
     @endcan
-    @endif
     <div class="container">
         <div class="row">
             @foreach ($ads as $ad)
