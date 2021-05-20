@@ -90,8 +90,23 @@
 }
 
 .container-img-ad {
+    position: relative;
     max-width: $grid__bp-md * 1px;
     margin: 0 auto;
+    i {
+        position: absolute;
+        background: white;
+        bottom: 0;
+        right: 0;
+    }
+
+}
+
+.heart {
+    cursor: pointer;
+    font-size: 25px;
+    color:red;
+    margin: 10px;
 }
 
 .ad-image {

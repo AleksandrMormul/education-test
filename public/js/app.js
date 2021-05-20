@@ -48015,7 +48015,7 @@ __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js");
 
 __webpack_require__(/*! select2/src/scss/core.scss */ "./node_modules/select2/src/scss/core.scss");
 
-__webpack_require__(/*! ./plugins/selectCountry */ "./resources/js/plugins/selectCountry.js"); //require('./plugins/deleteValidation');
+__webpack_require__(/*! ./plugins/selectCountry */ "./resources/js/plugins/selectCountry.js");
 
 /***/ }),
 

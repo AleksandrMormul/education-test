@@ -12580,8 +12580,23 @@ a.text-dark:focus {
 }
 
 .container-img-ad {
+  position: relative;
   max-width: 768px;
   margin: 0 auto;
+}
+
+.container-img-ad i {
+  position: absolute;
+  background: white;
+  bottom: 0;
+  right: 0;
+}
+
+.heart {
+  cursor: pointer;
+  font-size: 25px;
+  color: red;
+  margin: 10px;
 }
 
 .ad-image {

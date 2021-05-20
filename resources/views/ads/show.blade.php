@@ -17,6 +17,11 @@
                 },5000);
             });
         </script>
+    <script>
+        $(document).on('click','.heart',function(){
+            $(this).toggleClass("fas far");
+        })
+    </script>
 @endpush
 @section('content')
     @if ($message = Session::get('error'))
@@ -41,8 +46,8 @@
             <div class="col-12 content">
                     <div>
                         <div class="container-img-ad">
-                            <img class="ad-image" src="{{ $ad->image_url }}"
-                                alt="ad image">
+                            <img class="ad-image" src="{{ $ad->image_url }}" alt="ad image">
+                            <i class="heart far fa-heart"></i>
                         </div>
                         <p>{{ $ad->description }}</p>
                         <p>{{ optional($ad->created_at)->toDateString() }}</p>
