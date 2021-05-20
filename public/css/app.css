@@ -12551,13 +12551,6 @@ a.text-dark:focus {
   color: #e3342f;
 }
 
-.btn-edit-ad {
-  position: absolute;
-  right: 0;
-  font-size: 30px;
-  margin-right: 25px;
-}
-
 .card {
   height: 100%;
 }
@@ -12603,5 +12596,10 @@ a.text-dark:focus {
 
 .btnSubmit {
   margin-top: 10px;
+}
+
+.deleteInfo {
+  margin-left: 15px;
+  width: 50%;
 }
 

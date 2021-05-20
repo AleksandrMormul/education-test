@@ -5,4 +5,3 @@ require('./plugins/datepicker');
 require('select2');
 require('select2/src/scss/core.scss');
 require('./plugins/selectCountry');
-require('./plugins/deleteValidation');

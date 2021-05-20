@@ -100,7 +100,6 @@ class AdService
      */
     public function deleteAd(int $adId): int
     {
-        //TODO
         return Ad::destroy($adId);
     }
 }

@@ -1,9 +1,23 @@
 @extends('layouts.app')
-
+@push('scripts')
+    <script>
+        $(function(){
+            window.setTimeout(function(){
+                $('.alert-success').alert('close');
+            },5000);
+        });
+    </script>
+@endpush
 @section('content')
     @can('create', \App\Models\Ad::class)
         <a href="{{ route("ads.create") }}" class="btn btn-primary create-ad-btn">Create Ad</a>
     @endcan
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success alert-block deleteInfo" >
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <div class="container">
         <div class="row">
             @foreach ($ads as $ad)

@@ -16,7 +16,7 @@ class AdPolicy
      * @param User|null $user
      * @return bool
      */
-    public function viewAny(?User $user)
+    public function viewAny(?User $user): bool
     {
         return true;
     }
@@ -26,9 +26,9 @@ class AdPolicy
      *
      * @param User|null $user
      * @param Ad $ad
-     * @return mixed
+     * @return bool
      */
-    public function view(?User $user, Ad $ad)
+    public function view(?User $user, Ad $ad): bool
     {
         return true;
     }
@@ -37,13 +37,14 @@ class AdPolicy
      * Determine whether the user can create models.
      *
      * @param  User  $user
-     * @return mixed
+     * @return bool
      */
-    public function create(User $user)
+    public function create(User $user): bool
     {
         if ($user->isAdmin() || $user->isAuthor()) {
             return true;
         }
+        return false;
     }
 
     /**
@@ -51,9 +52,9 @@ class AdPolicy
      *
      * @param User $user
      * @param  Ad $ad
-     * @return mixed
+     * @return bool
      */
-    public function update(User $user, Ad $ad)
+    public function update(User $user, Ad $ad): bool
     {
         return $user->id === $ad->user_id;
     }
@@ -63,13 +64,14 @@ class AdPolicy
      *
      * @param User $user
      * @param Ad $ad
-     * @return mixed
+     * @return bool
      */
-    public function delete(User $user, Ad $ad)
+    public function delete(User $user, Ad $ad): bool
     {
         $isAuthorAd = $user->id === $ad->user_id;
         if ($user->isAdmin() || $isAuthorAd) {
             return true;
         }
+        return false;
     }
 }

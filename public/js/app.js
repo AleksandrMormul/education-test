@@ -7442,7 +7442,7 @@ GMaps.prototype.drawOverlay = function(options) {
     if (!options.layer) {
       options.layer = 'overlayLayer';
     }
-
+    
     var panes = this.getPanes(),
         overlayLayer = panes[options.layer],
         stop_overlay_events = ['contextmenu', 'DOMMouseScroll', 'dblclick', 'mousedown'];
@@ -8307,7 +8307,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.markers.length > 0) {
     static_map_options['markers'] = [];
-
+    
     for (var i = 0; i < this.markers.length; i++) {
       static_map_options['markers'].push({
         lat: this.markers[i].getPosition().lat(),
@@ -8318,7 +8318,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.polylines.length > 0) {
     var polyline = this.polylines[0];
-
+    
     static_map_options['polyline'] = {};
     static_map_options['polyline']['path'] = google.maps.geometry.encoding.encodePath(polyline.getPath());
     static_map_options['polyline']['strokeColor'] = polyline.strokeColor
@@ -8342,7 +8342,7 @@ GMaps.staticMapURL = function(options){
   static_root += '?';
 
   var markers = options.markers;
-
+  
   delete options.markers;
 
   if (!markers && options.marker) {
@@ -8644,7 +8644,7 @@ GMaps.custom_events = ['marker_added', 'marker_removed', 'polyline_added', 'poly
 
 GMaps.on = function(event_name, object, handler) {
   if (GMaps.custom_events.indexOf(event_name) == -1) {
-    if(object instanceof GMaps) object = object.map;
+    if(object instanceof GMaps) object = object.map; 
     return google.maps.event.addListener(object, event_name, handler);
   }
   else {
@@ -8662,7 +8662,7 @@ GMaps.on = function(event_name, object, handler) {
 
 GMaps.off = function(event_name, object) {
   if (GMaps.custom_events.indexOf(event_name) == -1) {
-    if(object instanceof GMaps) object = object.map;
+    if(object instanceof GMaps) object = object.map; 
     google.maps.event.clearListeners(object, event_name);
   }
   else {
@@ -8731,7 +8731,7 @@ GMaps.geocode = function(options) {
   delete options.lat;
   delete options.lng;
   delete options.callback;
-
+  
   this.geocoder.geocode(options, function(results, status) {
     callback(results, status);
   });
@@ -47685,7 +47685,7 @@ function addStyle (obj, options) {
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
 	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css)
+		 ? options.transform(obj.css) 
 		 : options.transform.default(obj.css);
 
 	    if (result) {
@@ -48009,16 +48009,13 @@ __webpack_require__(/*! ./plugins/phoneMask */ "./resources/js/plugins/phoneMask
 
 __webpack_require__(/*! ./plugins/gmaps */ "./resources/js/plugins/gmaps.js");
 
-__webpack_require__(/*! ./plugins/datepicker */ "./resources/js/plugins/datepicker.js"); //require('js-datepicker/src/datepicker.scss');
-
+__webpack_require__(/*! ./plugins/datepicker */ "./resources/js/plugins/datepicker.js");
 
 __webpack_require__(/*! select2 */ "./node_modules/select2/dist/js/select2.js");
 
 __webpack_require__(/*! select2/src/scss/core.scss */ "./node_modules/select2/src/scss/core.scss");
 
-__webpack_require__(/*! ./plugins/selectCountry */ "./resources/js/plugins/selectCountry.js");
-
-__webpack_require__(/*! ./plugins/deleteValidation */ "./resources/js/plugins/deleteValidation.js");
+__webpack_require__(/*! ./plugins/selectCountry */ "./resources/js/plugins/selectCountry.js"); //require('./plugins/deleteValidation');
 
 /***/ }),
 
@@ -48091,27 +48088,6 @@ js_datepicker__WEBPACK_IMPORTED_MODULE_0___default()('#adEndDate', {
     input.value = date.getDate() + "-" + currentMonth + "-" + date.getFullYear();
   }
 });
-
-/***/ }),
-
-/***/ "./resources/js/plugins/deleteValidation.js":
-/*!**************************************************!*\
-  !*** ./resources/js/plugins/deleteValidation.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-function confirmDelete() {
-  var result = confirm('Are you sure you want to delete this ad?');
-  console.log('sdfs');
-
-  if (result) {
-    event.preventDefault();
-    document.getElementById('delete-ad').submit();
-  }
-}
-
-window.confirmDelete = confirmDelete();
 
 /***/ }),
 
