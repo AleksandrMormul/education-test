@@ -6,6 +6,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -24,11 +25,13 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property int|null $role_id
- * @property-read Collection|\App\Models\Ad[] $ads
+ * @property-read Collection|Ad[] $ads
  * @property-read int|null $ads_count
+ * @property-read Collection|Favorite[] $favorites
+ * @property-read int|null $favorites_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\Role $roles
+ * @property-read Role|null $roles
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
@@ -81,11 +84,34 @@ class User extends Authenticatable
     /**
      * Ads
      *
-     * @return mixed
+     * @return HasMany
      */
-    public function ads()
+    public function ads(): HasMany
     {
         return $this->hasMany(Ad::class);
+    }
+
+    /**
+     * @param $class
+     * @param int $adId
+     * @return Collection
+     */
+    public function favorite($class, int $adId): Collection
+    {
+        return $this->favorites()->where('favoriteable_type', $class)
+            ->where('favoriteable_id', '=', $adId)
+            ->with('favoriteable')
+            ->get();
+    }
+
+    /**
+     * Ads
+     *
+     * @return HasMany
+     */
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class, 'user_id');
     }
 
     /**
@@ -94,14 +120,6 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->checkRole(self::ROLE_ADMIN);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAuthor(): bool
-    {
-        return $this->checkRole(self::ROLE_AUTHOR);
     }
 
     /**
@@ -124,5 +142,13 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAuthor(): bool
+    {
+        return $this->checkRole(self::ROLE_AUTHOR);
     }
 }

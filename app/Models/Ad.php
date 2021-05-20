@@ -6,10 +6,14 @@ use App\Services\AdService;
 use Countries;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
+use Monarobase\CountryList\CountryNotFoundException;
 
 /**
  * App\Models\Ad
@@ -26,9 +30,11 @@ use Illuminate\Support\Facades\Lang;
  * @property Carbon $end_date
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Collection|Favorite[] $favorites
+ * @property-read int|null $favorites_count
  * @property-read string $full_name_country
  * @property-read string $image_url
- * @property-read \App\Models\User $user
+ * @property-read User $user
  * @method static Builder|Ad newModelQuery()
  * @method static Builder|Ad newQuery()
  * @method static Builder|Ad query()
@@ -83,9 +89,23 @@ class Ad extends Model
      *
      * @return BelongsTo
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function addFavorite()
+    {
+        $favorite = new Favorite(['user_id' => Auth::id()]);
+        $this->favorites()->save($favorite);
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function favorites(): MorphMany
+    {
+        return $this->morphMany(Favorite::class, 'favoriteable');
     }
 
     public function scopeVisibleForDate($query)
@@ -96,8 +116,9 @@ class Ad extends Model
 
     /**
      * @return string
+     * @throws CountryNotFoundException
      */
-    public function getFullNameCountryAttribute()
+    public function getFullNameCountryAttribute(): string
     {
         return Countries::getOne($this->country_code, Lang::getLocale());
     }
