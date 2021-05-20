@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Ad;
+use App\Models\User;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -101,5 +102,19 @@ class AdService
     public function deleteAd(int $adId): int
     {
         return Ad::destroy($adId);
+    }
+
+    /**
+     * @param int $adId
+     * @return bool
+     */
+    public function isFavorite(int $adId): bool
+    {
+        $user = User::find(Auth::id());
+        $favorite = $user->favorite(Ad::class, $adId);
+        if (count($favorite) === 1) {
+            return true;
+        }
+        return false;
     }
 }

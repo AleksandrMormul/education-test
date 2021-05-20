@@ -19,6 +19,14 @@
         </script>
     <script>
         $(document).on('click','.heart',function(){
+            $.ajax({
+                type:"POST",
+                url:"http://localhost/favorites",
+                data:{
+                    id: {{ $ad->id }},
+                    '_token':$('input[name=_token]').val()
+                },
+            });
             $(this).toggleClass("fas far");
         })
     </script>
@@ -47,7 +55,7 @@
                     <div>
                         <div class="container-img-ad">
                             <img class="ad-image" src="{{ $ad->image_url }}" alt="ad image">
-                            <i class="heart far fa-heart"></i>
+                            <i class="heart  {{ $isFavorite ? 'fas' : 'far'}}  fa-heart"></i>
                         </div>
                         <p>{{ $ad->description }}</p>
                         <p>{{ optional($ad->created_at)->toDateString() }}</p>

@@ -8,6 +8,7 @@ use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
 use App\Services\CountryService;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -95,9 +96,13 @@ class AdController extends Controller
      * @param Ad $ad
      * @return Renderable
      */
-    public function show(GetAdRequest $request, Ad $ad)
+    public function show(GetAdRequest $request, Ad $ad): Renderable
     {
-        return view('ads/show', ['ad' => $ad]);
+        $isFavorite = $this->adService->isFavorite($ad->id);
+        return view('ads/show', [
+            'ad' => $ad,
+            'isFavorite' => $isFavorite,
+        ]);
     }
 
     /**
@@ -148,8 +153,17 @@ class AdController extends Controller
         try {
             $this->adService->deleteAd($ad->id);
             return redirect()->route('ads.index')->with('success', 'Deleting ad was success');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function storeFavorite(Request $request)
+    {
+        $ad = Ad::find($request->input('id'));
+        $ad->addFavorite();
     }
 }
