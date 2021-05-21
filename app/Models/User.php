@@ -50,16 +50,16 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    const ROLE_ADMIN = 'admin';
-    const ROLE_AUTHOR = 'author';
-    const ROLE_USER = 'user';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id'
+        'name',
+        'email',
+        'password',
+        'role_id',
     ];
 
     /**
@@ -115,40 +115,10 @@ class User extends Authenticatable
     }
 
     /**
-     * @return bool
-     */
-    public function isAdmin(): bool
-    {
-        return $this->checkRole(self::ROLE_ADMIN);
-    }
-
-    /**
-     * @param string $roleName
-     * @return bool
-     */
-    private function checkRole(string $roleName): bool
-    {
-        foreach ($this->roles()->get() as $role) {
-            if ($role->role === $roleName) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * @return BelongsTo
      */
-    public function roles()
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id');
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAuthor(): bool
-    {
-        return $this->checkRole(self::ROLE_AUTHOR);
     }
 }
