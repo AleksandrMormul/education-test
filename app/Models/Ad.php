@@ -96,8 +96,12 @@ class Ad extends Model
 
     public function addFavorite()
     {
-        $favorite = new Favorite(['user_id' => Auth::id()]);
-        $this->favorites()->save($favorite);
+        if (Favorite::where('user_id', '=', Auth::id())
+            ->where('favoriteable_id', '=', $this->id)->doesntExist()) {
+            $favorite = new Favorite(['user_id' => Auth::id()]);
+            $this->favorites()->save($favorite);
+        }
+
     }
 
     /**

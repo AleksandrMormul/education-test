@@ -18,11 +18,11 @@
             });
         </script>
     <script>
-
+        let isFavorite = false
         $(document).on('click','.heart',function(){
 
-            console.log({!! json_encode($isFavorite) !!})
-            if ({!! json_encode(!$isFavorite) !!}) {
+            console.log('pos',isFavorite)
+            if (!isFavorite/*{!! json_encode(!$isFavorite) !!}*/) {
                 $.ajax({
                     type: "POST",
                     url: "http://localhost/favorites",
@@ -30,14 +30,16 @@
                         id: {{ $ad->id }},
                         '_token': $('input[name=_token]').val()
                     },
+
                 });
+                isFavorite = true;
                 $(this).toggleClass("fas");
             }
         })
         $(document).on('click','.heart',function(){
 
-            console.log({!! json_encode($isFavorite) !!})
-            if ({!! json_encode($isFavorite) !!}) {
+            console.log('del',isFavorite)
+            if (isFavorite) {
                 $.ajax({
                     type: "DELETE",
                     url: "http://localhost/favorites/" + '{{ $ad->id }}',
@@ -45,7 +47,10 @@
                         '_token':$('input[name=_token]').val(),
                         id: {{ $ad->id }},
                     },
+
                 });
+                isFavorite = false;
+                $(this).removeClass("fas");
                 $(this).toggleClass("far");
             }
         })
