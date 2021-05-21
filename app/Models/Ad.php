@@ -30,11 +30,11 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @property Carbon $end_date
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection|Favorite[] $favorites
+ * @property-read Collection|\App\Models\Favorite[] $favorites
  * @property-read int|null $favorites_count
  * @property-read string $full_name_country
  * @property-read string $image_url
- * @property-read User $user
+ * @property-read \App\Models\User $user
  * @method static Builder|Ad newModelQuery()
  * @method static Builder|Ad newQuery()
  * @method static Builder|Ad query()

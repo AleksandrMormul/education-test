@@ -8,6 +8,7 @@ use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
 use App\Services\CountryService;
+use App\Services\FavoriteService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
@@ -176,5 +177,15 @@ class AdController extends Controller
     {
         $ad = Ad::find($request->input('id'));
         $this->adService->deleteFavorite($ad->id);
+    }
+
+    /**
+     * @return Application|\Illuminate\Contracts\View\Factory|View
+     */
+    public function showFavorite()
+    {
+        $favoriteService = resolve(FavoriteService::class);
+        $favoriteService->getFavoriteAds();
+        return view('ads.favorite');
     }
 }

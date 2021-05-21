@@ -17,7 +17,7 @@ use Illuminate\Support\Carbon;
  * @property int $favoriteable_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Model|Eloquent $favoriteable
+ * @property-read Model|\Eloquent $favoriteable
  * @method static Builder|Favorite newModelQuery()
  * @method static Builder|Favorite newQuery()
  * @method static Builder|Favorite query()

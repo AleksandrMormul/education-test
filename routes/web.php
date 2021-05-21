@@ -18,6 +18,7 @@ Auth::routes();
 Route::resource('ads', 'AdController');
 Route::post('favorites', 'AdController@storeFavorite');
 Route::delete('favorites/{adId}', 'AdController@destroyFavorite');
+Route::get('favorites', 'AdController@showFavorite')->name('ads.favorite');
 Route::get('/', function () {
     return view('welcome');
 });
