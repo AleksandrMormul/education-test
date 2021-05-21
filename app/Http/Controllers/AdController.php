@@ -21,21 +21,13 @@ use Illuminate\View\View;
  */
 class AdController extends Controller
 {
-
-    /**
-     * @var AdService|mixed
-     */
-    private $adService;
-
     /**
      * __construct
      *
-     * @param AdService $service
      * @return void
      */
-    public function __construct(AdService $service)
+    public function __construct()
     {
-        $this->adService = $service;
         $this->authorizeResource(Ad::class, 'ad');
     }
 
@@ -44,9 +36,9 @@ class AdController extends Controller
      *
      * @return View
      */
-    public function index()
+    public function index(): View
     {
-        $query = $this->adService->getAds();
+        $query = AdService::getAds();
 
         return view(
             'ads/index',
@@ -59,9 +51,9 @@ class AdController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         $countries = CountryService::getAllCountry();
         return view('ads/create', ['countries' => $countries]);
@@ -76,11 +68,13 @@ class AdController extends Controller
     public function store(StoreAdRequest $request)
     {
         $imgSrcName = null;
+
         if ($request->file('ad_file')) {
-            $imgSrcName = $this->adService->storeAdImage($request->file('ad_file'));
+            $imgSrcName = AdService::storeAdImage($request->file('ad_file'));
         }
+
         $adData = $request->getPayload();
-        $adId = $this->adService->createAd(array_merge($adData, [
+        $adId = AdService::createAd(array_merge($adData, [
             'img_src' => $imgSrcName,
         ]));
 
@@ -94,7 +88,7 @@ class AdController extends Controller
      * @param Ad $ad
      * @return Renderable
      */
-    public function show(GetAdRequest $request, Ad $ad)
+    public function show(GetAdRequest $request, Ad $ad): Renderable
     {
         return view('ads/show', ['ad' => $ad]);
     }
@@ -108,6 +102,7 @@ class AdController extends Controller
     public function edit(Ad $ad): Renderable
     {
         $countries = CountryService::getAllCountry();
+
         return view('ads.edit', [
             'ad' => $ad,
             'countries' => $countries,
@@ -125,13 +120,16 @@ class AdController extends Controller
     {
         $adId = $ad->id;
         $imgSrcName = null;
+
         if ($request->hasFile('ad_file')) {
-            $imgSrcName = $this->adService->storeAdImage($request->file('ad_file'));
+            $imgSrcName = AdService::storeAdImage($request->file('ad_file'));
         }
+
         $adData = $request->getPayload();
-        $this->adService->updateAd($ad, array_merge($adData, [
+        AdService::updateAd($ad, array_merge($adData, [
             'img_src' => $imgSrcName,
         ]));
+
         return redirect(route('ads.show', $adId));
     }
 

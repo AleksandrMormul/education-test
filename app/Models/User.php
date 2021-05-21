@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\UserService;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -95,5 +96,30 @@ class User extends Authenticatable
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return UserService::isAdmin($this);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAuthor(): bool
+    {
+        return UserService::isAuthor($this);
+    }
+
+    /**
+     * @param string $roleName
+     * @return bool
+     */
+    private function checkRole(string $roleName): bool
+    {
+        return UserService::checkRole($this, $roleName);
     }
 }
