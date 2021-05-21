@@ -3,10 +3,10 @@
 namespace App\Services;
 
 use App\Models\Role;
-use App\Models\User;
 use Illuminate\Database\Eloquent\HigherOrderBuilderProxy;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class RoleService
@@ -17,6 +17,7 @@ class RoleService
     public const ADMIN_ROLE = 'admin';
     public const USER_ROLE = 'user';
     public const AUTHOR_ROLE = 'author';
+    public const CACHE_PREFIX = 'role_';
 
     /**
      * @param string $name
@@ -25,16 +26,19 @@ class RoleService
      */
     public static function getRoleIdByName(string $name)
     {
-        $key = 'role_' . $name;
+        $key = self::CACHE_PREFIX . $name;
         $role = Cache::get($key);
 
         if (is_null($role)) {
-            $role = Role::whereName($name)->first();
-            Cache::forever($key, $role);
-        }
+            Cache::rememberForever($key,function () use ($name){
+                try {
+                    return Role::whereName($name)->firstOrFail();
+                } catch (ModelNotFoundException $exception) {
+                    Log::warning('Check if role ' . $name . ' exist in database. Or run artisan db:seed.');
+                    throw new \Exception('The' . $name . ' role is not in the database');
+                }
 
-        if (!$role) {
-            throw new \Exception('Check if role ' . $name . ' exist in database. Or run artisan db:seed.');
+            });
         }
 
         return $role->id;

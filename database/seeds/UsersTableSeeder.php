@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Role;
 use App\Models\User;
 use App\Services\RoleService;
 use Illuminate\Database\Seeder;
@@ -19,14 +18,15 @@ class UsersTableSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     * @throws Exception
      */
     public function run()
     {
         if (User::where('email', self::ADMIN_USER_EMAIL)->doesntExist()) {
 
-            $roleIdAdmin = Role::whereName(RoleService::ADMIN_ROLE)->first()->id;
-            $roleIdUser = Role::whereName(RoleService::USER_ROLE)->first()->id;
-            $roleIdAuthor = Role::whereName(RoleService::AUTHOR_ROLE)->first()->id;
+            $roleIdAdmin = RoleService::getRoleIdByName(RoleService::ADMIN_ROLE);
+            $roleIdUser = RoleService::getRoleIdByName(RoleService::USER_ROLE);
+            $roleIdAuthor = RoleService::getRoleIdByName(RoleService::AUTHOR_ROLE);
 
             User::create(
                 [

@@ -2,9 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class UserService
@@ -37,7 +35,7 @@ class UserService
      */
     public static function checkRole(User $user, string $roleName): bool
     {
-        $userRole = $user->role()->get()->first()->name;
+        $userRole = $user->role->name;
         return $userRole === $roleName;
     }
 }
