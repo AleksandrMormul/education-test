@@ -8,9 +8,6 @@ use Illuminate\Database\Seeder;
  */
 class UserRoleSeeder extends Seeder
 {
-    public const ADMIN_ROLE = 'admin';
-    public const USER_ROLE = 'user';
-    public const AUTHOR_ROLE = 'author';
 
     /**
      * Run the database seeds.
@@ -19,11 +16,11 @@ class UserRoleSeeder extends Seeder
      */
     public function run()
     {
-        if (Role::whereIn('role', [self::ADMIN_ROLE, self::AUTHOR_ROLE, self::USER_ROLE])->doesntExist()) {
-            $roles = [self::ADMIN_ROLE, self::AUTHOR_ROLE, self::USER_ROLE];
+        if (Role::whereIn('name', [Role::ADMIN_ROLE, Role::AUTHOR_ROLE, Role::USER_ROLE])->doesntExist()) {
+            $roles = [Role::ADMIN_ROLE, Role::AUTHOR_ROLE, Role::USER_ROLE];
             foreach ($roles as $roleName) {
                 Role::create([
-                    'role' => $roleName
+                    'name' => $roleName
                 ]);
             }
         }

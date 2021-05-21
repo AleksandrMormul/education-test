@@ -4,12 +4,22 @@ namespace App\Policies;
 
 use App\Models\Ad;
 use App\Models\User;
+use App\Services\RoleService;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AdPolicy
 {
     use HandlesAuthorization;
 
+    /**
+     * @var RoleService
+     */
+    private $roleService;
+
+    public function __construct(RoleService $service)
+    {
+        $this->roleService = $service;
+    }
     /**
      * Determine whether the user can view any models.
      *
@@ -41,9 +51,10 @@ class AdPolicy
      */
     public function create(User $user): bool
     {
-        if ($user->isAdmin() || $user->isAuthor()) {
+        if ($this->roleService->isAdmin() || $this->roleService->isAuthor()) {
             return true;
         }
+        return false;
     }
 
     /**

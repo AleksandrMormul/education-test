@@ -12,19 +12,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * App\Models\Role
  *
  * @property int $id
- * @property string $role
+ * @property string $name
  * @property-read Collection|User[] $users
  * @property-read int|null $users_count
  * @method static Builder|Role newModelQuery()
  * @method static Builder|Role newQuery()
  * @method static Builder|Role query()
  * @method static Builder|Role whereId($value)
- * @method static Builder|Role whereRole($value)
+ * @method static Builder|Role whereName($value)
  * @mixin Eloquent
  */
 class Role extends Model
 {
-
+    public const ADMIN_ROLE = 'admin';
+    public const USER_ROLE = 'user';
+    public const AUTHOR_ROLE = 'author';
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -33,15 +35,6 @@ class Role extends Model
      */
     protected $fillable = [
         'role',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'role' => 'string',
     ];
 
     /**

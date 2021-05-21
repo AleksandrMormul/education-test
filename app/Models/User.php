@@ -6,12 +6,12 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\User
@@ -48,15 +48,16 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    public const ROLE_ADMIN = 'admin';
-    public const ROLE_AUTHOR = 'author';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id'
+        'name',
+        'email',
+        'password',
+        'role_id',
     ];
 
     /**
@@ -89,39 +90,9 @@ class User extends Authenticatable
     }
 
     /**
-     * @return bool
-     */
-    public function isAdmin(): bool
-    {
-        return $this->checkRole(self::ROLE_ADMIN);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isAuthor(): bool
-    {
-        return $this->checkRole(self::ROLE_AUTHOR);
-    }
-
-    /**
-     * @param string $roleName
-     * @return bool
-     */
-    private function checkRole(string $roleName): bool
-    {
-        foreach ($this->roles()->get() as $role) {
-            if ($role->role === $roleName) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * @return BelongsTo
      */
-    public function roles(): BelongsTo
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id');
     }
