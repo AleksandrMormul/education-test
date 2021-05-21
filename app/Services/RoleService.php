@@ -17,7 +17,7 @@ class RoleService
     public const ADMIN_ROLE = 'admin';
     public const USER_ROLE = 'user';
     public const AUTHOR_ROLE = 'author';
-    public const CACHE_PREFIX = 'role_';
+    private const CACHE_PREFIX = 'role_';
 
     /**
      * @param string $name
@@ -27,20 +27,13 @@ class RoleService
     public static function getRoleIdByName(string $name)
     {
         $key = self::CACHE_PREFIX . $name;
-        $role = Cache::get($key);
-
-        if (is_null($role)) {
-            Cache::rememberForever($key,function () use ($name){
-                try {
-                    return Role::whereName($name)->firstOrFail();
-                } catch (ModelNotFoundException $exception) {
-                    Log::warning('Check if role ' . $name . ' exist in database. Or run artisan db:seed.');
-                    throw new \Exception('The' . $name . ' role is not in the database');
-                }
-
-            });
-        }
-
-        return $role->id;
+        Cache::rememberForever($key,function () use ($name){
+            try {
+                return Role::whereName($name)->firstOrFail();
+            } catch (ModelNotFoundException $exception) {
+                Log::warning('Check if role ' . $name . ' exist in database. Or run artisan db:seed.');
+                throw new \Exception('The' . $name . ' role is not in the database');
+            }
+        });
     }
 }
