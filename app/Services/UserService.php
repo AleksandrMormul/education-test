@@ -13,6 +13,7 @@ class UserService
     /**
      * @param User $user
      * @return bool
+     * @throws \Exception
      */
     public static function isAdmin(User $user): bool
     {
@@ -22,6 +23,7 @@ class UserService
     /**
      * @param User $user
      * @return bool
+     * @throws \Exception
      */
     public static function isAuthor(User $user): bool
     {
@@ -32,10 +34,10 @@ class UserService
      * @param User $user
      * @param string $roleName
      * @return bool
+     * @throws \Exception
      */
     public static function checkRole(User $user, string $roleName): bool
     {
-        $userRole = $user->role->name;
-        return $userRole === $roleName;
+        return $user->role_id === RoleService::getRoleIdByName($roleName);
     }
 }
