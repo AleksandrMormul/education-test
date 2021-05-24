@@ -100,7 +100,7 @@ class AdService
      * @param int $adId
      * @return int
      */
-    public function deleteAd(int $adId): int
+    public static function deleteAd(int $adId): int
     {
         return Ad::destroy($adId);
     }
