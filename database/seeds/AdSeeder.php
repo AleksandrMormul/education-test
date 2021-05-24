@@ -1,10 +1,9 @@
 <?php
 
+use App\Models\Ad;
+use App\Models\User;
 use App\Services\RoleService;
 use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Ad;
-use App\Models\Role;
 
 /**
  * AdSeeder
@@ -19,13 +18,8 @@ class AdSeeder extends Seeder
      */
     public function run()
     {
-        $roleService = resolve(RoleService::class);
-        $roleId = $roleService->getRoleIdByName(Role::AUTHOR_ROLE);
-        if (!$roleId) {
-            throw new Exception('blabla');
-        }
+        $roleId = RoleService::getRoleIdByName(RoleService::AUTHOR_ROLE);
 
-        //dd($roleId);
         factory(User::class, 5)->create()->each(
             function ($user) use ($roleId) {
                 $user->update(['role_id' => $roleId]);

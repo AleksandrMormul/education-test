@@ -34,7 +34,7 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @property-read int|null $favorites_count
  * @property-read string $full_name_country
  * @property-read string $image_url
- * @property-read \App\Models\User $user
+ * @property-read User $user
  * @method static Builder|Ad newModelQuery()
  * @method static Builder|Ad newQuery()
  * @method static Builder|Ad query()
@@ -132,7 +132,6 @@ class Ad extends Model
      */
     public function getImageUrlAttribute(): string
     {
-        $adService = resolve(AdService::class);
-        return $adService->getImageUrl($this);
+        return AdService::getImageUrl($this);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\UserService;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -25,13 +26,11 @@ use Illuminate\Support\Carbon;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection|\App\Models\Ad[] $ads
+ * @property-read Collection|Ad[] $ads
  * @property-read int|null $ads_count
- * @property-read Collection|\App\Models\Favorite[] $favorites
- * @property-read int|null $favorites_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\Role|null $role
+ * @property-read Role|null $role
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
@@ -120,5 +119,30 @@ class User extends Authenticatable
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return UserService::isAdmin($this);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAuthor(): bool
+    {
+        return UserService::isAuthor($this);
+    }
+
+    /**
+     * @param string $roleName
+     * @return bool
+     */
+    private function checkRole(string $roleName): bool
+    {
+        return UserService::checkRole($this, $roleName);
     }
 }

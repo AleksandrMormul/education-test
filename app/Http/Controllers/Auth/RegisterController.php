@@ -64,13 +64,13 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return User
+     * @throws \Exception
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
-        $roleService = resolve(RoleService::class);
-        $roleId = $roleService->getRoleIdByName(Role::USER_ROLE);
+        $roleId = RoleService::getRoleIdByName(RoleService::USER_ROLE);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

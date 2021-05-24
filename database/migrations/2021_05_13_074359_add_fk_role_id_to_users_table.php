@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AdFkRoleIdToUsersTable extends Migration
+class AddFkRoleIdToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AdFkRoleIdToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreign('role_id')->references('id')->on('roles')
-                ->onDelete('cascade')->onUpdate('cascade');
+                ->onUpdate('cascade')->onDelete('set null');
         });
     }
 

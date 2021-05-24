@@ -24,9 +24,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Role extends Model
 {
-    public const ADMIN_ROLE = 'admin';
-    public const USER_ROLE = 'user';
-    public const AUTHOR_ROLE = 'author';
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -34,7 +36,7 @@ class Role extends Model
      * @var array
      */
     protected $fillable = [
-        'role',
+        'name',
     ];
 
     /**

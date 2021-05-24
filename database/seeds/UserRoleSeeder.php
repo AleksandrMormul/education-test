@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Role;
+use App\Services\RoleService;
 use Illuminate\Database\Seeder;
 
 /**
@@ -16,8 +17,9 @@ class UserRoleSeeder extends Seeder
      */
     public function run()
     {
-        if (Role::whereIn('name', [Role::ADMIN_ROLE, Role::AUTHOR_ROLE, Role::USER_ROLE])->doesntExist()) {
-            $roles = [Role::ADMIN_ROLE, Role::AUTHOR_ROLE, Role::USER_ROLE];
+        if (Role::whereIn('name', [RoleService::ADMIN_ROLE, RoleService::AUTHOR_ROLE, RoleService::USER_ROLE])->doesntExist()) {
+            $roles = [RoleService::ADMIN_ROLE, RoleService::AUTHOR_ROLE, RoleService::USER_ROLE];
+
             foreach ($roles as $roleName) {
                 Role::create([
                     'name' => $roleName
