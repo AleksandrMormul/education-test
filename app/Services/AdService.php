@@ -114,8 +114,11 @@ class AdService
     public static function isFavorite(int $adId): bool
     {
         $user = User::find(Auth::id());
-        $favorite = $user->favorite(Ad::class, $adId);
-        return count($favorite) === 1;
+        if ($user) {
+            $favorite = $user->favorite(Ad::class, $adId);
+            return count($favorite) === 1;
+        }
+        return false;
     }
 
     /**

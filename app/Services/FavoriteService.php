@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Models\Ad;
 use App\Models\User;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\HigherOrderCollectionProxy;
 
 /**
  * Class FavoriteService
@@ -13,12 +15,15 @@ use Illuminate\Support\HigherOrderCollectionProxy;
 class FavoriteService
 {
     /**
-     * @return HigherOrderCollectionProxy|mixed
+     * @return LengthAwarePaginator
+     * @throws BindingResolutionException
      */
-    public static function getFavoriteAds()
+    public static function getFavoriteAds(): LengthAwarePaginator
     {
         $user = User::find(Auth::id());
 
-        return $user->favorites()->paginate(5);
+        $favoriteAds = $user->favoriteAds(Ad::class);
+
+        return PaginateService::paginate($favoriteAds, 15);
     }
 }

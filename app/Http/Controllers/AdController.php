@@ -14,7 +14,6 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 
@@ -172,6 +171,7 @@ class AdController extends Controller
     public function destroyFavorite(Request $request)
     {
         $ad = Ad::find($request->input('id'));
+
         AdService::deleteFavorite($ad->id);
     }
 
@@ -181,8 +181,9 @@ class AdController extends Controller
     public function showFavorite()
     {
         $favorites = FavoriteService::getFavoriteAds();
+
         return view('ads.favorite', [
-            'favorites' => $favorites,
+            'favoritesAds' => $favorites,
         ]);
     }
 }

@@ -1,19 +1,20 @@
 @extends('layouts.app')
 
 @section('content')
+    @if( count($favoritesAds) > 0 )
     <div class="container">
         <div class="row">
-            @foreach ($favorites as $favorite)
+            @foreach ($favoritesAds as $ad)
                 <div class="col-4 content">
                     <div class="card">
-                        <img src="{{ $favorite->image_url }}"
+                        <img src="{{ $ad->image_url }}"
                              class="card-img-top" alt="ad image">
                         <div class="card-body">
-                            <h3 class="card-title">{{ $favorite->title }}</h3>
-                            <p class="card-text">{{ $favorite->description }}</p>
-                            <p class="card-text">Created at {{ optional($favorite->created_at)->toDateString() }}</p>
-                            <p class="card-text">End date {{ optional($favorite->end_date)->toDateString() }}</p>
-                            <a href="{{ route('ads.show', $favorite->id) }}" class="btn btn-primary">Show details</a>
+                            <h3 class="card-title">{{ $ad->title }}</h3>
+                            <p class="card-text">{{ $ad->description }}</p>
+                            <p class="card-text">Created at {{ optional($ad->created_at)->toDateString() }}</p>
+                            <p class="card-text">End date {{ optional($ad->end_date)->toDateString() }}</p>
+                            <a href="{{ route('ads.show', $ad->id) }}" class="btn btn-primary">Show details</a>
                         </div>
                     </div>
                 </div>
@@ -21,6 +22,11 @@
         </div>
     </div>
     <div class="d-flex justify-content-center">
-        {!! $favorites->links() !!}
+        {!! $favoritesAds->links() !!}
     </div>
+    @else
+        <div class="container">
+            <h3>List of favorite ads are empty</h3>
+        </div>
+    @endif
 @endsection

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Services\UserService;
 use Eloquent;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -116,6 +117,26 @@ class User extends Authenticatable
     }
 
     /**
+     * @param $class
+     * @return Collection|\Illuminate\Support\Collection
+     */
+    public function favoriteAds($class)
+    {
+        return $this->favorites()
+            ->where('favoriteable_type', $class)
+            ->with('favoriteable')
+            ->get()
+            ->mapWithKeys(function ($item) {
+
+                if (isset($item['favoriteable'])) {
+                    return [$item['favoriteable']->id => $item['favoriteable']];
+                }
+
+                return [];
+            });
+    }
+
+    /**
      * @return BelongsTo
      */
     public function role(): BelongsTo
@@ -125,7 +146,7 @@ class User extends Authenticatable
 
     /**
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function isAdmin(): bool
     {
@@ -134,7 +155,7 @@ class User extends Authenticatable
 
     /**
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function isAuthor(): bool
     {
@@ -144,7 +165,7 @@ class User extends Authenticatable
     /**
      * @param string $roleName
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     private function checkRole(string $roleName): bool
     {

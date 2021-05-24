@@ -70,7 +70,9 @@
                     <div>
                         <div class="container-img-ad">
                             <img class="ad-image" src="{{ $ad->image_url }}" alt="ad image">
-                            <i class="heart  {{ $isFavorite ? 'fas' : 'far'}}  fa-heart"></i>
+                            @auth
+                                <i class="heart  {{ $isFavorite ? 'fas' : 'far'}}  fa-heart"></i>
+                            @endauth
                         </div>
                         <p>{{ $ad->description }}</p>
                         <p>{{ optional($ad->created_at)->toDateString() }}</p>
