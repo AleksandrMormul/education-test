@@ -21,18 +21,20 @@ class RoleService
 
     /**
      * @param string $name
-     * @return HigherOrderBuilderProxy|int|mixed
-     * @throws \Exception
+     * @return int
+     * @throws \RuntimeException
      */
     public static function getRoleIdByName(string $name)
     {
         $key = self::CACHE_PREFIX . $name;
-        Cache::rememberForever($key,function () use ($name){
+
+        return Cache::rememberForever($key, function () use ($name) {
             try {
-                return Role::whereName($name)->firstOrFail();
+                return Role::whereName($name)->firstOrFail()->id;
             } catch (ModelNotFoundException $exception) {
                 Log::warning('Check if role ' . $name . ' exist in database. Or run artisan db:seed.');
-                throw new \Exception('The' . $name . ' role is not in the database');
+
+                throw new \RuntimeException('The' . $name . ' role is not in the database');
             }
         });
     }
