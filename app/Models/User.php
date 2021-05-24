@@ -94,19 +94,6 @@ class User extends Authenticatable
     }
 
     /**
-     * @param $class
-     * @param int $adId
-     * @return Collection
-     */
-    public function favorite($class, int $adId): Collection
-    {
-        return $this->favorites()->where('favoriteable_type', $class)
-            ->where('favoriteable_id', '=', $adId)
-            ->with('favoriteable')
-            ->get();
-    }
-
-    /**
      * Ads
      *
      * @return HasMany
@@ -114,26 +101,6 @@ class User extends Authenticatable
     public function favorites(): HasMany
     {
         return $this->hasMany(Favorite::class, 'user_id');
-    }
-
-    /**
-     * @param $class
-     * @return Collection|\Illuminate\Support\Collection
-     */
-    public function favoriteAds($class)
-    {
-        return $this->favorites()
-            ->where('favoriteable_type', $class)
-            ->with('favoriteable')
-            ->get()
-            ->mapWithKeys(function ($item) {
-
-                if (isset($item['favoriteable'])) {
-                    return [$item['favoriteable']->id => $item['favoriteable']];
-                }
-
-                return [];
-            });
     }
 
     /**

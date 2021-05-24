@@ -108,26 +108,26 @@ class AdService
     }
 
     /**
-     * @param int $adId
+     * @param Ad $ad
      * @return bool
      */
-    public static function isFavorite(int $adId): bool
+    public static function isFavorite(Ad $ad): bool
     {
         $user = User::find(Auth::id());
         if ($user) {
-            $favorite = $user->favorite(Ad::class, $adId);
+            $favorite = UserService::userAdFavorite($user, $ad, Ad::class);
             return count($favorite) === 1;
         }
         return false;
     }
 
     /**
-     * @param int $adId
+     * @param Ad $ad
      */
-    public static function deleteFavorite(int $adId)
+    public static function deleteFavorite(Ad $ad)
     {
         $user = User::find(Auth::id());
-        $favorite = $user->favorite(Ad::class, $adId);
+        $favorite = UserService::userAdFavorite($user, $ad, Ad::class);
         Favorite::destroy($favorite[0]->id);
     }
 }

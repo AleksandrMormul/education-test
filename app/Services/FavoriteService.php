@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Ad;
+use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -22,8 +23,23 @@ class FavoriteService
     {
         $user = User::find(Auth::id());
 
-        $favoriteAds = $user->favoriteAds(Ad::class);
+        $favoriteAds = UserService::userAdsFavorite($user, Ad::class);
 
         return PaginateService::paginate($favoriteAds, 15);
+    }
+
+    /**
+     * @param Ad $ad
+     */
+    public static function addFavorite(Ad $ad)
+    {
+        if (
+            Favorite::where('user_id', '=', Auth::id())
+            ->where('favoriteable_id', '=', $ad->id)
+            ->doesntExist()
+        ) {
+            $favorite = new Favorite(['user_id' => Auth::id()]);
+            $ad->favorites()->save($favorite);
+        }
     }
 }

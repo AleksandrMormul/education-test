@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Ad;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class UserService
@@ -40,4 +42,40 @@ class UserService
     {
         return $user->role_id === RoleService::getRoleIdByName($roleName);
     }
+
+    /**
+     * @param User $user
+     * @param Ad $ad
+     * @param $class
+     * @return Collection
+     */
+    public static function userAdFavorite(User $user, Ad $ad, $class): Collection
+    {
+        return $user->favorites()->where('favoriteable_type', $class)
+            ->where('favoriteable_id', '=', $ad->id)
+            ->with('favoriteable')
+            ->get();
+    }
+
+    /**
+     * @param User $user
+     * @param $class
+     * @return Collection|\Illuminate\Support\Collection
+     */
+    public static function userAdsFavorite(User $user, $class)
+    {
+        return $user->favorites()
+            ->where('favoriteable_type', $class)
+            ->with('favoriteable')
+            ->get()
+            ->mapWithKeys(function ($item) {
+
+                if (isset($item['favoriteable'])) {
+                    return [$item['favoriteable']->id => $item['favoriteable']];
+                }
+
+                return [];
+            });
+    }
+
 }

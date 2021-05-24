@@ -93,7 +93,7 @@ class AdController extends Controller
      */
     public function show(GetAdRequest $request, Ad $ad): Renderable
     {
-        $isFavorite = AdService::isFavorite($ad->id);
+        $isFavorite = $ad->isFavorite();
         return view('ads/show', [
             'ad' => $ad,
             'isFavorite' => $isFavorite,
@@ -163,7 +163,7 @@ class AdController extends Controller
     public function storeFavorite(Request $request)
     {
         $ad = Ad::find($request->input('id'));
-        $ad->addFavorite();
+        FavoriteService::addFavorite($ad);
     }
 
     /**
@@ -173,11 +173,12 @@ class AdController extends Controller
     {
         $ad = Ad::find($request->input('id'));
 
-        AdService::deleteFavorite($ad->id);
+        AdService::deleteFavorite($ad);
     }
 
     /**
      * @return Application|View
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function showFavorite()
     {

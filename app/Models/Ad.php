@@ -94,14 +94,12 @@ class Ad extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function addFavorite()
+    /**
+     * @return bool
+     */
+    public function isFavorite(): bool
     {
-        if (Favorite::where('user_id', '=', Auth::id())
-            ->where('favoriteable_id', '=', $this->id)->doesntExist()) {
-            $favorite = new Favorite(['user_id' => Auth::id()]);
-            $this->favorites()->save($favorite);
-        }
-
+        return AdService::isFavorite($this);
     }
 
     /**
