@@ -11,6 +11,7 @@ use App\Services\CountryService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
@@ -136,11 +137,17 @@ class AdController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return Response
+     * @param Request $request
+     * @param Ad $ad
+     * @return RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Request $request, Ad $ad): RedirectResponse
     {
-        //
+        try {
+            AdService::deleteAd($ad);
+            return redirect()->route('ads.index')->with('success', 'Deleting ad was success');
+        } catch (\Exception $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
     }
 }

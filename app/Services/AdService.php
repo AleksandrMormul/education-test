@@ -95,4 +95,13 @@ class AdService
     {
         return asset(self::COMMON_IMAGES_PATH . '/' . self::DEFAULT_IMAGE_FILENAME);
     }
+
+    /**
+     * @param Ad $ad
+     * @return int
+     */
+    public static function deleteAd(Ad $ad): int
+    {
+        return Ad::destroy($ad->id);
+    }
 }

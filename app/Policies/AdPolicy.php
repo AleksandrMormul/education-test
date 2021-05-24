@@ -62,4 +62,20 @@ class AdPolicy
     {
         return $user->id === $ad->user_id;
     }
+
+    /**
+     * Determine whether the user can delete the model.
+     *
+     * @param User $user
+     * @param Ad $ad
+     * @return bool
+     */
+    public function delete(User $user, Ad $ad): bool
+    {
+        $isAuthorAd = $user->id === $ad->user_id;
+        if ($user->isAdmin() || $isAuthorAd) {
+            return true;
+        }
+        return false;
+    }
 }
