@@ -35,7 +35,7 @@ class UserService
      */
     public static function checkRole(User $user, string $roleName): bool
     {
-        $userRole = $user->role->name;
+        $userRole = $user->roles->name;
         return $userRole === $roleName;
     }
 }
