@@ -17,11 +17,7 @@ class AdPolicy
     /**
      * Determine whether the user can view any models.
      *
-<<<<<<<<< Temporary merge branch 1
-     * @param User $user
-=========
      * @param User|null $user
->>>>>>>>> Temporary merge branch 2
      * @return bool
      */
     public function viewAny(?User $user): bool
@@ -46,6 +42,7 @@ class AdPolicy
      *
      * @param User $user
      * @return bool
+     * @throws \Exception
      */
     public function create(User $user): bool
     {
@@ -73,6 +70,7 @@ class AdPolicy
      * @param User $user
      * @param Ad $ad
      * @return bool
+     * @throws \Exception
      */
     public function delete(User $user, Ad $ad): bool
     {

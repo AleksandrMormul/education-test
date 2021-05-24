@@ -94,7 +94,6 @@ class AdController extends Controller
     public function show(GetAdRequest $request, Ad $ad): Renderable
     {
         $isFavorite = AdService::isFavorite($ad->id);
-       // dd($isFavorite);
         return view('ads/show', [
             'ad' => $ad,
             'isFavorite' => $isFavorite,
@@ -151,7 +150,7 @@ class AdController extends Controller
     public function destroy(Request $request, Ad $ad): RedirectResponse
     {
         try {
-            $this->adService->deleteAd($ad->id);
+            AdService::deleteAd($ad->id);
             return redirect()->route('ads.index')->with('success', 'Deleting ad was success');
         } catch (Exception $exception) {
             return back()->with('error', $exception->getMessage());
@@ -181,8 +180,9 @@ class AdController extends Controller
      */
     public function showFavorite()
     {
-        $favoriteService = resolve(FavoriteService::class);
-        $favoriteService->getFavoriteAds();
-        return view('ads.favorite');
+        $favorites = FavoriteService::getFavoriteAds();
+        return view('ads.favorite', [
+            'favorites' => $favorites,
+        ]);
     }
 }

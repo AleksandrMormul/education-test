@@ -1,11 +1,10 @@
 <?php
 
-
 namespace App\Services;
 
-use App\Models\Ad;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\HigherOrderCollectionProxy;
 
 /**
  * Class FavoriteService
@@ -13,11 +12,13 @@ use Illuminate\Support\Facades\Auth;
  */
 class FavoriteService
 {
+    /**
+     * @return HigherOrderCollectionProxy|mixed
+     */
     public static function getFavoriteAds()
     {
-        $ads = Ad::where('user', '=', Auth::id());
         $user = User::find(Auth::id());
-        return $user->favorites;
 
+        return $user->favorites()->paginate(5);
     }
 }

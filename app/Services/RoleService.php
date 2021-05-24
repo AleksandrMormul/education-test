@@ -22,7 +22,7 @@ class RoleService
     /**
      * @param string $name
      * @return int
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public static function getRoleIdByName(string $name)
     {

@@ -28,6 +28,8 @@ use Illuminate\Support\Carbon;
  * @property Carbon|null $updated_at
  * @property-read Collection|Ad[] $ads
  * @property-read int|null $ads_count
+ * @property-read Collection|Favorite[] $favorites
+ * @property-read int|null $favorites_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Role|null $role
@@ -123,6 +125,7 @@ class User extends Authenticatable
 
     /**
      * @return bool
+     * @throws \Exception
      */
     public function isAdmin(): bool
     {
@@ -131,6 +134,7 @@ class User extends Authenticatable
 
     /**
      * @return bool
+     * @throws \Exception
      */
     public function isAuthor(): bool
     {
@@ -140,6 +144,7 @@ class User extends Authenticatable
     /**
      * @param string $roleName
      * @return bool
+     * @throws \Exception
      */
     private function checkRole(string $roleName): bool
     {

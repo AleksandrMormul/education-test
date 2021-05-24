@@ -118,7 +118,10 @@ class AdService
         return count($favorite) === 1;
     }
 
-    public function deleteFavorite(int $adId)
+    /**
+     * @param int $adId
+     */
+    public static function deleteFavorite(int $adId)
     {
         $user = User::find(Auth::id());
         $favorite = $user->favorite(Ad::class, $adId);
