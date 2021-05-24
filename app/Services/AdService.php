@@ -24,7 +24,7 @@ class AdService
      *
      * @return Builder
      */
-    public function getAds()
+    public static function getAds()
     {
         return Ad::query()->visibleForDate();
     }
@@ -34,7 +34,7 @@ class AdService
      *
      * @return Ad
      */
-    public function getAd(int $id)
+    public static function getAd(int $id): Ad
     {
         return Ad::with('user')->find($id);
     }
@@ -43,10 +43,11 @@ class AdService
      * @param array $storeData
      * @return int|mixed
      */
-    public function createAd(array $storeData)
+    public static function createAd(array $storeData)
     {
         $storeData['user_id'] = Auth::id();
         $ad = Ad::create($storeData);
+
         return $ad->id;
     }
 
@@ -54,10 +55,11 @@ class AdService
      * @param UploadedFile $file
      * @return string|null
      */
-    public function storeAdImage(UploadedFile $file): ?string
+    public static function storeAdImage(UploadedFile $file): ?string
     {
         $filePathName = Storage::disk('public')->putFile(self::ADS_IMAGES_PATH, $file);
         $fileName = basename($filePathName);
+
         return is_string($fileName) ? $fileName : null;
     }
 
@@ -66,7 +68,7 @@ class AdService
      * @param array $storeData
      * @return void
      */
-    public function updateAd(Ad $ad, array $storeData)
+    public static function updateAd(Ad $ad, array $storeData)
     {
         $storeData['user_id'] = Auth::id();
         $ad->update($storeData);
@@ -77,19 +79,19 @@ class AdService
      * @param Ad $ad
      * @return string
      */
-    public function getImageUrl(Ad $ad): string
+    public static function getImageUrl(Ad $ad): string
     {
         if ($ad->img_src) {
             return asset('storage/' . self::ADS_IMAGES_PATH . '/' . $ad->img_src);
         } else {
-            return $this->getDefaultImageUrl();
+            return self::getDefaultImageUrl();
         }
     }
 
     /**
      * @return string
      */
-    public function getDefaultImageUrl(): string
+    public static function getDefaultImageUrl(): string
     {
         return asset(self::COMMON_IMAGES_PATH . '/' . self::DEFAULT_IMAGE_FILENAME);
     }

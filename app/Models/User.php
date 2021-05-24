@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Services\UserService;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -18,17 +20,17 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property int|null $role_id
  * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property int|null $role_id
- * @property-read Collection|\App\Models\Ad[] $ads
+ * @property-read Collection|Ad[] $ads
  * @property-read int|null $ads_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\Role $roles
+ * @property-read Role|null $role
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
@@ -47,16 +49,16 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    const ROLE_ADMIN = 'admin';
-    const ROLE_AUTHOR = 'author';
-    const ROLE_USER = 'user';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id'
+        'name',
+        'email',
+        'password',
+        'role_id',
     ];
 
     /**
@@ -81,11 +83,19 @@ class User extends Authenticatable
     /**
      * Ads
      *
-     * @return mixed
+     * @return HasMany
      */
-    public function ads()
+    public function ads(): HasMany
     {
         return $this->hasMany(Ad::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     /**
@@ -93,7 +103,7 @@ class User extends Authenticatable
      */
     public function isAdmin(): bool
     {
-        return $this->checkRole(self::ROLE_ADMIN);
+        return UserService::isAdmin($this);
     }
 
     /**
@@ -101,7 +111,7 @@ class User extends Authenticatable
      */
     public function isAuthor(): bool
     {
-        return $this->checkRole(self::ROLE_AUTHOR);
+        return UserService::isAuthor($this);
     }
 
     /**
@@ -110,19 +120,6 @@ class User extends Authenticatable
      */
     private function checkRole(string $roleName): bool
     {
-        foreach ($this->roles()->get() as $role) {
-            if ($role->role === $roleName) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * @return BelongsTo
-     */
-    public function roles()
-    {
-        return $this->belongsTo(Role::class, 'role_id');
+        return UserService::checkRole($this, $roleName);
     }
 }

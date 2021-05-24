@@ -6,6 +6,10 @@ use App\Models\Ad;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
+/**
+ * Class AdPolicy
+ * @package App\Policies
+ */
 class AdPolicy
 {
     use HandlesAuthorization;
@@ -36,7 +40,7 @@ class AdPolicy
     /**
      * Determine whether the user can create models.
      *
-     * @param  User  $user
+     * @param User $user
      * @return bool
      */
     public function create(User $user): bool

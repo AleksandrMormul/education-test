@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AdRoleIdToUsersTable extends Migration
+class AdUniqueNameToRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AdRoleIdToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('role_id')->nullable();
+        Schema::table('roles', function (Blueprint $table) {
+            $table->unique('name');
         });
     }
 
@@ -25,8 +25,8 @@ class AdRoleIdToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role_id');
+        Schema::table('roles', function (Blueprint $table) {
+            $table->dropUnique(['name']);
         });
     }
 }
