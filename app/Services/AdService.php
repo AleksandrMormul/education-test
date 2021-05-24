@@ -111,21 +111,17 @@ class AdService
      * @param int $adId
      * @return bool
      */
-    public function isFavorite(int $adId): bool
+    public static function isFavorite(int $adId): bool
     {
         $user = User::find(Auth::id());
         $favorite = $user->favorite(Ad::class, $adId);
-        if (count($favorite) === 1) {
-            return true;
-        }
-        return false;
+        return count($favorite) === 1;
     }
 
     public function deleteFavorite(int $adId)
     {
         $user = User::find(Auth::id());
         $favorite = $user->favorite(Ad::class, $adId);
-        //dd($favorite);
         Favorite::destroy($favorite[0]->id);
     }
 }
