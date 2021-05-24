@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if(Auth::check())
+    @can('create', \App\Models\Ad::class)
         <a href="{{ route("ads.create") }}" class="btn btn-primary create-ad-btn">Create Ad</a>
     @endif
     <div class="container">

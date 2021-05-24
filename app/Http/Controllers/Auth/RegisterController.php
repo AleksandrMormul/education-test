@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Services\RoleService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -62,14 +64,17 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return User
+     * @throws \Exception
      */
-    protected function create(array $data)
+    protected function create(array $data): User
     {
+        $roleId = RoleService::getRoleIdByName(RoleService::USER_ROLE);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'role_id' => $roleId,
             'password' => Hash::make($data['password']),
         ]);
     }

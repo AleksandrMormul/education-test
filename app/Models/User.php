@@ -2,9 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Services\UserService;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\User
@@ -12,27 +20,30 @@ use Illuminate\Notifications\Notifiable;
  * @property int $id
  * @property string $name
  * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property int|null $role_id
+ * @property Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Ad[] $ads
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Collection|Ad[] $ads
  * @property-read int|null $ads_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|User query()
- * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property-read Role|null $role
+ * @method static Builder|User newModelQuery()
+ * @method static Builder|User newQuery()
+ * @method static Builder|User query()
+ * @method static Builder|User whereCreatedAt($value)
+ * @method static Builder|User whereEmail($value)
+ * @method static Builder|User whereEmailVerifiedAt($value)
+ * @method static Builder|User whereId($value)
+ * @method static Builder|User whereName($value)
+ * @method static Builder|User wherePassword($value)
+ * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereRoleId($value)
+ * @method static Builder|User whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class User extends Authenticatable
 {
@@ -44,7 +55,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'role_id',
     ];
 
     /**
@@ -63,15 +77,49 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'role_id ' => 'integer',
     ];
 
     /**
      * Ads
      *
-     * @return mixed
+     * @return HasMany
      */
-    public function ads()
+    public function ads(): HasMany
     {
         return $this->hasMany(Ad::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return UserService::isAdmin($this);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAuthor(): bool
+    {
+        return UserService::isAuthor($this);
+    }
+
+    /**
+     * @param string $roleName
+     * @return bool
+     */
+    private function checkRole(string $roleName): bool
+    {
+        return UserService::checkRole($this, $roleName);
     }
 }
