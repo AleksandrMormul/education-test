@@ -63,11 +63,11 @@
                     </div>
             </div>
         </div>
+        @can('delete', $ad)
             <form method="POST" id="delete-ad" action="{{ route('ads.destroy', $ad->id) }}">
                 {{ csrf_field() }}
                 <input type="hidden" name="_method" value="DELETE">
             </form>
-        @can('delete', $ad)
             <button onclick="confirmDelete()" class="btn btn-delete-ad">Delete</button>
         @endcan
     </div>
