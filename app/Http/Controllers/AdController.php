@@ -144,7 +144,7 @@ class AdController extends Controller
     public function destroy(Request $request, Ad $ad): RedirectResponse
     {
         try {
-            AdService::deleteAd($ad->id);
+            AdService::deleteAd($ad);
             return redirect()->route('ads.index')->with('success', 'Deleting ad was success');
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
