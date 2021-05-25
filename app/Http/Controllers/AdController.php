@@ -9,12 +9,10 @@ use App\Models\Ad;
 use App\Services\AdService;
 use App\Services\CountryService;
 use App\Services\FavoriteService;
-use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Redirector;
 use Illuminate\View\View;
 
@@ -162,7 +160,7 @@ class AdController extends Controller
      */
     public function storeFavorite(Request $request)
     {
-        $ad = Ad::find($request->input('id'));
+        $ad = AdService::getAd($request->input('id'));
         FavoriteService::addFavorite($ad);
     }
 

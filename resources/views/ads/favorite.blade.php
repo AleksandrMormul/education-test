@@ -26,7 +26,7 @@
     </div>
     @else
         <div class="container">
-            <h3>List of favorite ads are empty</h3>
+            <p>List of favorite ads are empty</p>
         </div>
     @endif
 @endsection

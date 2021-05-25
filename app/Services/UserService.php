@@ -15,7 +15,7 @@ class UserService
     /**
      * @param User $user
      * @return bool
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public static function isAdmin(User $user): bool
     {
@@ -25,7 +25,7 @@ class UserService
     /**
      * @param User $user
      * @return bool
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public static function isAuthor(User $user): bool
     {
@@ -36,7 +36,7 @@ class UserService
      * @param User $user
      * @param string $roleName
      * @return bool
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public static function checkRole(User $user, string $roleName): bool
     {

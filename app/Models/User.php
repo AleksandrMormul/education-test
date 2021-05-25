@@ -113,7 +113,7 @@ class User extends Authenticatable
 
     /**
      * @return bool
-     * @throws Exception
+     * @throws \RuntimeException
      */
     public function isAdmin(): bool
     {
@@ -122,7 +122,7 @@ class User extends Authenticatable
 
     /**
      * @return bool
-     * @throws Exception
+     * @throws \RuntimeException
      */
     public function isAuthor(): bool
     {
@@ -132,7 +132,7 @@ class User extends Authenticatable
     /**
      * @param string $roleName
      * @return bool
-     * @throws Exception
+     * @throws \RuntimeException
      */
     private function checkRole(string $roleName): bool
     {
