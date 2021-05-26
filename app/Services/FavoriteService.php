@@ -16,26 +16,13 @@ use Illuminate\Support\Facades\Auth;
 class FavoriteService
 {
     /**
-     * @return LengthAwarePaginator
-     * @throws BindingResolutionException
-     */
-    public static function getFavoriteAds(): LengthAwarePaginator
-    {
-        $user = User::find(Auth::id());
-
-        $favoriteAds = UserService::userAdsFavorite($user, Ad::class);
-
-        return PaginateService::paginate($favoriteAds, 15);
-    }
-
-    /**
      * @param Ad $ad
      * @return array
      */
-    public static function toggleFavorite(Ad $ad): array
+    public static function toggleFavorite(Ad $ad, User $user): array
     {
         if (
-            Favorite::where('user_id', '=', Auth::id())
+            Favorite::where('user_id', '=', $user->id)
             ->where('favoriteable_id', '=', $ad->id)
             ->doesntExist()
         ) {

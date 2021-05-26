@@ -3,9 +3,8 @@
 namespace App\Services;
 
 use App\Models\Ad;
-use App\Models\Favorite;
 use App\Models\User;
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +25,7 @@ class AdService
      *
      * @return Builder
      */
-    public static function getAds()
+    public static function getAds(): Builder
     {
         return Ad::query()->visibleForDate();
     }
@@ -34,6 +33,7 @@ class AdService
     /**
      * Get Ad
      *
+     * @param int $id
      * @return Ad
      */
     public static function getAd(int $id): Ad
@@ -48,9 +48,7 @@ class AdService
     public static function createAd(array $storeData)
     {
         $storeData['user_id'] = Auth::id();
-        $ad = Ad::create($storeData);
-
-        return $ad->id;
+        return Ad::create($storeData)->id;
     }
 
     /**
@@ -85,9 +83,9 @@ class AdService
     {
         if ($ad->img_src) {
             return asset('storage/' . self::ADS_IMAGES_PATH . '/' . $ad->img_src);
-        } else {
-            return self::getDefaultImageUrl();
         }
+
+        return self::getDefaultImageUrl();
     }
 
     /**
@@ -109,11 +107,11 @@ class AdService
 
     /**
      * @param Ad $ad
+     * @param User $user
      * @return bool
      */
-    public static function isFavorite(Ad $ad): bool
+    public static function isFavoriteForUser(Ad $ad, User $user): bool
     {
-        $user = User::find(Auth::id());
         if ($user) {
             $favorite = UserService::userAdFavorite($user, $ad, Ad::class);
             return count($favorite) === 1;
@@ -121,4 +119,12 @@ class AdService
         return false;
     }
 
+    /**
+     * @param User $user
+     * @return Builder
+     */
+    public static function getFavoritesForUser(User $user): Builder
+    {
+        return Ad::visibleForDate()->favoritesForUser($user);
+    }
 }

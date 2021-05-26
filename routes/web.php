@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::resource('ads', 'AdController');
-Route::post('favorites', 'AdController@storeFavorite');
 Route::get('/', function () {
     return view('welcome');
 });

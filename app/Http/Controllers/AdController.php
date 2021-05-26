@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Ad\GetAdRequest;
+use App\Http\Requests\Ad\IndexAdRequest;
 use App\Http\Requests\Ad\StoreAdRequest;
 use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
 use App\Services\CountryService;
-use App\Services\FavoriteService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -35,11 +35,16 @@ class AdController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return View
+     * @param IndexAdRequest $request
+     * @return Renderable
      */
-    public function index(): View
+    public function index(IndexAdRequest $request): Renderable
     {
         $query = AdService::getAds();
+
+        if ($request->getFavorites() && auth()->user()) {
+            $query = AdService::getFavoritesForUser($request->user());
+        }
 
         return view(
             'ads/index',
@@ -57,6 +62,7 @@ class AdController extends Controller
     public function create(): View
     {
         $countries = CountryService::getAllCountry();
+
         return view('ads/create', ['countries' => $countries]);
     }
 
@@ -91,7 +97,10 @@ class AdController extends Controller
      */
     public function show(GetAdRequest $request, Ad $ad): Renderable
     {
-        $isFavorite = $ad->isFavorite();
+        $user = $request->user();
+
+        $isFavorite = $ad->isFavoriteForUser($user);
+
         return view('ads/show', [
             'ad' => $ad,
             'isFavorite' => $isFavorite,
@@ -123,7 +132,6 @@ class AdController extends Controller
      */
     public function update(UpdateAdRequest $request, Ad $ad)
     {
-        $adId = $ad->id;
         $imgSrcName = null;
 
         if ($request->hasFile('ad_file')) {
@@ -135,7 +143,7 @@ class AdController extends Controller
             'img_src' => $imgSrcName,
         ]));
 
-        return redirect(route('ads.show', $adId));
+        return redirect(route('ads.show', $ad->id));
     }
 
     /**
@@ -149,6 +157,7 @@ class AdController extends Controller
     {
         try {
             AdService::deleteAd($ad);
+
             return redirect()->route('ads.index')->with('success', 'Deleting ad was success');
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());

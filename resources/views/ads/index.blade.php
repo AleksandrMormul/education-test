@@ -12,6 +12,9 @@
     @can('create', \App\Models\Ad::class)
         <a href="{{ route("ads.create") }}" class="btn btn-primary create-ad-btn">Create Ad</a>
     @endcan
+    @auth
+        <a href="{{ route("ads.index", 'favorites=1') }}" class="btn btn-primary show-favorite-btn">Show my favorite ads</a>
+    @endauth
     @if ($message = Session::get('success'))
         <div class="alert alert-success alert-block deleteInfo" >
             <button type="button" class="close" data-dismiss="alert">×</button>

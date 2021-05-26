@@ -12504,6 +12504,13 @@ a.text-dark:focus {
   margin-left: 25px;
 }
 
+.show-favorite-btn {
+  position: absolute;
+  right: 0;
+  margin-right: 25px;
+  margin-top: 50px;
+}
+
 .form-control {
   width: 50%;
 }

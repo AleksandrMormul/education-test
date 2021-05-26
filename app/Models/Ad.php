@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Monarobase\CountryList\CountryNotFoundException;
 
@@ -35,6 +35,7 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @property-read string $full_name_country
  * @property-read string $image_url
  * @property-read User $user
+ * @method static Builder|Ad favoritesForUser(User $user)
  * @method static Builder|Ad newModelQuery()
  * @method static Builder|Ad newQuery()
  * @method static Builder|Ad query()
@@ -95,11 +96,12 @@ class Ad extends Model
     }
 
     /**
+     * @param $user
      * @return bool
      */
-    public function isFavorite(): bool
+    public function isFavoriteForUser($user): bool
     {
-        return AdService::isFavorite($this);
+        return AdService::isFavoriteForUser($this, $user);
     }
 
     /**
@@ -110,10 +112,28 @@ class Ad extends Model
         return $this->morphMany(Favorite::class, 'favoriteable');
     }
 
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeVisibleForDate($query)
     {
         $now = today()->toDateString();
         return $query->where('end_date', '>=', $now);
+    }
+
+    /**
+     * @param $query
+     * @param User $user
+     * @return mixed
+     */
+    public function scopeFavoritesForUser($query, User $user)
+    {
+        return $query->join('favorites', function (JoinClause $join) {
+            $join->where('favorites.favoriteable_type', self::class)
+                    ->whereColumn('favorites.favoriteable_id', 'ads.id');
+        })
+            ->where('favorites.user_id', $user->id);
     }
 
     /**
@@ -132,5 +152,4 @@ class Ad extends Model
     {
         return AdService::getImageUrl($this);
     }
-
 }
