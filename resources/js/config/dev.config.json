@@ -1,0 +1,6 @@
+{
+    "environment": "development",
+    "host": {
+        "apiUrl": "http://localhost/api/"
+    }
+}

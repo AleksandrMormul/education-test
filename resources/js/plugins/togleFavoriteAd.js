@@ -1,3 +1,5 @@
+import config from '../config/dev.config.json';
+
 let adIdd1
 
 window.toggleFavorite = function (id) {
@@ -9,7 +11,7 @@ $(document).on('click', '.heart', function () {
         type: "POST",
         dataType: 'json',
         context: this,
-        url: `http://localhost/api/favorites/ads/${adIdd1}/toggle`,
+        url: config.host.apiUrl + `favorites/ads/${adIdd1}/toggle`,
         success: function (result) {
             if (result['favorite'] === 'enabled') {
                 $(this).removeClass('far').addClass('fas');

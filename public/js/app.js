@@ -48066,6 +48066,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/config/dev.config.json":
+/*!*********************************************!*\
+  !*** ./resources/js/config/dev.config.json ***!
+  \*********************************************/
+/*! exports provided: environment, host, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"environment\":\"development\",\"host\":{\"apiUrl\":\"http://localhost/api/\"}}");
+
+/***/ }),
+
 /***/ "./resources/js/plugins/datepicker.js":
 /*!********************************************!*\
   !*** ./resources/js/plugins/datepicker.js ***!
@@ -48264,8 +48275,13 @@ $(document).ready(function () {
 /*!*************************************************!*\
   !*** ./resources/js/plugins/togleFavoriteAd.js ***!
   \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/dev.config.json */ "./resources/js/config/dev.config.json");
+var _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../config/dev.config.json */ "./resources/js/config/dev.config.json", 1);
 
 var adIdd1;
 
@@ -48278,7 +48294,7 @@ $(document).on('click', '.heart', function () {
     type: "POST",
     dataType: 'json',
     context: this,
-    url: "http://localhost/api/favorites/ads/".concat(adIdd1, "/toggle"),
+    url: _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl + "favorites/ads/".concat(adIdd1, "/toggle"),
     success: function success(result) {
       if (result['favorite'] === 'enabled') {
         $(this).removeClass('far').addClass('fas');
