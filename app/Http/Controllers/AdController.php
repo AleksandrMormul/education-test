@@ -41,15 +41,21 @@ class AdController extends Controller
     public function index(IndexAdRequest $request): Renderable
     {
         $query = AdService::getAds();
+        $ads = $query->paginate(15);
+
+        foreach ($ads as $ad) {
+            $ad['isFavorite'] = $ad->isFavoriteForUser($request->user());
+        }
 
         if ($request->getFavorites() && auth()->user()) {
             $query = AdService::getFavoritesForUser($request->user());
+            $ads = $query->paginate(15);
         }
 
         return view(
             'ads/index',
             [
-                'ads' => $query->paginate(15),
+                'ads' => $ads,
             ]
         );
     }

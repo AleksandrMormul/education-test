@@ -26,14 +26,19 @@
             @foreach ($ads as $ad)
                 <div class="col-4 content">
                     <div class="card">
+                        <div class="container-img-ad">
                         <img src="{{ $ad->image_url }}"
                             class="card-img-top" alt="ad image">
+                        @auth
+                            <i onclick="toggleFavorite({{$ad->id}})" class="heart  {{ $ad->isFavorite || $ad->favoriteable_id ? 'fas' : 'far'}}  fa-heart"></i>
+                        @endauth
+                        </div>
                         <div class="card-body">
                             <h3 class="card-title">{{ $ad->title }}</h3>
                             <p class="card-text">{{ $ad->description }}</p>
                             <p class="card-text">Created at {{ optional($ad->created_at)->toDateString() }}</p>
                             <p class="card-text">End date {{ optional($ad->end_date)->toDateString() }}</p>
-                            <a href="{{ route('ads.show', $ad->id) }}" class="btn btn-primary">Show details</a>
+                            <a href="{{ route('ads.show', $ad->id) }}" id="adDetail" class="btn btn-primary">Show details</a>
                         </div>
                     </div>
                 </div>

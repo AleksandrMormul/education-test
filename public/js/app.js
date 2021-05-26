@@ -48005,6 +48005,8 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./plugins/togleFavoriteAd */ "./resources/js/plugins/togleFavoriteAd.js");
+
 __webpack_require__(/*! ./plugins/phoneMask */ "./resources/js/plugins/phoneMask.js");
 
 __webpack_require__(/*! ./plugins/gmaps */ "./resources/js/plugins/gmaps.js");
@@ -48253,6 +48255,40 @@ function prepareData(markers) {
 $(document).ready(function () {
   $('.countrySelect').select2({
     placeholder: 'Select your country'
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/plugins/togleFavoriteAd.js":
+/*!*************************************************!*\
+  !*** ./resources/js/plugins/togleFavoriteAd.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var adIdd1;
+
+window.toggleFavorite = function (id) {
+  adIdd1 = id;
+};
+
+$(document).on('click', '.heart', function () {
+  $.ajax({
+    type: "POST",
+    dataType: 'json',
+    context: this,
+    url: "http://localhost/api/favorites/ads/".concat(adIdd1, "/toggle"),
+    success: function success(result) {
+      if (result['favorite'] === 'enabled') {
+        $(this).removeClass('far').addClass('fas');
+      } else {
+        $(this).removeClass('fas').addClass('far');
+      }
+    },
+    error: function error(jqxhr, status, exception) {
+      alert(exception);
+    }
   });
 });
 

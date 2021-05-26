@@ -17,26 +17,6 @@
                 },5000);
             });
         </script>
-    <script>
-        $(document).on('click','.heart',function(){
-                $.ajax({
-                    type: "POST",
-                    dataType: 'json',
-                    context: this,
-                    url: 'http://localhost/api/favorites/ads/{{ $ad->id }}/toggle',
-                    success: function(result) {
-                        if(result['favorite'] === 'enabled') {
-                            $(this).removeClass('far').addClass('fas');
-                        } else {
-                            $(this).removeClass('fas').addClass('far');
-                        }
-                    },
-                    error: function(jqxhr, status, exception) {
-                        alert(exception);
-                    },
-                });
-        })
-    </script>
 @endpush
 @section('content')
     @if ($message = Session::get('error'))
@@ -63,7 +43,7 @@
                         <div class="container-img-ad">
                             <img class="ad-image" src="{{ $ad->image_url }}" alt="ad image">
                             @auth
-                                <i class="heart  {{ $isFavorite ? 'fas' : 'far'}}  fa-heart"></i>
+                                <i onclick="toggleFavorite({{$ad->id}})" class="heart  {{ $isFavorite ? 'fas' : 'far'}}  fa-heart"></i>
                             @endauth
                         </div>
                         <p>{{ $ad->description }}</p>
