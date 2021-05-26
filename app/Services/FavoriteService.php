@@ -30,8 +30,9 @@ class FavoriteService
 
     /**
      * @param Ad $ad
+     * @return array
      */
-    public static function addFavorite(Ad $ad)
+    public static function toggleFavorite(Ad $ad): array
     {
         if (
             Favorite::where('user_id', '=', Auth::id())
@@ -40,6 +41,15 @@ class FavoriteService
         ) {
             $favorite = new Favorite(['user_id' => Auth::id()]);
             $ad->favorites()->save($favorite);
+
+            return ['favorite' => 'enabled'];
+
         }
+
+        $user = Auth::user();
+        $favorite = UserService::userAdFavorite($user, $ad, Ad::class);
+        Favorite::destroy($favorite[0]->id);
+
+        return ['favorite' => 'disabled'];
     }
 }

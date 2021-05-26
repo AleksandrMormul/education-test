@@ -154,36 +154,4 @@ class AdController extends Controller
             return back()->with('error', $exception->getMessage());
         }
     }
-
-    /**
-     * @param Request $request
-     */
-    public function storeFavorite(Request $request)
-    {
-        $ad = AdService::getAd($request->input('id'));
-        FavoriteService::addFavorite($ad);
-    }
-
-    /**
-     * @param Request $request
-     */
-    public function destroyFavorite(Request $request)
-    {
-        $ad = Ad::find($request->input('id'));
-
-        AdService::deleteFavorite($ad);
-    }
-
-    /**
-     * @return Application|View
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
-    public function showFavorite()
-    {
-        $favorites = FavoriteService::getFavoriteAds();
-
-        return view('ads.favorite', [
-            'favoritesAds' => $favorites,
-        ]);
-    }
 }

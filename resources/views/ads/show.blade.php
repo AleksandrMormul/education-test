@@ -19,30 +19,22 @@
         </script>
     <script>
         $(document).on('click','.heart',function(){
-            $(this).toggleClass("fas");
-            if($(this).hasClass('fas')){
                 $.ajax({
                     type: "POST",
-                    url: "http://localhost/favorites",
-                    data: {
-                        id: {{ $ad->id }},
-                        '_token': $('input[name=_token]').val()
+                    dataType: 'json',
+                    context: this,
+                    url: 'http://localhost/api/favorites/ads/{{ $ad->id }}/toggle',
+                    success: function(result) {
+                        if(result['favorite'] === 'enabled') {
+                            $(this).removeClass('far').addClass('fas');
+                        } else {
+                            $(this).removeClass('fas').addClass('far');
+                        }
+                    },
+                    error: function(jqxhr, status, exception) {
+                        alert(exception);
                     },
                 });
-            }
-        })
-        $(document).on('click','.heart',function(){
-            $(this).toggleClass("far");
-            if($(this).hasClass('far')){
-                $.ajax({
-                    type: "DELETE",
-                    url: "http://localhost/favorites/" + '{{ $ad->id }}',
-                    data:{
-                        '_token':$('input[name=_token]').val(),
-                        id: {{ $ad->id }},
-                    },
-                });
-            }
         })
     </script>
 @endpush

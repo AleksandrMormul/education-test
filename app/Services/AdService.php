@@ -121,13 +121,4 @@ class AdService
         return false;
     }
 
-    /**
-     * @param Ad $ad
-     */
-    public static function deleteFavorite(Ad $ad)
-    {
-        $user = User::find(Auth::id());
-        $favorite = UserService::userAdFavorite($user, $ad, Ad::class);
-        Favorite::destroy($favorite[0]->id);
-    }
 }
