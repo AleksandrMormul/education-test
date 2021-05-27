@@ -23,8 +23,9 @@ class FavoriteService
     {
         if (
             Favorite::where('user_id', '=', $user->id)
-            ->where('favoriteable_id', '=', $ad->id)
-            ->doesntExist()
+                ->where('favoriteable_type', '=', Ad::class)
+                ->where('favoriteable_id', '=', $ad->id)
+                ->doesntExist()
         ) {
             $favorite = new Favorite(['user_id' => $user->id]);
             $ad->favorites()->save($favorite);
