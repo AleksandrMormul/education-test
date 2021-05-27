@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Ad;
 use App\Services\FavoriteService;
 use Illuminate\Http\JsonResponse;
@@ -9,7 +10,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class FavoriteController
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\Api
  */
 class FavoriteController extends Controller
 {

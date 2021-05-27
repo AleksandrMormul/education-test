@@ -50,6 +50,10 @@ class AdController extends Controller
         if ($request->getFavorites() && auth()->user()) {
             $query = AdService::getFavoritesForUser($request->user());
             $ads = $query->paginate(15);
+
+            if (count($ads) === 0) {
+                return view('ads.favorite');
+            }
         }
 
         return view(
