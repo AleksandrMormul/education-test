@@ -37,6 +37,9 @@
             @endforeach
         </div>
     </div>
+    <div>
+        <button type="button" class="btn subscriptionBtn">Subscribe</button>
+    </div>
     <div class="d-flex justify-content-center">
         {!! $ads->links() !!}
     </div>

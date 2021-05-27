@@ -12603,3 +12603,15 @@ a.text-dark:focus {
   width: 50%;
 }
 
+.subscriptionBtn {
+  color: #c6e0f5;
+  background: blueviolet;
+  position: fixed;
+  bottom: 10px;
+  right: 25px;
+}
+
+.subscriptionBtn:hover {
+  color: #009926;
+}
+
