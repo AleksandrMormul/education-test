@@ -1,0 +1,6 @@
+{
+    "environment": "development",
+    "host": {
+        "apiUrl": "YOUR_API_URL"
+    }
+}
