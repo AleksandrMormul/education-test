@@ -2,7 +2,7 @@
 /public/hot
 /public/storage
 /storage/*.key
-/resources/js/config/dev.config.json
+dev.config.json
 /vendor
 .env
 .env.backup
