@@ -15,6 +15,13 @@
     }
 }
 
+.show-favorite-btn {
+    position: absolute;
+    right: 0;
+    margin-right: 25px;
+    margin-top: 50px;
+}
+
 .form-control {
     width: 50%;
 }
@@ -23,10 +30,10 @@
     width: 100%;
 
     &__flag {
-        background-image: url("../images/flags/flags.png");
+        background-image: url("~intl-tel-input/build/img/flags.png");
 
         @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-            background-image: url("../images/flags/flags@2x.png");
+            background-image: url("~intl-tel-input/build/img/flags.png");
         }
     }
 }
@@ -91,8 +98,23 @@
 }
 
 .container-img-ad {
+    position: relative;
     max-width: $grid__bp-md * 1px;
     margin: 0 auto;
+    i {
+        position: absolute;
+        background: white;
+        bottom: 0;
+        right: 0;
+    }
+
+}
+
+.heart {
+    cursor: pointer;
+    font-size: 25px;
+    color:red;
+    margin: 10px;
 }
 
 .ad-image {

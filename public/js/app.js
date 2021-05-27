@@ -7442,7 +7442,7 @@ GMaps.prototype.drawOverlay = function(options) {
     if (!options.layer) {
       options.layer = 'overlayLayer';
     }
-    
+
     var panes = this.getPanes(),
         overlayLayer = panes[options.layer],
         stop_overlay_events = ['contextmenu', 'DOMMouseScroll', 'dblclick', 'mousedown'];
@@ -8307,7 +8307,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.markers.length > 0) {
     static_map_options['markers'] = [];
-    
+
     for (var i = 0; i < this.markers.length; i++) {
       static_map_options['markers'].push({
         lat: this.markers[i].getPosition().lat(),
@@ -8318,7 +8318,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.polylines.length > 0) {
     var polyline = this.polylines[0];
-    
+
     static_map_options['polyline'] = {};
     static_map_options['polyline']['path'] = google.maps.geometry.encoding.encodePath(polyline.getPath());
     static_map_options['polyline']['strokeColor'] = polyline.strokeColor
@@ -8342,7 +8342,7 @@ GMaps.staticMapURL = function(options){
   static_root += '?';
 
   var markers = options.markers;
-  
+
   delete options.markers;
 
   if (!markers && options.marker) {
@@ -8644,7 +8644,7 @@ GMaps.custom_events = ['marker_added', 'marker_removed', 'polyline_added', 'poly
 
 GMaps.on = function(event_name, object, handler) {
   if (GMaps.custom_events.indexOf(event_name) == -1) {
-    if(object instanceof GMaps) object = object.map; 
+    if(object instanceof GMaps) object = object.map;
     return google.maps.event.addListener(object, event_name, handler);
   }
   else {
@@ -8662,7 +8662,7 @@ GMaps.on = function(event_name, object, handler) {
 
 GMaps.off = function(event_name, object) {
   if (GMaps.custom_events.indexOf(event_name) == -1) {
-    if(object instanceof GMaps) object = object.map; 
+    if(object instanceof GMaps) object = object.map;
     google.maps.event.clearListeners(object, event_name);
   }
   else {
@@ -8731,7 +8731,7 @@ GMaps.geocode = function(options) {
   delete options.lat;
   delete options.lng;
   delete options.callback;
-  
+
   this.geocoder.geocode(options, function(results, status) {
     callback(results, status);
   });
@@ -47685,7 +47685,7 @@ function addStyle (obj, options) {
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
 	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css) 
+		 ? options.transform(obj.css)
 		 : options.transform.default(obj.css);
 
 	    if (result) {
@@ -48007,6 +48007,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./plugins/confirmSubscription */ "./resources/js/plugins/confirmSubscription.js");
 
+__webpack_require__(/*! ./plugins/togleFavoriteAd */ "./resources/js/plugins/togleFavoriteAd.js");
+
 __webpack_require__(/*! ./plugins/phoneMask */ "./resources/js/plugins/phoneMask.js");
 
 __webpack_require__(/*! ./plugins/gmaps */ "./resources/js/plugins/gmaps.js");
@@ -48081,6 +48083,17 @@ window.confirmSubscription = function () {
     document.getElementById('adSubscription').submit();
   }
 };
+
+/***/ }),
+
+/***/ "./resources/js/config/dev.config.json":
+/*!*********************************************!*\
+  !*** ./resources/js/config/dev.config.json ***!
+  \*********************************************/
+/*! exports provided: environment, host, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"environment\":\"development\",\"host\":{\"apiUrl\":\"http://localhost/api/\"}}");
 
 /***/ }),
 
@@ -48273,6 +48286,45 @@ function prepareData(markers) {
 $(document).ready(function () {
   $('.countrySelect').select2({
     placeholder: 'Select your country'
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/plugins/togleFavoriteAd.js":
+/*!*************************************************!*\
+  !*** ./resources/js/plugins/togleFavoriteAd.js ***!
+  \*************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/dev.config.json */ "./resources/js/config/dev.config.json");
+var _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../config/dev.config.json */ "./resources/js/config/dev.config.json", 1);
+
+var adIdd1;
+
+window.toggleFavorite = function (id) {
+  adIdd1 = id;
+};
+
+$(document).on('click', '.heart', function () {
+  $.ajax({
+    type: "POST",
+    dataType: 'json',
+    context: this,
+    url: _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl + "favorites/ads/".concat(adIdd1, "/toggle"),
+    success: function success(result) {
+      if (result['favorite'] === 'enabled') {
+        $(this).removeClass('far').addClass('fas');
+      } else {
+        $(this).removeClass('fas').addClass('far');
+      }
+    },
+    error: function error(jqxhr, status, exception) {
+      alert(exception);
+    }
   });
 });
 

@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Ad;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Class UserService
@@ -13,7 +15,7 @@ class UserService
     /**
      * @param User $user
      * @return bool
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public static function isAdmin(User $user): bool
     {
@@ -23,7 +25,7 @@ class UserService
     /**
      * @param User $user
      * @return bool
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public static function isAuthor(User $user): bool
     {
@@ -34,10 +36,24 @@ class UserService
      * @param User $user
      * @param string $roleName
      * @return bool
-     * @throws \Exception
+     * @throws \RuntimeException
      */
     public static function checkRole(User $user, string $roleName): bool
     {
         return $user->role_id === RoleService::getRoleIdByName($roleName);
+    }
+
+    /**
+     * @param User $user
+     * @param Ad $ad
+     * @param $class
+     * @return Collection
+     */
+    public static function userAdFavorite(User $user, Ad $ad, $class): Collection
+    {
+        return $user->favorites()->where('favoriteable_type', $class)
+            ->where('favoriteable_id', '=', $ad->id)
+            ->with('favoriteable')
+            ->get();
     }
 }
