@@ -9,7 +9,7 @@ window.toggleFavorite = function (id) {
     heartId = `heartId-${id}`;
     //$(document).ready(function() {
     if (heartId) {
-        el = document.getElementById(heartId);
+        //el = document.getElementById(heartId);
 
             document.getElementById(heartId).addEventListener('click', function () {
                 $.ajax({
@@ -35,7 +35,7 @@ window.toggleFavorite = function (id) {
 //$(document).on('click','.heart',function(){
 //$(`#heartId${adIdd1}`).click( function () {
 
-if (el) {
+
     // document.getElementById(heartId).addEventListener('click', function () {
     //     $.ajax({
     //         type: "POST",
@@ -54,4 +54,4 @@ if (el) {
     //         },
     //     });
     // })
-}
+

@@ -97,9 +97,8 @@ class Ad extends Model
 
     /**
      * @param $user
-     * @return bool
      */
-    public function isFavoriteForUser($user): bool
+    public function isFavoriteForUser($user)
     {
         return AdService::isFavoriteForUser($this, $user);
     }

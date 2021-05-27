@@ -110,6 +110,7 @@ class AdController extends Controller
     {
         $user = $request->user();
         $isFavorite = null;
+
         if ($user) {
             $isFavorite = $ad->isFavoriteForUser($user);
         }

@@ -43,7 +43,7 @@
                         <div class="container-img-ad">
                             <img class="ad-image" src="{{ $ad->image_url }}" alt="ad image">
                             @auth
-                                <i onclick="toggleFavorite({{$ad->id}})" id="{{$ad->id}}" class="heart  {{ $isFavorite ? 'fas' : 'far'}}  fa-heart"></i>
+                                <i onclick="toggleFavorite({{$ad->id}})" id="heartId-{{$ad->id}}" class="heart  {{ $isFavorite ? 'fas' : 'far'}}  fa-heart"></i>
                             @endauth
                         </div>
                         <p>{{ $ad->description }}</p>
