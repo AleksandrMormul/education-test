@@ -1,11 +1,9 @@
 <?php
 
-
 namespace App\Services;
 
-
 use App\Models\Subscription;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 /**
  * Class SubscriptionService
@@ -15,14 +13,13 @@ class SubscriptionService
 {
 
     /**
-     * @param Request $request
+     * @param User $user
      */
-    public static function subscribe(Request $request)
+    public static function subscribe(User $user)
     {
-        Subscription::create([
-            'user_id' => $request->user()->id,
+        Subscription::firstOrCreate([
+            'user_id' => $user->id,
             'is_subscription' => true
         ]);
     }
-
 }

@@ -4,6 +4,10 @@ namespace App\Http\Requests\Ad;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class IndexAdRequest
+ * @package App\Http\Requests\Ad
+ */
 class IndexAdRequest extends FormRequest
 {
     /**
@@ -11,7 +15,7 @@ class IndexAdRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,10 +25,11 @@ class IndexAdRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'favorites' => 'nullable|in:0,1',
+            'is_subscribe' => 'nullable|in:0,1',
         ];
     }
 
@@ -34,5 +39,13 @@ class IndexAdRequest extends FormRequest
     public function getFavorites(): bool
     {
         return (bool)$this->input('favorites', 0);
+    }
+
+    /**
+     * @return bool
+     */
+    public function addSubscribe(): bool
+    {
+        return (bool)$this->input('is_subscribe', 0);
     }
 }

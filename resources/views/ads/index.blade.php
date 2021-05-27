@@ -21,6 +21,12 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
+    @if ($message = Session::get('error'))
+        <div class="alert alert-danger alert-block deleteInfo">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ $message }}</strong>
+        </div>
+    @endif
     <div class="container">
         <div class="row">
             @foreach ($ads as $ad)
@@ -46,12 +52,15 @@
         </div>
     </div>
     <div>
-        @auth()
-        <form method="POST" id="adSubscription" action="{{ route('ads.destroy', $ad->id) }}">
-            {{ csrf_field() }}
-        </form>
-        <button type="button" class="btn subscriptionBtn" onclick="confirmSubscription()">Subscribe</button>
-        @endauth
+        @if(!Auth::user()->subscription)
+            @auth()
+                <form method="GET" id="adSubscription" action="{{ route('ads.index') }}">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="is_subscribe" value="1">
+                </form>
+                <button type="button" class="btn subscriptionBtn" onclick="confirmSubscription()">Subscribe</button>
+            @endauth
+        @endif
     </div>
     <div class="d-flex justify-content-center">
         {!! $ads->links() !!}

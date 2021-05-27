@@ -9,6 +9,7 @@ use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
 use App\Services\CountryService;
+use App\Services\SubscriptionService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -50,6 +51,17 @@ class AdController extends Controller
         if ($request->getFavorites() && auth()->user()) {
             $query = AdService::getFavoritesForUser($request->user());
             $ads = $query->paginate(15);
+        }
+
+
+        if ($request->addSubscribe() && auth()->user()) {
+            try {
+                SubscriptionService::subscribe($request->user());
+
+                back()->with('success', 'You was successfully subscribed on weekly sending emails :)');
+            } catch (\Exception $exception) {
+                back()->with('error', $exception->getMessage());
+            }
         }
 
         return view(
