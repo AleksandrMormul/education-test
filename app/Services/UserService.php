@@ -46,14 +46,13 @@ class UserService
     /**
      * @param User $user
      * @param Ad $ad
-     * @param $class
-     * @return Collection
+     * @return bool
      */
-    public static function userAdFavorite(User $user, Ad $ad, $class): Collection
+    public static function userAdFavorite(User $user, Ad $ad): bool
     {
-        return $user->favorites()->where('favoriteable_type', $class)
+        return $user->favorites()->where('favoriteable_type', Ad::class)
             ->where('favoriteable_id', '=', $ad->id)
             ->with('favoriteable')
-            ->get();
+            ->exists();
     }
 }

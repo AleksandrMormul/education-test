@@ -48284,29 +48284,59 @@ __webpack_require__.r(__webpack_exports__);
 var _dev_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../dev.config.json */ "./dev.config.json", 1);
 
 var adIdd1;
+var heartId;
+var el;
 
 window.toggleFavorite = function (id) {
+  console.log(id);
   adIdd1 = id;
-};
+  heartId = "heartId-".concat(id); //$(document).ready(function() {
 
-$("#heartId").click(function () {
-  $.ajax({
-    type: "POST",
-    dataType: 'json',
-    context: this,
-    url: _dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl + "favorites/ads/".concat(adIdd1, "/toggle"),
-    success: function success(result) {
-      if (result['favorite'] === 'enabled') {
-        $(this).removeClass('far').addClass('fas');
-      } else {
-        $(this).removeClass('fas').addClass('far');
-      }
-    },
-    error: function error(jqxhr, status, exception) {
-      alert(exception);
-    }
-  });
-});
+  if (heartId) {
+    el = document.getElementById(heartId);
+    document.getElementById(heartId).addEventListener('click', function () {
+      $.ajax({
+        type: "POST",
+        dataType: 'json',
+        context: this,
+        url: _dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl + "favorites/ads/".concat(adIdd1, "/toggle"),
+        success: function success(result) {
+          if (result['favorite'] === 'enabled') {
+            $(this).removeClass('far').addClass('fas');
+          } else {
+            $(this).removeClass('fas').addClass('far');
+          }
+        },
+        error: function error(jqxhr, status, exception) {
+          alert(exception);
+        }
+      });
+    });
+  } // })
+
+}; //$(document).on('click','.heart',function(){
+//$(`#heartId${adIdd1}`).click( function () {
+
+
+if (el) {// document.getElementById(heartId).addEventListener('click', function () {
+  //     $.ajax({
+  //         type: "POST",
+  //         dataType: 'json',
+  //         context: this,
+  //         url: config.host.apiUrl + `favorites/ads/${adIdd1}/toggle`,
+  //         success: function (result) {
+  //             if (result['favorite'] === 'enabled') {
+  //                 $(this).removeClass('far').addClass('fas');
+  //             } else {
+  //                 $(this).removeClass('fas').addClass('far');
+  //             }
+  //         },
+  //         error: function (jqxhr, status, exception) {
+  //             alert(exception);
+  //         },
+  //     });
+  // })
+}
 
 /***/ }),
 

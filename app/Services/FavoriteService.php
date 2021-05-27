@@ -5,9 +5,6 @@ namespace App\Services;
 use App\Models\Ad;
 use App\Models\Favorite;
 use App\Models\User;
-use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class FavoriteService
@@ -17,6 +14,7 @@ class FavoriteService
 {
     /**
      * @param Ad $ad
+     * @param User $user
      * @return array
      */
     public static function toggleFavorite(Ad $ad, User $user): array
@@ -34,8 +32,8 @@ class FavoriteService
 
         }
 
-        $favorite = UserService::userAdFavorite($user, $ad, Ad::class);
-        Favorite::destroy($favorite[0]->id);
+        $favorite = UserService::userAdFavorite($user, $ad);
+        $favorite->delete();
 
         return ['favorite' => 'disabled'];
     }
