@@ -48089,8 +48089,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var js_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-datepicker */ "./node_modules/js-datepicker/dist/datepicker.min.js");
 /* harmony import */ var js_datepicker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_datepicker__WEBPACK_IMPORTED_MODULE_0__);
 
+var form = document.getElementById('adForm');
 
-if (typeof isCreate !== 'undefined' || typeof isEdit !== 'undefined') {
+if (form) {
   js_datepicker__WEBPACK_IMPORTED_MODULE_0___default()('#adEndDate', {
     minDate: typeof endDate !== 'undefined' ? endDate : new Date(),
     formatter: function formatter(input, date, instance) {
@@ -48121,8 +48122,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _prepareData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./prepareData */ "./resources/js/plugins/prepareData.js");
 
 
+var form = document.getElementById('adForm');
 
-if (typeof isCreate !== 'undefined' || typeof isEdit !== 'undefined') {
+if (form) {
   var _markers = [];
   var map;
 
@@ -48197,8 +48199,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-tel-input */ "./node_modules/intl-tel-input/index.js");
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_tel_input__WEBPACK_IMPORTED_MODULE_0__);
 
+var form = document.getElementById('adForm');
 
-if (typeof isCreate !== 'undefined' || typeof isEdit !== 'undefined') {
+if (form) {
   var input = document.getElementById('adPhone');
 
   var _phoneInput = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(input, {

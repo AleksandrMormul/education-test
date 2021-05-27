@@ -4,7 +4,6 @@
     <!-- Google Maps -->
     <script src="https://maps.google.com/maps/api/js?key={{ config('app.google_api_key')}}"></script>
     <script>
-        const isCreate = true;
         const endDate = new Date('@php echo today()->toDateString() @endphp');
         $(document).ready(function() {
             const oldValue = '{{ old('country_code') }}';

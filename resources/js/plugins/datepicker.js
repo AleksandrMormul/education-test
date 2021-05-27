@@ -1,5 +1,7 @@
 import datepicker from 'js-datepicker';
-if (typeof isCreate !== 'undefined' ||typeof isEdit !== 'undefined' ) {
+
+const form = document.getElementById('adForm');
+if (form) {
     datepicker('#adEndDate', {
         minDate: (typeof endDate !== 'undefined') ? endDate : new Date(),
         formatter: (input, date, instance) => {

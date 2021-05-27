@@ -1,6 +1,9 @@
 import GMaps from 'gmaps';
 import prepareData  from './prepareData';
-if (typeof isCreate !== 'undefined' ||typeof isEdit !== 'undefined' ) {
+
+const form = document.getElementById('adForm');
+
+if (form) {
     let markers = [];
     let map;
     if (typeof isEdit !== 'undefined' && lat && lng) {

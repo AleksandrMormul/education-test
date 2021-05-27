@@ -1,6 +1,6 @@
 import intlTelInput from 'intl-tel-input';
-
-if (typeof isCreate !== 'undefined' ||typeof isEdit !== 'undefined' ) {
+const form = document.getElementById('adForm');
+if (form) {
     const input = document.getElementById('adPhone');
     const phoneInput = intlTelInput(input, ({
         formatOnDisplay: true,
