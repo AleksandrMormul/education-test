@@ -38,7 +38,12 @@
         </div>
     </div>
     <div>
-        <button type="button" class="btn subscriptionBtn">Subscribe</button>
+        @auth()
+        <form method="POST" id="adSubscription" action="{{ route('ads.destroy', $ad->id) }}">
+            {{ csrf_field() }}
+        </form>
+        <button type="button" class="btn subscriptionBtn" onclick="confirmSubscription()">Subscribe</button>
+        @endauth
     </div>
     <div class="d-flex justify-content-center">
         {!! $ads->links() !!}

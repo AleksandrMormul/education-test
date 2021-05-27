@@ -48005,6 +48005,8 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./plugins/confirmSubscription */ "./resources/js/plugins/confirmSubscription.js");
+
 __webpack_require__(/*! ./plugins/phoneMask */ "./resources/js/plugins/phoneMask.js");
 
 __webpack_require__(/*! ./plugins/gmaps */ "./resources/js/plugins/gmaps.js");
@@ -48061,6 +48063,24 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/plugins/confirmSubscription.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/plugins/confirmSubscription.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+window.confirmSubscription = function () {
+  var result = confirm('Are you sure you want to subscribe weekly sending emails?');
+
+  if (result) {
+    event.preventDefault();
+    document.getElementById('adSubscription').submit();
+  }
+};
 
 /***/ }),
 

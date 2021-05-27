@@ -1,4 +1,5 @@
 require('./bootstrap');
+require('./plugins/confirmSubscription');
 require('./plugins/phoneMask');
 require('./plugins/gmaps');
 require('./plugins/datepicker');
