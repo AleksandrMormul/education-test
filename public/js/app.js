@@ -48283,57 +48283,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dev_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../dev.config.json */ "./dev.config.json");
 var _dev_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../dev.config.json */ "./dev.config.json", 1);
 
-var adIdd1;
-var heartId;
-var el;
+$(function () {
+  $('.heart').click(function (event) {
+    var $target = $(event.target);
+    var adId = $target.data('ad-id');
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+      context: this,
+      url: "".concat(_dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl, "favorites/ads/").concat(adId, "/toggle"),
+      success: function success(result) {
+        switch (result['favorite']) {
+          case 'enabled':
+            $target.removeClass('far').addClass('fas');
+            break;
 
-window.toggleFavorite = function (id) {
-  console.log(id);
-  adIdd1 = id;
-  heartId = "heartId-".concat(id); //$(document).ready(function() {
-
-  if (heartId) {
-    //el = document.getElementById(heartId);
-    document.getElementById(heartId).addEventListener('click', function () {
-      $.ajax({
-        type: "POST",
-        dataType: 'json',
-        context: this,
-        url: _dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl + "favorites/ads/".concat(adIdd1, "/toggle"),
-        success: function success(result) {
-          if (result['favorite'] === 'enabled') {
-            $(this).removeClass('far').addClass('fas');
-          } else {
-            $(this).removeClass('fas').addClass('far');
-          }
-        },
-        error: function error(jqxhr, status, exception) {
-          alert(exception);
+          case 'disabled':
+          default:
+            $target.removeClass('fas').addClass('far');
+            break;
         }
-      });
+      },
+      error: function error(jqxhr, status, exception) {
+        console.log(exception);
+      }
     });
-  } // })
-
-}; //$(document).on('click','.heart',function(){
-//$(`#heartId${adIdd1}`).click( function () {
-// document.getElementById(heartId).addEventListener('click', function () {
-//     $.ajax({
-//         type: "POST",
-//         dataType: 'json',
-//         context: this,
-//         url: config.host.apiUrl + `favorites/ads/${adIdd1}/toggle`,
-//         success: function (result) {
-//             if (result['favorite'] === 'enabled') {
-//                 $(this).removeClass('far').addClass('fas');
-//             } else {
-//                 $(this).removeClass('fas').addClass('far');
-//             }
-//         },
-//         error: function (jqxhr, status, exception) {
-//             alert(exception);
-//         },
-//     });
-// })
+  });
+});
 
 /***/ }),
 
