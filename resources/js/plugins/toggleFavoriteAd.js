@@ -1,12 +1,12 @@
-import config from '../config/dev.config.json';
+import config from '../../../dev.config.json';
 
-let adIdd1
+let adIdd1;
 
 window.toggleFavorite = function (id) {
     adIdd1 = id;
 }
 
-$(document).on('click', '.heart', function () {
+$("#heartId").click( function () {
     $.ajax({
         type: "POST",
         dataType: 'json',

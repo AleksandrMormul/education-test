@@ -30,7 +30,7 @@
                         <img src="{{ $ad->image_url }}"
                             class="card-img-top" alt="ad image">
                         @auth
-                            <i onclick="toggleFavorite({{$ad->id}})" class="heart  {{ $ad->isFavorite || $ad->favoriteable_id ? 'fas' : 'far'}}  fa-heart"></i>
+                            <i onclick="toggleFavorite({{$ad->id}})" id="heartId" class="heart {{ $ad->isFavorite || $ad->favoriteable_id ? 'fas' : 'far'}}  fa-heart"></i>
                         @endauth
                         </div>
                         <div class="card-body">

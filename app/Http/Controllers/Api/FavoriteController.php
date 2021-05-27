@@ -21,7 +21,9 @@ class FavoriteController extends Controller
      */
     public function toggleFavorite(Request $request, Ad $ad): JsonResponse
     {
-        $data = FavoriteService::toggleFavorite($ad, $request->user());
-        return  response()->json($data);
+        if (auth()->user()) {
+            $data = FavoriteService::toggleFavorite($ad, $request->user());
+            return  response()->json($data);
+        }
     }
 }

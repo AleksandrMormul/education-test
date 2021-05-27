@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./dev.config.json":
+/*!*************************!*\
+  !*** ./dev.config.json ***!
+  \*************************/
+/*! exports provided: environment, host, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"environment\":\"development\",\"host\":{\"apiUrl\":\"http://localhost/api/\"}}");
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -48005,7 +48016,7 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-__webpack_require__(/*! ./plugins/togleFavoriteAd */ "./resources/js/plugins/togleFavoriteAd.js");
+__webpack_require__(/*! ./plugins/toggleFavoriteAd */ "./resources/js/plugins/toggleFavoriteAd.js");
 
 __webpack_require__(/*! ./plugins/phoneMask */ "./resources/js/plugins/phoneMask.js");
 
@@ -48063,17 +48074,6 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
-
-/***/ }),
-
-/***/ "./resources/js/config/dev.config.json":
-/*!*********************************************!*\
-  !*** ./resources/js/config/dev.config.json ***!
-  \*********************************************/
-/*! exports provided: environment, host, default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("{\"environment\":\"development\",\"host\":{\"apiUrl\":\"http://localhost/api/\"}}");
 
 /***/ }),
 
@@ -48271,17 +48271,17 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ "./resources/js/plugins/togleFavoriteAd.js":
-/*!*************************************************!*\
-  !*** ./resources/js/plugins/togleFavoriteAd.js ***!
-  \*************************************************/
+/***/ "./resources/js/plugins/toggleFavoriteAd.js":
+/*!**************************************************!*\
+  !*** ./resources/js/plugins/toggleFavoriteAd.js ***!
+  \**************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/dev.config.json */ "./resources/js/config/dev.config.json");
-var _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../config/dev.config.json */ "./resources/js/config/dev.config.json", 1);
+/* harmony import */ var _dev_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../dev.config.json */ "./dev.config.json");
+var _dev_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../dev.config.json */ "./dev.config.json", 1);
 
 var adIdd1;
 
@@ -48289,12 +48289,12 @@ window.toggleFavorite = function (id) {
   adIdd1 = id;
 };
 
-$(document).on('click', '.heart', function () {
+$("#heartId").click(function () {
   $.ajax({
     type: "POST",
     dataType: 'json',
     context: this,
-    url: _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl + "favorites/ads/".concat(adIdd1, "/toggle"),
+    url: _dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl + "favorites/ads/".concat(adIdd1, "/toggle"),
     success: function success(result) {
       if (result['favorite'] === 'enabled') {
         $(this).removeClass('far').addClass('fas');
