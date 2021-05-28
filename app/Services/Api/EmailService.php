@@ -6,6 +6,8 @@ namespace App\Services\Api;
 
 use App\Jobs\WeeklySendMail;
 use App\Models\Ad;
+use App\Models\User;
+use App\Services\UserService;
 
 /**
  * Class EmailService
@@ -16,6 +18,11 @@ class EmailService
     public static function weeklyEmail()
     {
         $newAds = Ad::newAds()->get();
-        WeeklySendMail::dispatch($newAds);
+        $usersIds = UserService::getSubscribeUsersIds();
+
+        foreach ($usersIds as $userId) {
+            $user = User::findOrFail($userId);
+            WeeklySendMail::dispatch($newAds, $user);
+        }
     }
 }

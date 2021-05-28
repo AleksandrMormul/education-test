@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Ad;
+use App\Models\Subscription;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
@@ -53,5 +55,13 @@ class UserService
             ->where('favoriteable_id', '=', $ad->id)
             ->with('favoriteable')
             ->first();
+    }
+
+    /**
+     * @return Subscription|Builder
+     */
+    public static function getSubscribeUsersIds()
+    {
+        return Subscription::subscriptionUsersIds();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Jobs\WeeklySendMail;
 use App\Services\Api\EmailService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -76,6 +77,7 @@ class Kernel extends HttpKernel
     {
         $schedule->call(function () {
             EmailService::weeklyEmail();
-        })->weeklyOn(7, '15:00');
+        })->everyMinute();//->weeklyOn(7, '15:00');
+        //$schedule->job(new WeeklySendMail);
     }
 }
