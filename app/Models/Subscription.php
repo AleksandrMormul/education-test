@@ -63,6 +63,6 @@ class Subscription extends Model
      */
     public function scopeSubscriptionUsersIds($query)
     {
-        return $query->whereIsSubscription(true)->value('user_id');
+        return $query->whereIsSubscription(true);
     }
 }

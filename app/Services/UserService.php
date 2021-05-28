@@ -58,10 +58,10 @@ class UserService
     }
 
     /**
-     * @return Subscription|Builder
+     * @return Builder[]|Collection|Subscription[]
      */
     public static function getSubscribeUsersIds()
     {
-        return Subscription::subscriptionUsersIds();
+        return Subscription::subscriptionUsersIds()->get();
     }
 }

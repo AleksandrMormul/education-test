@@ -19,9 +19,8 @@ class EmailService
     {
         $newAds = Ad::newAds()->get();
         $usersIds = UserService::getSubscribeUsersIds();
-
         foreach ($usersIds as $userId) {
-            $user = User::findOrFail($userId);
+            $user = User::findOrFail($userId->user_id);
             WeeklySendMail::dispatch($newAds, $user);
         }
     }

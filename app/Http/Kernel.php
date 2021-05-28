@@ -70,14 +70,4 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
 
-    /**
-     * @param Schedule $schedule
-     */
-    protected function schedule(Schedule $schedule)
-    {
-        $schedule->call(function () {
-            EmailService::weeklyEmail();
-        })->everyMinute();//->weeklyOn(7, '15:00');
-        //$schedule->job(new WeeklySendMail);
-    }
 }
