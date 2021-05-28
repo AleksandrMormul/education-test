@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Models\Ad;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use RuntimeException;
 
 /**
  * Class UserService
@@ -15,7 +17,7 @@ class UserService
     /**
      * @param User $user
      * @return bool
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public static function isAdmin(User $user): bool
     {
@@ -24,19 +26,9 @@ class UserService
 
     /**
      * @param User $user
-     * @return bool
-     * @throws \RuntimeException
-     */
-    public static function isAuthor(User $user): bool
-    {
-        return self::checkRole($user, RoleService::AUTHOR_ROLE);
-    }
-
-    /**
-     * @param User $user
      * @param string $roleName
      * @return bool
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     public static function checkRole(User $user, string $roleName): bool
     {
@@ -45,7 +37,18 @@ class UserService
 
     /**
      * @param User $user
+     * @return bool
+     * @throws RuntimeException
+     */
+    public static function isAuthor(User $user): bool
+    {
+        return self::checkRole($user, RoleService::AUTHOR_ROLE);
+    }
+
+    /**
+     * @param User $user
      * @param Ad $ad
+     * @return Model|HasMany|object|null
      */
     public static function userAdFavorite(User $user, Ad $ad)
     {

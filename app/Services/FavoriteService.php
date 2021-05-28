@@ -33,7 +33,10 @@ class FavoriteService
         }
 
         $favorite = UserService::userAdFavorite($user, $ad);
-        $favorite->delete();
+
+        if ($favorite) {
+            $favorite->delete();
+        }
 
         return ['favorite' => 'disabled'];
     }

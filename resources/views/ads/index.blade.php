@@ -27,6 +27,11 @@
             <strong>{{ $message }}</strong>
         </div>
     @endif
+    @if(count($ads) === 0)
+        <div class="container">
+            <p>List of favorite ads are empty</p>
+        </div>
+    @endif
     <div class="container">
         <div class="row">
             @foreach ($ads as $ad)
