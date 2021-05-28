@@ -14,5 +14,6 @@
     </div>
 </div>
 <p> for see more asd please click <a href="{{ route('ads.index')}}">here</a>!</p>
+<p>For unsubscribe click <a href="{{$unsubscribeUrl}}">here</a></p>
 
 
