@@ -29,7 +29,8 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             Log::info('This is running');
             EmailService::weeklyEmail();
-        })->weeklyOn(7, '15:00');
+        })/*->everyMinute();*/->weeklyOn(7, '15:00');
+
     }
 
     /**

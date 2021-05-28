@@ -21,7 +21,7 @@ class EmailService
         $usersIds = UserService::getSubscribeUsersIds();
         foreach ($usersIds as $userId) {
             $user = User::findOrFail($userId->user_id);
-            WeeklySendMail::dispatch($newAds, $user);
+            WeeklySendMail::dispatch($newAds, $user)->onQueue('weekly-emails');
         }
     }
 }
