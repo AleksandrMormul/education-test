@@ -108,15 +108,10 @@ class AdService
     /**
      * @param Ad $ad
      * @param User|null $user
-     * @return bool
      */
-    public static function isFavoriteForUser(Ad $ad, ?User $user): bool
+    public static function isFavoriteForUser(Ad $ad, User $user)
     {
-        if ($user) {
-            $favorite = UserService::userAdFavorite($user, $ad, Ad::class);
-            return count($favorite) === 1;
-        }
-        return false;
+        return UserService::userAdFavorite($user, $ad);
     }
 
     /**

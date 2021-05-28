@@ -1,6 +1,6 @@
 require('./bootstrap');
 require('./plugins/confirmSubscription');
-require('./plugins/togleFavoriteAd');
+require('./plugins/toggleFavoriteAd');
 require('./plugins/phoneMask');
 require('./plugins/gmaps');
 require('./plugins/datepicker');

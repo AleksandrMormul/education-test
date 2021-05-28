@@ -41,16 +41,21 @@ class AdController extends Controller
      */
     public function index(IndexAdRequest $request): Renderable
     {
-        $query = AdService::getAds();
-        $ads = $query->paginate(15);
-
-        foreach ($ads as $ad) {
-            $ad['isFavorite'] = $ad->isFavoriteForUser($request->user());
-        }
-
         if ($request->getFavorites() && auth()->user()) {
             $query = AdService::getFavoritesForUser($request->user());
             $ads = $query->paginate(15);
+
+            if (count($ads) === 0) {
+                return view('ads.favorite');
+            }
+        } else {
+            $query = AdService::getAds();
+            $ads = $query->paginate(15);
+            if (auth()->user()) {
+                foreach ($ads as $ad) {
+                    $ad['isFavorite'] = $ad->isFavoriteForUser($request->user());
+                }
+            }
         }
 
 
@@ -116,8 +121,11 @@ class AdController extends Controller
     public function show(GetAdRequest $request, Ad $ad): Renderable
     {
         $user = $request->user();
+        $isFavorite = null;
 
-        $isFavorite = $ad->isFavoriteForUser($user);
+        if ($user) {
+            $isFavorite = $ad->isFavoriteForUser($user);
+        }
 
         return view('ads/show', [
             'ad' => $ad,

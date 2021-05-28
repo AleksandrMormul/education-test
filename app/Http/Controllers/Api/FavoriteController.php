@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Ad;
 use App\Services\FavoriteService;
 use Illuminate\Http\JsonResponse;
@@ -9,7 +10,7 @@ use Illuminate\Http\Request;
 
 /**
  * Class FavoriteController
- * @package App\Http\Controllers
+ * @package App\Http\Controllers\Api
  */
 class FavoriteController extends Controller
 {
@@ -20,7 +21,9 @@ class FavoriteController extends Controller
      */
     public function toggleFavorite(Request $request, Ad $ad): JsonResponse
     {
-        $data = FavoriteService::toggleFavorite($ad, $request->user());
-        return  response()->json($data);
+        if (auth()->user()) {
+            $data = FavoriteService::toggleFavorite($ad, $request->user());
+            return  response()->json($data);
+        }
     }
 }

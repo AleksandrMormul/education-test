@@ -1,6 +1,6 @@
 {
     "environment": "development",
     "host": {
-        "apiUrl": "http://localhost/api/"
+        "apiUrl": "YOUR_API_URL"
     }
 }

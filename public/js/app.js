@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./dev.config.json":
+/*!*************************!*\
+  !*** ./dev.config.json ***!
+  \*************************/
+/*! exports provided: environment, host, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"environment\":\"development\",\"host\":{\"apiUrl\":\"http://localhost/api/\"}}");
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -48007,7 +48018,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./plugins/confirmSubscription */ "./resources/js/plugins/confirmSubscription.js");
 
-__webpack_require__(/*! ./plugins/togleFavoriteAd */ "./resources/js/plugins/togleFavoriteAd.js");
+__webpack_require__(/*! ./plugins/toggleFavoriteAd */ "./resources/js/plugins/toggleFavoriteAd.js");
 
 __webpack_require__(/*! ./plugins/phoneMask */ "./resources/js/plugins/phoneMask.js");
 
@@ -48109,18 +48120,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var js_datepicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! js-datepicker */ "./node_modules/js-datepicker/dist/datepicker.min.js");
 /* harmony import */ var js_datepicker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(js_datepicker__WEBPACK_IMPORTED_MODULE_0__);
 
-js_datepicker__WEBPACK_IMPORTED_MODULE_0___default()('#adEndDate', {
-  minDate: typeof endDate !== 'undefined' ? endDate : new Date(),
-  formatter: function formatter(input, date, instance) {
-    var currentMonth = date.getMonth() + 1;
+var form = document.getElementById('adForm');
 
-    if (currentMonth < 10) {
-      currentMonth = '0' + currentMonth;
+if (form) {
+  js_datepicker__WEBPACK_IMPORTED_MODULE_0___default()('#adEndDate', {
+    minDate: typeof endDate !== 'undefined' ? endDate : new Date(),
+    formatter: function formatter(input, date, instance) {
+      var currentMonth = date.getMonth() + 1;
+
+      if (currentMonth < 10) {
+        currentMonth = '0' + currentMonth;
+      }
+
+      input.value = date.getDate() + "-" + currentMonth + "-" + date.getFullYear();
     }
-
-    input.value = date.getDate() + "-" + currentMonth + "-" + date.getFullYear();
-  }
-});
+  });
+}
 
 /***/ }),
 
@@ -48138,52 +48153,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _prepareData__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./prepareData */ "./resources/js/plugins/prepareData.js");
 
 
-var markers = [];
-var map;
+var form = document.getElementById('adForm');
 
-if (typeof isEdit !== 'undefined' && lat && lng) {
-  map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
-    div: '#adMap',
-    zoom: 5,
-    lat: lat,
-    lng: lng
-  });
-  var marker = map.addMarker({
-    lat: lat,
-    lng: lng
-  });
-  markers.push(marker);
-} else {
-  map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
-    div: '#adMap',
-    zoom: 5,
-    lat: 50.431759,
-    lng: 30.517023
+if (form) {
+  var _markers = [];
+  var map;
+
+  if (typeof isEdit !== 'undefined' && lat && lng) {
+    map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
+      div: '#adMap',
+      zoom: 5,
+      lat: lat,
+      lng: lng
+    });
+    var marker = map.addMarker({
+      lat: lat,
+      lng: lng
+    });
+
+    _markers.push(marker);
+  } else {
+    map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
+      div: '#adMap',
+      zoom: 5,
+      lat: 50.431759,
+      lng: 30.517023
+    });
+  }
+
+  map.addListener('click', function (e) {
+    var coord = e.latLng.toJSON();
+
+    if (_markers.length === 0) {
+      var _marker = map.addMarker({
+        lat: coord.lat,
+        lng: coord.lng
+      });
+
+      _markers.push(_marker);
+    } else if (_markers.length === 1) {
+      _markers[0].setMap(null);
+
+      _markers.shift();
+
+      var _marker2 = map.addMarker({
+        lat: coord.lat,
+        lng: coord.lng
+      });
+
+      _markers.push(_marker2);
+    }
   });
 }
 
-map.addListener('click', function (e) {
-  var coord = e.latLng.toJSON();
-
-  if (markers.length === 0) {
-    var _marker = map.addMarker({
-      lat: coord.lat,
-      lng: coord.lng
-    });
-
-    markers.push(_marker);
-  } else if (markers.length === 1) {
-    markers[0].setMap(null);
-    markers.shift();
-
-    var _marker2 = map.addMarker({
-      lat: coord.lat,
-      lng: coord.lng
-    });
-
-    markers.push(_marker2);
-  }
-});
 $(document).ready(function () {
   $("#adBtnSubmit").click(function () {
     Object(_prepareData__WEBPACK_IMPORTED_MODULE_1__["default"])(markers);
@@ -48208,30 +48230,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! intl-tel-input */ "./node_modules/intl-tel-input/index.js");
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_tel_input__WEBPACK_IMPORTED_MODULE_0__);
 
-var input = document.getElementById('adPhone');
-var phoneInput = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(input, {
-  formatOnDisplay: true,
-  hiddenInput: "fullPhoneNumber",
-  utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/utils.js'
-});
+var form = document.getElementById('adForm');
 
-if (typeof isEdit !== 'undefined') {
-  phoneInput.setNumber(phoneNumber);
+if (form) {
+  var input = document.getElementById('adPhone');
+
+  var _phoneInput = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(input, {
+    formatOnDisplay: true,
+    hiddenInput: "fullPhoneNumber",
+    utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/utils.js'
+  });
+
+  if (typeof isEdit !== 'undefined') {
+    _phoneInput.setNumber(phoneNumber);
+  }
+
+  var errorMap = ['Invalid number', 'Invalid country code', 'Too short', 'Too long', 'Invalid number'];
+  var error = document.querySelector('.phone-error');
+  error.style.display = 'none';
+  input.addEventListener('change', function () {
+    if (_phoneInput.isValidNumber()) {
+      error.style.display = 'none';
+    } else {
+      var errorCode = _phoneInput.getValidationError();
+
+      error.style.display = '';
+      error.style.color = 'red';
+      error.innerHTML = errorMap[errorCode];
+    }
+  });
 }
 
-var errorMap = ['Invalid number', 'Invalid country code', 'Too short', 'Too long', 'Invalid number'];
-var error = document.querySelector('.phone-error');
-error.style.display = 'none';
-input.addEventListener('change', function () {
-  if (phoneInput.isValidNumber()) {
-    error.style.display = 'none';
-  } else {
-    var errorCode = phoneInput.getValidationError();
-    error.style.display = '';
-    error.style.color = 'red';
-    error.innerHTML = errorMap[errorCode];
-  }
-});
 function getNumber() {
   return phoneInput.getNumber().toString();
 }
@@ -48291,40 +48320,43 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ "./resources/js/plugins/togleFavoriteAd.js":
-/*!*************************************************!*\
-  !*** ./resources/js/plugins/togleFavoriteAd.js ***!
-  \*************************************************/
+/***/ "./resources/js/plugins/toggleFavoriteAd.js":
+/*!**************************************************!*\
+  !*** ./resources/js/plugins/toggleFavoriteAd.js ***!
+  \**************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/dev.config.json */ "./resources/js/config/dev.config.json");
-var _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../config/dev.config.json */ "./resources/js/config/dev.config.json", 1);
+/* harmony import */ var _dev_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../dev.config.json */ "./dev.config.json");
+var _dev_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../dev.config.json */ "./dev.config.json", 1);
 
-var adIdd1;
+$(function () {
+  $('.heart').click(function (event) {
+    var $target = $(event.target);
+    var adId = $target.data('ad-id');
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+      context: this,
+      url: "".concat(_dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl, "favorites/ads/").concat(adId, "/toggle"),
+      success: function success(result) {
+        switch (result['favorite']) {
+          case 'enabled':
+            $target.removeClass('far').addClass('fas');
+            break;
 
-window.toggleFavorite = function (id) {
-  adIdd1 = id;
-};
-
-$(document).on('click', '.heart', function () {
-  $.ajax({
-    type: "POST",
-    dataType: 'json',
-    context: this,
-    url: _config_dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl + "favorites/ads/".concat(adIdd1, "/toggle"),
-    success: function success(result) {
-      if (result['favorite'] === 'enabled') {
-        $(this).removeClass('far').addClass('fas');
-      } else {
-        $(this).removeClass('fas').addClass('far');
+          case 'disabled':
+          default:
+            $target.removeClass('fas').addClass('far');
+            break;
+        }
+      },
+      error: function error(jqxhr, status, exception) {
+        console.log(exception);
       }
-    },
-    error: function error(jqxhr, status, exception) {
-      alert(exception);
-    }
+    });
   });
 });
 
