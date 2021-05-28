@@ -1,4 +1,5 @@
 import getNumber from "./phoneMask";
+import getDomain from '../common/getDomain';
 
 export default function prepareData(markers) {
     const formElement = document.getElementById("adForm");
@@ -18,7 +19,7 @@ export default function prepareData(markers) {
     inputLng.name = "longitude";
     inputLng.value = coord.lng();
 
-    request.open("POST", "http://localhost/ads");
+    request.open("POST", `${getDomain()}/ads`);
     formElement.appendChild(inputLat)
     formElement.appendChild(fullPhoneNumber)
     formElement.appendChild(inputLng)
