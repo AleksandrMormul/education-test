@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Services\Api\EmailService;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,4 +68,14 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+
+    /**
+     * @param Schedule $schedule
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->call(function () {
+            EmailService::weeklyEmail();
+        })->weeklyOn(7, '15:00');
+    }
 }

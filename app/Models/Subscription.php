@@ -16,7 +16,7 @@ use Illuminate\Support\Carbon;
  * @property bool $is_subscription
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read User $user
+ * @property-read \App\Models\User $user
  * @method static Builder|Subscription newModelQuery()
  * @method static Builder|Subscription newQuery()
  * @method static Builder|Subscription query()

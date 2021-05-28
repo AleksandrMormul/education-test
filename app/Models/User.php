@@ -27,14 +27,14 @@ use Illuminate\Support\Carbon;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection|Ad[] $ads
+ * @property-read Collection|\App\Models\Ad[] $ads
  * @property-read int|null $ads_count
- * @property-read Collection|Favorite[] $favorites
+ * @property-read Collection|\App\Models\Favorite[] $favorites
  * @property-read int|null $favorites_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read Role|null $role
- * @property-read Subscription|null $subscription
+ * @property-read \App\Models\Role|null $role
+ * @property-read \App\Models\Subscription|null $subscription
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
