@@ -16,21 +16,18 @@ class AdDeleteByAuthorSendMail extends Mailable
     use Queueable;
     use SerializesModels;
 
-    /**
-     * @var Ad
-     */
-    protected $ad;
+    public $ad;
     /**
      * @var
      */
-    protected $deletedAd;
+    public $deletedAd;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Ad $ad, $deletedAd)
+    public function __construct($ad, $deletedAd)
     {
         $this->ad = $ad;
         $this->deletedAd = $deletedAd;

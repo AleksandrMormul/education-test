@@ -8,6 +8,7 @@ use App\Http\Requests\Ad\StoreAdRequest;
 use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Services\AdService;
+use App\Services\Api\EmailService;
 use App\Services\Api\SubscriptionService;
 use App\Services\CountryService;
 use Illuminate\Contracts\Foundation\Application;
@@ -54,7 +55,6 @@ class AdController extends Controller
                 }
             }
         }
-
 
         if ($request->addSubscribe() && auth()->user()) {
             try {
@@ -179,7 +179,11 @@ class AdController extends Controller
     public function destroy(Request $request, Ad $ad): RedirectResponse
     {
         try {
+            $adData = $ad->toArray();
             AdService::deleteAd($ad);
+            if ($request->user()->isAuthor()) {
+                EmailService::deletedByAuthorEmail($adData);
+            }
 
             return redirect()->route('ads.index')->with('success', 'Deleting ad was success');
         } catch (\Exception $exception) {

@@ -102,7 +102,7 @@ class AdService
      */
     public static function deleteAd(Ad $ad): int
     {
-        return Ad::destroy($ad->id);
+        return $ad->delete();
     }
 
     /**

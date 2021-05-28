@@ -56,15 +56,15 @@
         @endif
     </div>
     <div>
-        @if(!Auth::user()->subscription)
             @auth()
-                <form method="GET" id="adSubscription" action="{{ route('ads.index') }}">
+            @if(!Auth::user()->subscription)
+            <form method="GET" id="adSubscription" action="{{ route('ads.index') }}">
                     {{ csrf_field() }}
                     <input type="hidden" name="is_subscribe" value="1">
                 </form>
                 <button type="button" class="btn subscriptionBtn" onclick="confirmSubscription()">Subscribe</button>
-            @endauth
-        @endif
+            @endif
+        @endauth
     </div>
     <div class="d-flex justify-content-center">
         {!! $ads->links() !!}

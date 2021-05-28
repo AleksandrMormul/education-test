@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
@@ -35,6 +36,7 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $notifications_count
  * @property-read \App\Models\Role|null $role
  * @property-read \App\Models\Subscription|null $subscription
+ * @method static Builder|User getUsersWhoHaveFavorites($ad)
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
  * @method static Builder|User query()
@@ -136,6 +138,19 @@ class User extends Authenticatable
     public function isAuthor(): bool
     {
         return UserService::isAuthor($this);
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeGetUsersWhoHaveFavorites($query, $ad)
+    {
+        return $query->join('favorites', function (JoinClause $join) {
+            $join->where('favorites.favoriteable_type', Ad::class)
+                ->whereColumn('favorites.user_id', 'users.id');
+        })
+            ->where('favorites.favoriteable_id', $ad->id);
     }
 
     /**
