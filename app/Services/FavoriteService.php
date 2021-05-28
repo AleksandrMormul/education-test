@@ -20,9 +20,11 @@ class FavoriteService
     public static function toggleFavorite(Ad $ad, User $user): array
     {
         if (
-            Favorite::where('user_id', '=', $user->id)
-                ->where('favoriteable_type', '=', Ad::class)
-                ->where('favoriteable_id', '=', $ad->id)
+            Favorite::where([
+                    ['user_id', $user->id],
+                    ['favoriteable_type', Ad::class],
+                    ['favoriteable_id', $ad->id],
+                ])
                 ->doesntExist()
         ) {
             $favorite = new Favorite(['user_id' => $user->id]);

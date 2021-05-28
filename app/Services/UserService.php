@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Ad;
+use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -48,12 +49,15 @@ class UserService
     /**
      * @param User $user
      * @param Ad $ad
-     * @return Model|HasMany|object|null
+     * @return Ad|Favorite|Model|null
      */
-    public static function userAdFavorite(User $user, Ad $ad)
+    public static function userAdFavorite(User $user, Ad $ad): ?Favorite
     {
-        return $user->favorites()->where('favoriteable_type', Ad::class)
-            ->where('favoriteable_id', '=', $ad->id)
+        return $user->favorites()
+            ->where([
+                ['favoriteable_type', Ad::class],
+                ['favoriteable_id', $ad->id],
+            ])
             ->with('favoriteable')
             ->first();
     }

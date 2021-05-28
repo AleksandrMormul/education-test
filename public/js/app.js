@@ -86,17 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./dev.config.json":
-/*!*************************!*\
-  !*** ./dev.config.json ***!
-  \*************************/
-/*! exports provided: environment, host, default */
-/***/ (function(module) {
-
-module.exports = JSON.parse("{\"environment\":\"development\",\"host\":{\"apiUrl\":\"http://localhost/api/\"}}");
-
-/***/ }),
-
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -48077,6 +48066,22 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/common/getDomain.js":
+/*!******************************************!*\
+  !*** ./resources/js/common/getDomain.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return getDomain; });
+function getDomain() {
+  return window.location.origin;
+}
+
+/***/ }),
+
 /***/ "./resources/js/plugins/datepicker.js":
 /*!********************************************!*\
   !*** ./resources/js/plugins/datepicker.js ***!
@@ -48247,6 +48252,8 @@ function getNumber() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return prepareData; });
 /* harmony import */ var _phoneMask__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./phoneMask */ "./resources/js/plugins/phoneMask.js");
+/* harmony import */ var _common_getDomain__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/getDomain */ "./resources/js/common/getDomain.js");
+
 
 function prepareData(markers) {
   var formElement = document.getElementById("adForm");
@@ -48265,7 +48272,7 @@ function prepareData(markers) {
   inputLng.type = "hidden";
   inputLng.name = "longitude";
   inputLng.value = coord.lng();
-  request.open("POST", "http://localhost/ads");
+  request.open("POST", "".concat(Object(_common_getDomain__WEBPACK_IMPORTED_MODULE_1__["default"])(), "/ads"));
   formElement.appendChild(inputLat);
   formElement.appendChild(fullPhoneNumber);
   formElement.appendChild(inputLng);
@@ -48298,8 +48305,7 @@ $(document).ready(function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _dev_config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../dev.config.json */ "./dev.config.json");
-var _dev_config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../dev.config.json */ "./dev.config.json", 1);
+/* harmony import */ var _common_getDomain__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/getDomain */ "./resources/js/common/getDomain.js");
 
 $(function () {
   $('.heart').click(function (event) {
@@ -48309,7 +48315,7 @@ $(function () {
       type: "POST",
       dataType: 'json',
       context: this,
-      url: "".concat(_dev_config_json__WEBPACK_IMPORTED_MODULE_0__.host.apiUrl, "favorites/ads/").concat(adId, "/toggle"),
+      url: "".concat(Object(_common_getDomain__WEBPACK_IMPORTED_MODULE_0__["default"])(), "/api/favorites/ads/").concat(adId, "/toggle"),
       success: function success(result) {
         switch (result['favorite']) {
           case 'enabled':
