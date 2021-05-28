@@ -6,8 +6,11 @@ use App\Services\AdService;
 use Countries;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Lang;
 use Monarobase\CountryList\CountryNotFoundException;
@@ -27,9 +30,12 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @property Carbon $end_date
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read Collection|Favorite[] $favorites
+ * @property-read int|null $favorites_count
  * @property-read string $full_name_country
  * @property-read string $image_url
  * @property-read User $user
+ * @method static Builder|Ad favoritesForUser(User $user)
  * @method static Builder|Ad newModelQuery()
  * @method static Builder|Ad newQuery()
  * @method static Builder|Ad query()
@@ -89,10 +95,44 @@ class Ad extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * @param $user
+     */
+    public function isFavoriteForUser($user)
+    {
+        return AdService::isFavoriteForUser($this, $user);
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function favorites(): MorphMany
+    {
+        return $this->morphMany(Favorite::class, 'favoriteable');
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeVisibleForDate($query)
     {
         $now = today()->toDateString();
         return $query->where('end_date', '>=', $now);
+    }
+
+    /**
+     * @param $query
+     * @param User $user
+     * @return mixed
+     */
+    public function scopeFavoritesForUser($query, User $user)
+    {
+        return $query->join('favorites', function (JoinClause $join) {
+            $join->where('favorites.favoriteable_type', self::class)
+                    ->whereColumn('favorites.favoriteable_id', 'ads.id');
+        })
+            ->where('favorites.user_id', $user->id);
     }
 
     /**

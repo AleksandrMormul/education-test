@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Role;
-use Illuminate\Database\Eloquent\HigherOrderBuilderProxy;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -17,6 +16,7 @@ class RoleService
     public const ADMIN_ROLE = 'admin';
     public const USER_ROLE = 'user';
     public const AUTHOR_ROLE = 'author';
+
     private const CACHE_PREFIX = 'role_';
 
     /**

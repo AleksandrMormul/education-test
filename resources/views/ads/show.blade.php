@@ -41,8 +41,10 @@
             <div class="col-12 content">
                     <div>
                         <div class="container-img-ad">
-                            <img class="ad-image" src="{{ $ad->image_url }}"
-                                alt="ad image">
+                            <img class="ad-image" src="{{ $ad->image_url }}" alt="ad image">
+                            @auth
+                                <i id="heartId-{{$ad->id}}" data-ad-id="{{$ad->id}}" class="heart  {{ $isFavorite ? 'fas' : 'far'}}  fa-heart"></i>
+                            @endauth
                         </div>
                         <p>{{ $ad->description }}</p>
                         <p>{{ optional($ad->created_at)->toDateString() }}</p>

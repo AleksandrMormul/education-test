@@ -7,7 +7,6 @@
         const phoneNumber ='{{ $ad->phone_number }}';
         const lat = {{ $ad->latitude ?: 'null' }};
         const lng = {{ $ad->longitude ?: 'null' }};
-        const isEdit = true;
     </script>
 @endpush
 

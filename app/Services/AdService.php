@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use App\Models\Ad;
-use Illuminate\Database\Query\Builder;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +25,7 @@ class AdService
      *
      * @return Builder
      */
-    public static function getAds()
+    public static function getAds(): Builder
     {
         return Ad::query()->visibleForDate();
     }
@@ -32,6 +33,7 @@ class AdService
     /**
      * Get Ad
      *
+     * @param int $id
      * @return Ad
      */
     public static function getAd(int $id): Ad
@@ -46,9 +48,7 @@ class AdService
     public static function createAd(array $storeData)
     {
         $storeData['user_id'] = Auth::id();
-        $ad = Ad::create($storeData);
-
-        return $ad->id;
+        return Ad::create($storeData)->id;
     }
 
     /**
@@ -83,9 +83,9 @@ class AdService
     {
         if ($ad->img_src) {
             return asset('storage/' . self::ADS_IMAGES_PATH . '/' . $ad->img_src);
-        } else {
-            return self::getDefaultImageUrl();
         }
+
+        return self::getDefaultImageUrl();
     }
 
     /**
@@ -103,5 +103,23 @@ class AdService
     public static function deleteAd(Ad $ad): int
     {
         return Ad::destroy($ad->id);
+    }
+
+    /**
+     * @param Ad $ad
+     * @param User|null $user
+     */
+    public static function isFavoriteForUser(Ad $ad, User $user)
+    {
+        return UserService::userAdFavorite($user, $ad);
+    }
+
+    /**
+     * @param User $user
+     * @return Builder
+     */
+    public static function getFavoritesForUser(User $user): Builder
+    {
+        return Ad::visibleForDate()->favoritesForUser($user);
     }
 }

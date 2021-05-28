@@ -2,7 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\Ad;
+use App\Models\Favorite;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use RuntimeException;
 
 /**
  * Class UserService
@@ -13,7 +18,7 @@ class UserService
     /**
      * @param User $user
      * @return bool
-     * @throws \Exception
+     * @throws RuntimeException
      */
     public static function isAdmin(User $user): bool
     {
@@ -22,8 +27,19 @@ class UserService
 
     /**
      * @param User $user
+     * @param string $roleName
      * @return bool
-     * @throws \Exception
+     * @throws RuntimeException
+     */
+    public static function checkRole(User $user, string $roleName): bool
+    {
+        return $user->role_id === RoleService::getRoleIdByName($roleName);
+    }
+
+    /**
+     * @param User $user
+     * @return bool
+     * @throws RuntimeException
      */
     public static function isAuthor(User $user): bool
     {
@@ -32,12 +48,17 @@ class UserService
 
     /**
      * @param User $user
-     * @param string $roleName
-     * @return bool
-     * @throws \Exception
+     * @param Ad $ad
+     * @return Ad|Favorite|Model|null
      */
-    public static function checkRole(User $user, string $roleName): bool
+    public static function userAdFavorite(User $user, Ad $ad): ?Favorite
     {
-        return $user->role_id === RoleService::getRoleIdByName($roleName);
+        return $user->favorites()
+            ->where([
+                ['favoriteable_type', Ad::class],
+                ['favoriteable_id', $ad->id],
+            ])
+            ->with('favoriteable')
+            ->first();
     }
 }
