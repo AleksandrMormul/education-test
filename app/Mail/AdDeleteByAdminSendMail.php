@@ -19,11 +19,11 @@ class AdDeleteByAdminSendMail extends Mailable
     /**
      * @var Ad
      */
-    protected $ad;
+    public $ad;
     /**
      * @var
      */
-    protected $deletedAd;
+    public $deletedAd;
 
     /**
      * Create a new message instance.
