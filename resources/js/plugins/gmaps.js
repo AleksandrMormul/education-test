@@ -44,15 +44,15 @@ if (form) {
             markers.push(marker);
         }
     });
+    $(document).ready(function() {
+        $("#adBtnSubmit").click(function(){
+            prepareData(markers);
+        });
+        $("#adBtnSave").click(function(){
+            prepareData(markers);
+        });
+    });
 }
-$(document).ready(function() {
-    $("#adBtnSubmit").click(function(){
-        prepareData(markers);
-    });
-    $("#adBtnSave").click(function(){
-        prepareData(markers);
-    });
-});
 
 
 

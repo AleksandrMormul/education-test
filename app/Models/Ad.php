@@ -30,6 +30,7 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @property Carbon $end_date
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property int $price
  * @property-read Collection|Favorite[] $favorites
  * @property-read int|null $favorites_count
  * @property-read string $full_name_country
@@ -49,6 +50,7 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @method static Builder|Ad whereLatitude($value)
  * @method static Builder|Ad whereLongitude($value)
  * @method static Builder|Ad wherePhoneNumber($value)
+ * @method static Builder|Ad wherePrice($value)
  * @method static Builder|Ad whereTitle($value)
  * @method static Builder|Ad whereUpdatedAt($value)
  * @method static Builder|Ad whereUserId($value)
@@ -64,6 +66,7 @@ class Ad extends Model
     protected $fillable = [
         'title',
         'description',
+        'price',
         'user_id',
         'phone_number',
         'country_code',
@@ -82,7 +85,8 @@ class Ad extends Model
         'user_id' => 'integer',
         'latitude' => 'decimal:8',
         'longitude' => 'decimal:8',
-        'end_date' => 'date'
+        'end_date' => 'date',
+        'price' => 'integer'
     ];
 
     /**
