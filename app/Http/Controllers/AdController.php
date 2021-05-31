@@ -7,6 +7,7 @@ use App\Http\Requests\Ad\IndexAdRequest;
 use App\Http\Requests\Ad\StoreAdRequest;
 use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
+use App\Models\Favorite;
 use App\Services\AdService;
 use App\Services\Api\EmailService;
 use App\Services\Api\SubscriptionService;
@@ -181,6 +182,7 @@ class AdController extends Controller
         try {
             $adData = $ad->toArray();
             AdService::deleteAd($ad);
+            Favorite::whereFavoriteableId($adData['id'])->delete();
 
             if ($request->user()->isAuthor()) {
                 EmailService::deletedByAuthorEmail($adData);
