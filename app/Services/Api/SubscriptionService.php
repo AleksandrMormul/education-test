@@ -18,7 +18,7 @@ class SubscriptionService
      */
     public static function subscribe(User $user)
     {
-        Subscription::firstOrCreate([
+        Subscription::create([
             'user_id' => $user->id,
             'is_subscription' => true
         ]);
