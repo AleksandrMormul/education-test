@@ -142,15 +142,16 @@ class User extends Authenticatable
 
     /**
      * @param $query
+     * @param $adId
      * @return mixed
      */
-    public function scopeGetUsersWhoHaveFavorites($query, $ad)
+    public function scopeGetUsersWhoHaveFavorites($query, $adId)
     {
         return $query->join('favorites', function (JoinClause $join) {
             $join->where('favorites.favoriteable_type', Ad::class)
                 ->whereColumn('favorites.user_id', 'users.id');
         })
-            ->where('favorites.favoriteable_id', $ad->id);
+            ->where('favorites.favoriteable_id', $adId);
     }
 
     /**

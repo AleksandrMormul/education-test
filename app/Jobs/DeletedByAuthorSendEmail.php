@@ -3,8 +3,6 @@
 namespace App\Jobs;
 
 use App\Mail\AdDeleteByAuthorSendMail;
-use App\Models\Ad;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -23,23 +21,26 @@ class DeletedByAuthorSendEmail implements ShouldQueue
     use Queueable;
     use SerializesModels;
 
-    protected $ad;
+    /**
+     * @var array
+     */
+    private $adData;
 
 
     /**
-     * @var User
+     * @var array
      */
-    protected $user;
+    private $user;
 
-    protected $deletedAt;
+    private $deletedAt;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($ad, User $user, $deletedAt)
+    public function __construct(array $adData, array $user, $deletedAt)
     {
-        $this->ad = $ad;
+        $this->adData = $adData;
         $this->user = $user;
         $this->deletedAt = $deletedAt;
     }
@@ -51,8 +52,8 @@ class DeletedByAuthorSendEmail implements ShouldQueue
      */
     public function handle()
     {
-        \Log::info('blalala');
-        $email = new AdDeleteByAuthorSendMail($this->ad, $this->deletedAt);
-        Mail::to($this->user->email)->send($email);
+        $email = new AdDeleteByAuthorSendMail($this->adData, $this->deletedAt);
+
+        Mail::to($this->user['email'])->send($email);
     }
 }

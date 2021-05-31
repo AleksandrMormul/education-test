@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Services\Api;
-
 
 use App\Jobs\DeletedByAuthorSendEmail;
 use App\Jobs\WeeklySendMail;
@@ -20,8 +18,10 @@ class EmailService
     {
         $newAds = Ad::newAds()->get();
         $usersIds = UserService::getSubscribeUsersIds();
+
         foreach ($usersIds as $userId) {
             $user = User::findOrFail($userId->user_id);
+
             WeeklySendMail::dispatch($newAds, $user)->onQueue('weekly-emails');
         }
     }
@@ -31,18 +31,12 @@ class EmailService
      */
     public static function deletedByAuthorEmail(array $adData)
     {
-        try {
-            \Log::info('function deletedByAuthorEmail run.....');
-            $ad = new Ad($adData);
-            $users = User::getUsersWhoHaveFavorites($ad)->get();
-            //dd($user);
-            $deletedAt = now();
-            foreach ($users as $user) {
-                \Log::info('dispatch job.....');
-                DeletedByAuthorSendEmail::dispatch($ad, $user, $deletedAt)->onQueue('delete-by-author-emails');
-            }
-        } catch (\Exception $e) {
-            \Log::error($e->getMessage());
+
+        $users = User::getUsersWhoHaveFavorites($adData['id'])->get();
+        $deletedAt = now();
+
+        foreach ($users as $user) {
+            DeletedByAuthorSendEmail::dispatch($adData, $user->toArray(), $deletedAt)->onQueue('delete-by-author-emails');
         }
     }
 }

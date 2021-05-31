@@ -1,2 +1,2 @@
-<p>Hi!The ad {{$ad->title}} was deleted from author!</p>
-<p>Deleted at {{$deletedAt}}</p>
+<p>Hi!The ad {{$adData['title']}} was deleted from author!</p>
+<p>Deleted at {{$deletedAd}}</p>

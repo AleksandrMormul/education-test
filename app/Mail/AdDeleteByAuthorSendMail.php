@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Ad;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -16,7 +15,10 @@ class AdDeleteByAuthorSendMail extends Mailable
     use Queueable;
     use SerializesModels;
 
-    public $ad;
+    /**
+     * @var array
+     */
+    public $adData;
     /**
      * @var
      */
@@ -27,9 +29,9 @@ class AdDeleteByAuthorSendMail extends Mailable
      *
      * @return void
      */
-    public function __construct($ad, $deletedAd)
+    public function __construct(array $adData, $deletedAd)
     {
-        $this->ad = $ad;
+        $this->adData = $adData;
         $this->deletedAd = $deletedAd;
     }
 
@@ -40,6 +42,6 @@ class AdDeleteByAuthorSendMail extends Mailable
      */
     public function build(): AdDeleteByAuthorSendMail
     {
-        return $this->view('emails.ads.delete-from-author');
+        return $this->view('emails.ads.delete-by-author');
     }
 }
