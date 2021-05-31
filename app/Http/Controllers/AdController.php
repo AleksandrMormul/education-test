@@ -181,8 +181,13 @@ class AdController extends Controller
         try {
             $adData = $ad->toArray();
             AdService::deleteAd($ad);
+
             if ($request->user()->isAuthor()) {
                 EmailService::deletedByAuthorEmail($adData);
+            }
+
+            if ($request->user()->isAdmin()) {
+                EmailService::deletedByAdminEmail($adData);
             }
 
             return redirect()->route('ads.index')->with('success', 'Deleting ad was success');

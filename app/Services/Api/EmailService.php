@@ -2,6 +2,7 @@
 
 namespace App\Services\Api;
 
+use App\Jobs\DeletedByAdminSendEmail;
 use App\Jobs\DeletedByAuthorSendEmail;
 use App\Jobs\WeeklySendMail;
 use App\Models\Ad;
@@ -36,7 +37,23 @@ class EmailService
         $deletedAt = now();
 
         foreach ($users as $user) {
-            DeletedByAuthorSendEmail::dispatch($adData, $user->toArray(), $deletedAt)->onQueue('delete-by-author-emails');
+            DeletedByAuthorSendEmail::dispatch($adData, $user->toArray(), $deletedAt)
+                ->onQueue('delete-by-author-emails');
+        }
+    }
+
+    /**
+     * @param array $adData
+     */
+    public static function deletedByAdminEmail(array $adData)
+    {
+
+        $users = User::getUsersWhoHaveFavorites($adData['id'])->get();
+        $deletedAt = now();
+
+        foreach ($users as $user) {
+            DeletedByAdminSendEmail::dispatch($adData, $user->toArray(), $deletedAt)
+                ->onQueue('delete-by-admin-emails');
         }
     }
 }

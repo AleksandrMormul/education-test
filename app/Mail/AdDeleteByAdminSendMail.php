@@ -17,22 +17,20 @@ class AdDeleteByAdminSendMail extends Mailable
     use SerializesModels;
 
     /**
-     * @var Ad
+     * @var array
      */
-    protected $ad;
-    /**
-     * @var
-     */
-    protected $deletedAd;
+    public $adData;
+
+    public $deletedAd;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Ad $ad, $deletedAd)
+    public function __construct(array $adData, $deletedAd)
     {
-        $this->ad = $ad;
+        $this->adData = $adData;
         $this->deletedAd = $deletedAd;
     }
 
