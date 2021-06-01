@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Api;
+namespace App\Services;
 
 use App\Jobs\DeletedByAdminSendEmail;
 use App\Jobs\DeletedByAuthorSendEmail;

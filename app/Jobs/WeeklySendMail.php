@@ -5,7 +5,7 @@ namespace App\Jobs;
 use App\Mail\AdWeeklySendMail;
 use App\Models\Ad;
 use App\Models\User;
-use App\Services\Api\SignedUrlService;
+use App\Services\SubscriptionService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -54,7 +54,7 @@ class WeeklySendMail implements ShouldQueue
      */
     public function handle()
     {
-        $unsubscribedUrl = SignedUrlService::getSignedUrl($this->user);
+        $unsubscribedUrl = SubscriptionService::getSignedUrl($this->user);
         $email = new AdWeeklySendMail($this->ads, $unsubscribedUrl);
         Mail::to($this->user->email)->send($email);
     }

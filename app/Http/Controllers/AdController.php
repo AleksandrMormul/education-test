@@ -9,8 +9,8 @@ use App\Http\Requests\Ad\UpdateAdRequest;
 use App\Models\Ad;
 use App\Models\Favorite;
 use App\Services\AdService;
-use App\Services\Api\EmailService;
-use App\Services\Api\SubscriptionService;
+use App\Services\EmailService;
+use App\Services\SubscriptionService;
 use App\Services\CountryService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
@@ -54,16 +54,6 @@ class AdController extends Controller
                 foreach ($ads as $ad) {
                     $ad['isFavorite'] = $ad->isFavoriteForUser($request->user());
                 }
-            }
-        }
-
-        if ($request->addSubscribe() && auth()->user()) {
-            try {
-                SubscriptionService::subscribe($request->user());
-
-                back()->with('success', 'You was successfully subscribed on weekly sending emails :)');
-            } catch (\Exception $exception) {
-                back()->with('error', $exception->getMessage());
             }
         }
 

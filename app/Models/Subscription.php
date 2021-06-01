@@ -13,7 +13,6 @@ use Illuminate\Support\Carbon;
  *
  * @property int $id
  * @property int $user_id
- * @property bool $is_subscription
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property-read \App\Models\User $user
@@ -23,7 +22,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Subscription subscriptionUsersIds()
  * @method static Builder|Subscription whereCreatedAt($value)
  * @method static Builder|Subscription whereId($value)
- * @method static Builder|Subscription whereIsSubscription($value)
  * @method static Builder|Subscription whereUpdatedAt($value)
  * @method static Builder|Subscription whereUserId($value)
  * @mixin Eloquent
@@ -37,7 +35,6 @@ class Subscription extends Model
      */
     protected $fillable = [
         'user_id',
-        'is_subscription',
     ];
 
     /**
@@ -46,7 +43,7 @@ class Subscription extends Model
      * @var array
      */
     protected $casts = [
-        'is_subscription' => 'boolean',
+        'user_id' => 'integer',
     ];
 
     /**
@@ -63,6 +60,6 @@ class Subscription extends Model
      */
     public function scopeSubscriptionUsersIds($query)
     {
-        return $query->whereIsSubscription(true);
+        //return $query->whereIsSubscription(true);
     }
 }

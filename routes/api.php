@@ -19,4 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth')->post('/favorites/ads/{ad}/toggle', 'Api\FavoriteController@toggleFavorite');
-Route::get('/unsubscribe/{user}', 'Api\UnsubscribeController@unsubscribe')->name('unsubscribe')->middleware('signed');
+Route::middleware('auth')->post('/subscribe/', 'Api\SubscriptionController@subscribe')
+    ->name('subscribe');

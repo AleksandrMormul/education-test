@@ -12622,6 +12622,7 @@ a.text-dark:focus {
 
 .deleteInfo {
   margin-left: 15px;
+  visibility: hidden;
   width: 50%;
 }
 
@@ -12635,5 +12636,17 @@ a.text-dark:focus {
 
 .subscriptionBtn:hover {
   color: #009926;
+}
+
+.unSubscriptionBtn {
+  color: #c6e0f5;
+  background: #2fa360;
+  position: fixed;
+  bottom: 10px;
+  right: 25px;
+}
+
+.unSubscriptionBtn:hover {
+  color: #c6e0f5;
 }
 

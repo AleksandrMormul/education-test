@@ -15,12 +15,12 @@
     @auth
         <a href="{{ route("ads.index", 'favorites=1') }}" class="btn btn-primary show-favorite-btn">Show my favorite ads</a>
     @endauth
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success alert-block deleteInfo" >
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <strong>{{ $message }}</strong>
-        </div>
-    @endif
+
+    <div class="alert alert-success alert-block deleteInfo" >
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong id="subscriptionMsg"></strong>
+    </div>
+
     @if ($message = Session::get('error'))
         <div class="alert alert-danger alert-block deleteInfo">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -56,14 +56,13 @@
         @endif
     </div>
     <div>
-            @auth()
-            @if(!Auth::user()->subscription)
+        @auth()
             <form method="GET" id="adSubscription" action="{{ route('ads.index') }}">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="is_subscribe" value="1">
-                </form>
-                <button type="button" class="btn subscriptionBtn" onclick="confirmSubscription()">Subscribe</button>
-            @endif
+                {{ csrf_field() }}
+            </form>
+            <input type="button" id="adSubscriptionBtn1"
+                class="btn {{ request()->user()->subscription ? 'unSubscriptionBtn' : 'subscriptionBtn'}}"
+                onclick="confirmSubscription()" name="sbs" value="{{ request()->user()->subscription ? 'Unsubscribe' : 'Subscribe' }}">
         @endauth
     </div>
     <div class="d-flex justify-content-center">

@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Services\Api\EmailService;
+use App\Services\EmailService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             Log::info('This is running');
             EmailService::weeklyEmail();
-        })/*->everyMinute();*/->weeklyOn(7, '15:00');
+        })->weeklyOn(7, '15:00');
 
     }
 

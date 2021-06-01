@@ -2,9 +2,6 @@
 
 namespace App\Http;
 
-use App\Jobs\WeeklySendMail;
-use App\Services\Api\EmailService;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel

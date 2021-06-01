@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Ad;
+namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 /**
- * Class IndexAdRequest
- * @package App\Http\Requests\Ad
+ * Class SubscriptionRequest
+ * @package App\Http\Requests\Api
  */
-class IndexAdRequest extends FormRequest
+class SubscriptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,15 +28,15 @@ class IndexAdRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'favorites' => 'nullable|in:0,1',
+            'is_subscribe' => 'nullable|in:0,1',
         ];
     }
 
     /**
      * @return bool
      */
-    public function getFavorites(): bool
+    public function addSubscribe(): bool
     {
-        return (bool)$this->input('favorites', 0);
+        return (bool)$this->input('is_subscribe', 0);
     }
 }

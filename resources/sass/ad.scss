@@ -132,6 +132,7 @@
 }
 .deleteInfo {
     margin-left: 15px;
+    visibility: hidden;
     width: 50%;
 }
 
@@ -143,5 +144,16 @@
     right: 25px;
     &:hover {
         color: #009926;
+    }
+}
+
+.unSubscriptionBtn {
+    color: #c6e0f5;
+    background: #2fa360;
+    position: fixed;
+    bottom: 10px;
+    right: 25px;
+    &:hover {
+        color: #c6e0f5;
     }
 }
