@@ -12504,6 +12504,10 @@ a.text-dark:focus {
   margin-left: 25px;
 }
 
+.adPrice {
+  font-weight: bold;
+}
+
 .show-favorite-btn {
   position: absolute;
   right: 0;

@@ -57,6 +57,10 @@
                         <p>Country:
                             <span class="contact-text">{{ $ad->full_name_country ?: 'The user did not set country' }}</span>
                         </p>
+                        <p class="card-text">Price:</p>
+                        <p class="card-text">EURO: <span class="adPrice">{{$ad->price_currency_e_u_r}}</span></p>
+                        <p class="card-text">USD: <span class="adPrice">{{$ad->price_currency_u_s_d}}</span></p>
+                        <p class="card-text">UAH: <span class="adPrice">{{$ad->price_currency_u_a_h}}</span></p>
                         @if( $ad->latitude && $ad->longitude )
                         <iframe style="width:100%; height:220px;overflow:auto;"
                                 src="https://www.google.com/maps/embed/v1/place?key={{ config('app.google_api_key')}}&q={{ $ad->latitude }}, {{ $ad->longitude }}"

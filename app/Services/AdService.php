@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Models\Ad;
+use App\Models\CurrencyRate;
 use App\Models\User;
+use App\Services\Api\UpdateCurrencyRate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -121,5 +123,26 @@ class AdService
     public static function getFavoritesForUser(User $user): Builder
     {
         return Ad::visibleForDate()->favoritesForUser($user);
+    }
+
+    /**
+     * @param Ad $ad
+     * @param string $currency
+     * @return float|int
+     */
+    public static function convertCurrency(Ad $ad, string $currency)
+    {
+        $currencyRate = CurrencyRate::first();
+
+        switch ($currency) {
+            case UpdateCurrencyRate::EURO:
+                return round($ad->price / $currencyRate->euro, 2);
+                break;
+            case UpdateCurrencyRate::DOLLAR:
+                return round($ad->price / $currencyRate->dollar, 2);
+                break;
+            default:
+                return ($ad->price * $currencyRate->grivna) / 100;
+        }
     }
 }
