@@ -1,11 +1,9 @@
 <?php
 
-
 namespace App\Services\Api;
 
 use AmrShawky\LaravelCurrency\Facade\Currency;
 use App\Models\CurrencyRate;
-
 
 /**
  * Class UpdateCurrencyRate
@@ -19,19 +17,13 @@ class UpdateCurrencyRate
 
     public static function updateCurrencyRate()
     {
-        $currencyRate = CurrencyRate::firstOrCreate(self::prepareData());
-        $currencyRate->update(self::prepareData());
-    }
+        $currencyRate = CurrencyRate::first();
 
-    /**
-     * @param string $typeCurrencyFrom
-     * @param string $typeCurrencyTo
-     * @param int $amount
-     * @return mixed
-     */
-    private static function convertCurrency(string $typeCurrencyFrom, string $typeCurrencyTo, int $amount = 1)
-    {
-        return Currency::convert()->from($typeCurrencyFrom)->to($typeCurrencyTo)->amount($amount)->get() * 100;
+        if (!$currencyRate) {
+            CurrencyRate::create(self::prepareData());
+        } else {
+            $currencyRate->update(self::prepareData());
+        }
     }
 
     /**
@@ -43,5 +35,16 @@ class UpdateCurrencyRate
             'dollar' => self::convertCurrency(self::DOLLAR, self::UAH),
             'euro' => self::convertCurrency(self::EURO, self::UAH),
         ];
+    }
+
+    /**
+     * @param string $typeCurrencyFrom
+     * @param string $typeCurrencyTo
+     * @param int $amount
+     * @return float|int
+     */
+    private static function convertCurrency(string $typeCurrencyFrom, string $typeCurrencyTo, int $amount = 1)
+    {
+        return Currency::convert()->from($typeCurrencyFrom)->to($typeCurrencyTo)->amount($amount)->get() * 100;
     }
 }
