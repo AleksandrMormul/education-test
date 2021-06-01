@@ -6,6 +6,7 @@ use App\Models\Ad;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 
 /**
  * Class AdDeleteByAuthorSendMail
@@ -19,18 +20,19 @@ class AdDeleteByAuthorSendMail extends Mailable
     /**
      * @var Ad
      */
-    protected $ad;
+    public $ad;
+
     /**
-     * @var
+     * @var Carbon
      */
-    protected $deletedAd;
+    public $deletedAd;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Ad $ad, $deletedAd)
+    public function __construct(Ad $ad, Carbon $deletedAd)
     {
         $this->ad = $ad;
         $this->deletedAd = $deletedAd;
