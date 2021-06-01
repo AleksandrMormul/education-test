@@ -50,6 +50,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|User whereRoleId($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
+ * @method static Builder|User getSubscribedUsers()
  */
 class User extends Authenticatable
 {
@@ -152,6 +153,17 @@ class User extends Authenticatable
                 ->whereColumn('favorites.user_id', 'users.id');
         })
             ->where('favorites.favoriteable_id', $adId);
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeGetSubscribedUsers($query)
+    {
+        return $query
+            ->join('subscriptions', 'subscriptions.user_id', 'users.id')
+            ->select('users.*');
     }
 
     /**

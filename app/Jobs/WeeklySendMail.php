@@ -30,21 +30,14 @@ class WeeklySendMail implements ShouldQueue
      */
     protected $ads;
 
-
-    /**
-     * @var User
-     */
-    protected $user;
-
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Collection $ads, User $user)
+    public function __construct(Collection $ads)
     {
         $this->ads = $ads;
-        $this->user = $user;
     }
 
     /**
@@ -54,8 +47,12 @@ class WeeklySendMail implements ShouldQueue
      */
     public function handle()
     {
-        $unsubscribedUrl = SubscriptionService::getSignedUrl($this->user);
-        $email = new AdWeeklySendMail($this->ads, $unsubscribedUrl);
-        Mail::to($this->user->email)->send($email);
+        $ads = $this->ads;
+        User::getSubscribedUsers()->chunkById(15, function ($user) use ($ads) {
+            $unsubscribedUrl = SubscriptionService::getSignedUrl($user);
+            $email = new AdWeeklySendMail($ads, $unsubscribedUrl);
+
+            Mail::to($user)->send($email);
+        });
     }
 }
