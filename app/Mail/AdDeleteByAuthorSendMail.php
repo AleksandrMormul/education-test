@@ -5,6 +5,7 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Carbon;
 
 /**
  * Class AdDeleteByAuthorSendMail
@@ -20,7 +21,7 @@ class AdDeleteByAuthorSendMail extends Mailable
      */
     public $adData;
     /**
-     * @var
+     * @var Carbon
      */
     public $deletedAd;
 
@@ -29,7 +30,7 @@ class AdDeleteByAuthorSendMail extends Mailable
      *
      * @return void
      */
-    public function __construct(array $adData, $deletedAd)
+    public function __construct(array $adData, Carbon $deletedAd)
     {
         $this->adData = $adData;
         $this->deletedAd = $deletedAd;

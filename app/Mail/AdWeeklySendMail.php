@@ -2,11 +2,10 @@
 
 namespace App\Mail;
 
-use App\Models\Ad;
 use Illuminate\Bus\Queueable;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Collection;
 
 /**
  * Class AdWeeklySendMail
@@ -17,15 +16,11 @@ class AdWeeklySendMail extends Mailable
     use Queueable;
     use SerializesModels;
 
-
     /**
      * @var Collection
-     */
-    public $ads;
-
-    /**
      * @var string
      */
+    public $ads;
     public $unsubscribeUrl;
 
     /**
@@ -46,7 +41,6 @@ class AdWeeklySendMail extends Mailable
      */
     public function build(): AdWeeklySendMail
     {
-
         return $this->view('emails.ads.weekly');
     }
 }
