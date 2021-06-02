@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\Subscription;
 use App\Models\Ad;
 use App\Models\Favorite;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use RuntimeException;
 
 /**
@@ -48,17 +49,14 @@ class UserService
 
     /**
      * @param User $user
-     * @param Ad $ad
-     * @return Ad|Favorite|Model|null
+     * @param array $ids
+     * @return \Illuminate\Support\Collection
      */
-    public static function userAdFavorite(User $user, Ad $ad): ?Favorite
+    public static function userAdFavorite(User $user, array $ids): \Illuminate\Support\Collection
     {
         return $user->favorites()
-            ->where([
-                ['favoriteable_type', Ad::class],
-                ['favoriteable_id', $ad->id],
-            ])
+            ->whereIn('favoriteable_id', $ids)
             ->with('favoriteable')
-            ->first();
+            ->pluck('favoriteable_id');
     }
 }

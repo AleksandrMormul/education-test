@@ -106,12 +106,13 @@ class AdService
     }
 
     /**
-     * @param Ad $ad
-     * @param User|null $user
+     * @param array $ids
+     * @param User $user
+     * @return \Illuminate\Support\Collection
      */
-    public static function isFavoriteForUser(Ad $ad, User $user)
+    public static function isFavoriteForUser(array $ids, User $user): \Illuminate\Support\Collection
     {
-        return UserService::userAdFavorite($user, $ad);
+        return UserService::userAdFavorite($user, $ids);
     }
 
     /**

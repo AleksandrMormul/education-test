@@ -96,14 +96,6 @@ class Ad extends Model
     }
 
     /**
-     * @param $user
-     */
-    public function isFavoriteForUser($user)
-    {
-        return AdService::isFavoriteForUser($this, $user);
-    }
-
-    /**
      * @return MorphMany
      */
     public function favorites(): MorphMany
@@ -132,7 +124,7 @@ class Ad extends Model
             $join->where('favorites.favoriteable_type', self::class)
                     ->whereColumn('favorites.favoriteable_id', 'ads.id');
         })
-            ->where('favorites.user_id', $user->id);
+            ->where('favorites.user_id', $user->id)->select('ads.*', 'favorites.favoriteable_id');
     }
 
     /**
