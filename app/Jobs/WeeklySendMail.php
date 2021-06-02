@@ -48,11 +48,13 @@ class WeeklySendMail implements ShouldQueue
     public function handle()
     {
         $ads = $this->ads;
-        User::getSubscribedUsers()->chunkById(15, function ($user) use ($ads) {
-            $unsubscribedUrl = SubscriptionService::getSignedUrl($user);
-            $email = new AdWeeklySendMail($ads, $unsubscribedUrl);
+        User::getSubscribedUsers()->chunkById(15, function ($users) use ($ads) {
+            foreach ($users as $user) {
+                $unsubscribedUrl = SubscriptionService::getSignedUrl($user);
+                $email = new AdWeeklySendMail($ads, $unsubscribedUrl);
 
-            Mail::to($user)->send($email);
+                Mail::to($user)->send($email);
+            }
         });
     }
 }
