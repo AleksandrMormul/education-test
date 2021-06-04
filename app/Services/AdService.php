@@ -3,9 +3,8 @@
 namespace App\Services;
 
 use App\Models\Ad;
-use App\Models\CurrencyRate;
+use App\Models\Currency;
 use App\Models\User;
-use App\Services\Api\UpdateCurrencyRate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
@@ -132,7 +131,7 @@ class AdService
      */
     public static function convertCurrency(Ad $ad, string $currency)
     {
-        $currencyRate = CurrencyRate::first();
+        $currencyRate = Currency::first();
 
         switch ($currency) {
             case UpdateCurrencyRate::EURO:

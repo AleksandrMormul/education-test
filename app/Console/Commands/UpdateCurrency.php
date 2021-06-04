@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Services\Api\UpdateCurrencyRate;
+use App\Services\UpdateCurrencyRate;
 use Illuminate\Console\Command;
 
 /**
@@ -16,14 +16,14 @@ class UpdateCurrency extends Command
      *
      * @var string
      */
-    protected $signature = 'update:currency-rate';
+    protected $signature = 'update:currency-rate {currency?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'This command will updating current currency rate';
+    protected $description = 'This command will updating current currency rate.If you want update only one currency just use argument {currency} for this.';
 
     /**
      * Create a new command instance.
@@ -42,6 +42,6 @@ class UpdateCurrency extends Command
      */
     public function handle()
     {
-        UpdateCurrencyRate::updateCurrencyRate();
+        UpdateCurrencyRate::updateCurrencyRate($this->argument('currency'));
     }
 }
