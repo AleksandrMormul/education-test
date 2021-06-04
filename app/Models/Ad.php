@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Services\AdService;
-use App\Services\Api\UpdateCurrencyRate;
+use App\Services\UpdateCurrencyRate;
 use Countries;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -105,6 +105,7 @@ class Ad extends Model
 
     /**
      * @param $user
+     * @return Ad|Favorite|Model|null
      */
     public function isFavoriteForUser($user)
     {
@@ -161,25 +162,25 @@ class Ad extends Model
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getPriceCurrencyUSDAttribute()
+    public function getPriceCurrencyUSDAttribute(): float
     {
         return AdService::convertCurrency($this, UpdateCurrencyRate::DOLLAR);
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getPriceCurrencyEURAttribute()
+    public function getPriceCurrencyEURAttribute(): float
     {
         return AdService::convertCurrency($this, UpdateCurrencyRate::EURO);
     }
 
     /**
-     * @return float|int
+     * @return float
      */
-    public function getPriceCurrencyUAHAttribute()
+    public function getPriceCurrencyUAHAttribute(): float
     {
         return AdService::convertCurrency($this, UpdateCurrencyRate::UAH);
     }

@@ -127,21 +127,12 @@ class AdService
     /**
      * @param Ad $ad
      * @param string $currency
-     * @return float|int
+     * @return float
      */
-    public static function convertCurrency(Ad $ad, string $currency)
+    public static function convertCurrency(Ad $ad, string $currency): float
     {
-        $currencyRate = Currency::first();
+        $currency = Currency::whereCode($currency)->pluck('rate');
 
-        switch ($currency) {
-            case UpdateCurrencyRate::EURO:
-                return round($ad->price / $currencyRate->euro, 2);
-                break;
-            case UpdateCurrencyRate::DOLLAR:
-                return round($ad->price / $currencyRate->dollar, 2);
-                break;
-            default:
-                return ($ad->price * $currencyRate->grivna) / 100;
-        }
+        return round($ad->price / $currency[0], 2);
     }
 }
