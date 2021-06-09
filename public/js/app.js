@@ -48007,6 +48007,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./plugins/toggleFavoriteAd */ "./resources/js/plugins/toggleFavoriteAd.js");
 
+__webpack_require__(/*! ./plugins/invoice */ "./resources/js/plugins/invoice.js");
+
 __webpack_require__(/*! ./plugins/phoneMask */ "./resources/js/plugins/phoneMask.js");
 
 __webpack_require__(/*! ./plugins/gmaps */ "./resources/js/plugins/gmaps.js");
@@ -48185,6 +48187,44 @@ if (form) {
     });
   });
 }
+
+/***/ }),
+
+/***/ "./resources/js/plugins/invoice.js":
+/*!*****************************************!*\
+  !*** ./resources/js/plugins/invoice.js ***!
+  \*****************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _common_getDomain__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/getDomain */ "./resources/js/common/getDomain.js");
+
+$(function () {
+  $('#payPal').click(function (event) {
+    var $target = $(event.target);
+    var adId = $target.data('ad-id');
+    var price = $target.data('ad-price');
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+      //context: this,
+      data: {
+        'value': price,
+        'ad_id': adId
+      },
+      url: "".concat(Object(_common_getDomain__WEBPACK_IMPORTED_MODULE_0__["default"])(), "/api/create-invoice"),
+      success: function success(result) {
+        console.log(result);
+        window.location.href = result['url'];
+      },
+      error: function error(jqxhr, status, exception) {
+        console.log(exception);
+      }
+    });
+  });
+});
 
 /***/ }),
 

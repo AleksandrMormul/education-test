@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Storage;
 class AdService
 {
     public const DEFAULT_IMAGE_FILENAME = 'temp.png';
-
     public const ADS_IMAGES_PATH = 'ads';
-
     public const COMMON_IMAGES_PATH = 'images';
+
+    public const PAID = 'PAID';
+    public const FREE = 'FREE';
+    public const RESERVATION = 'RESERVATION';
+
 
     private const CACHE_PREFIX = 'currency_';
 
@@ -32,7 +35,7 @@ class AdService
      */
     public static function getAds(): Builder
     {
-        return Ad::query()->visibleForDate();
+        return Ad::query()->visibleForDate()->notPaid();
     }
 
     /**

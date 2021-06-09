@@ -19,3 +19,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth')->post('/favorites/ads/{ad}/toggle', 'Api\FavoriteController@toggleFavorite');
+Route::middleware('auth')->post('/create-invoice/', 'Api\InvoiceController@createInvoice')->name('create.invoice');
+Route::post('webhook', 'Api\InvoiceController@handle');

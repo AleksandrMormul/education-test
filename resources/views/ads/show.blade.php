@@ -69,6 +69,9 @@
                     </div>
             </div>
         </div>
+        <div>
+            <a id="payPal" data-ad-id="{{$ad->id}}" data-ad-price="{{$ad->price_currency_u_s_d}}" class="btn btn-primary">Pay by PayPal</a>
+        </div>
         @can('delete', $ad)
             <form method="POST" id="delete-ad" action="{{ route('ads.destroy', $ad->id) }}">
                 {{ csrf_field() }}

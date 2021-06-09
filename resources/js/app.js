@@ -1,5 +1,6 @@
 require('./bootstrap');
 require('./plugins/toggleFavoriteAd');
+require('./plugins/invoice');
 require('./plugins/phoneMask');
 require('./plugins/gmaps');
 require('./plugins/datepicker');
