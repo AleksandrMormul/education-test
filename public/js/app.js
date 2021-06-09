@@ -48209,7 +48209,6 @@ $(function () {
     $.ajax({
       type: "POST",
       dataType: 'json',
-      //context: this,
       data: {
         'value': price,
         'ad_id': adId
