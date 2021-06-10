@@ -17,3 +17,4 @@ tools/php-cs-fixer/vendor/
 _ide_*.php
 .php*.php
 .php_*.cache
+config.json

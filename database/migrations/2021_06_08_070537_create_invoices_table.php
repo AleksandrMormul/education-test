@@ -21,7 +21,7 @@ class CreateInvoicesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('ad_id')->nullable();
             $table->string('order_id');
-            $table->string('paypal_status')->index();
+            $table->string('paypal_status')->nullable()->index();
             $table->timestamps();
         });
     }

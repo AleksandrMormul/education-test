@@ -12633,3 +12633,11 @@ a.text-dark:focus {
   background: #009926;
 }
 
+.orderPay {
+  cursor: pointer;
+}
+
+.buying {
+  cursor: pointer;
+}
+

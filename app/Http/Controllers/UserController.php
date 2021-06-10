@@ -20,7 +20,7 @@ class UserController extends Controller
      */
     public function showUserInvoices(ShowInvoiceRequest $request)
     {
-        $invoices =$request->user()->invoice;
+        $invoices = $request->user()->invoice;
         return view(
             'invoices.show',
             [
