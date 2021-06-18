@@ -24,6 +24,7 @@ class AdService
     public const PAID = 'PAID';
     public const FREE = 'FREE';
     public const RESERVATION = 'RESERVATION';
+    public const FAILED = 'FAILED';
 
 
     private const CACHE_PREFIX = 'currency_';

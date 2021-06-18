@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\User\ShowInvoiceRequest;
+use App\Services\InvoiceService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
@@ -25,6 +26,8 @@ class UserController extends Controller
             'invoices.show',
             [
                 'invoices' => $invoices,
+                'APPROVED' => InvoiceService::INVOICE_APPROVED,
+                'COMPLETED' => InvoiceService::INVOICE_COMPLETED,
             ]
         );
     }

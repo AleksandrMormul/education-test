@@ -5,6 +5,7 @@ namespace App\Models;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -14,9 +15,10 @@ use Illuminate\Support\Carbon;
  * @property int $user_id
  * @property int|null $ad_id
  * @property string $order_id
- * @property string $paypal_status
+ * @property string|null $paypal_status
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
+ * @property-read FailedInvoice|null $failedInvoice
  * @method static Builder|Invoice newModelQuery()
  * @method static Builder|Invoice newQuery()
  * @method static Builder|Invoice query()
@@ -49,6 +51,15 @@ class Invoice extends Model
      * @var array
      */
     protected $casts = [
-        //
+        'user_id' => 'integer',
+        'ad_id' => 'integer',
     ];
+
+    /**
+     * @return HasOne
+     */
+    public function failedInvoice(): HasOne
+    {
+        return $this->hasOne(FailedInvoice::class, 'invoice_id');
+    }
 }

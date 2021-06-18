@@ -4,13 +4,13 @@ namespace App\Services;
 
 use App\Http\Requests\Api\CreateInvoiceRequest;
 use App\Models\Ad;
+use App\Models\FailedInvoice;
 use App\Models\Invoice;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Redirector;
-use Illuminate\Support\Collection;
 use Log;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use Throwable;
@@ -160,24 +160,28 @@ class InvoiceService
     }
 
     /**
-     * @param Collection $invoices
      * @throws Throwable
      */
-    public static function validationInvoices(Collection $invoices)
+    public static function validationInvoices()
     {
         $provider = self::initialPayPalProvider();
-
-        foreach ($invoices as $invoice) {
-            $invoiceDetail = $provider->showOrderDetails($invoice->order_id);
-
-            if ($invoice->paypal_status === self::INVOICE_COMPLETED || is_null($invoice->paypal_status)) {
-                continue;
-            }
-
-            if (array_key_exists('name', $invoiceDetail) && $invoiceDetail['name'] === self::INVOICE_NOT_FOUND) {
-                $invoice->update(['paypal_status' => null]);
-                Ad::findOrFail($invoice->ad_id)->update(['status_paid' => null]);
-            }
-        }
+        Invoice::whereIn('paypal_status', [self::INVOICE_APPROVED, self::INVOICE_CREATED])
+            ->chunkById(15, function ($invoices) use ($provider) {
+                foreach ($invoices as $invoice) {
+                    $invoiceDetail = $provider->showOrderDetails($invoice->order_id);
+                    if ($invoiceDetail['type'] === 'error') {
+                        Ad::findOrFail($invoice->ad_id)->update(['status_paid' => AdService::FAILED]);
+                        FailedInvoice::create([
+                            'invoice_id' => $invoice->id,
+                            'ad_id' => $invoice->ad_id,
+                            'user_id' => $invoice->user_id,
+                        ]);
+                        $invoice->update([
+                            'paypal_status' => null,
+                            'ad_id' => null,
+                        ]);
+                    }
+                }
+            });
     }
 }

@@ -3,9 +3,15 @@
 namespace App\Console;
 
 use App\Console\Commands\UpdateCurrency;
+use App\Services\InvoiceService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Log;
 
+/**
+ * Class Kernel
+ * @package App\Console
+ */
 class Kernel extends ConsoleKernel
 {
     /**
@@ -25,7 +31,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('update:currency-rate')->hourly();
+        //$schedule->command('update:currency-rate')->hourly();
+        $schedule->call(function () {
+            Log::info('Validation schedule is running');
+            InvoiceService::validationInvoices();
+        })->everyMinute();
+
     }
 
     /**
