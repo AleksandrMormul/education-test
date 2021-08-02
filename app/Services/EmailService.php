@@ -19,7 +19,7 @@ class EmailService
     {
         $newAds = Ad::newAds()->get();
 
-        WeeklySendMail::dispatch($newAds)->onQueue('weekly-emails');
+        WeeklySendMail::dispatch($newAds)->onQueue('emails');
 
     }
 
@@ -34,7 +34,7 @@ class EmailService
 
         foreach ($users as $user) {
             DeletedByAuthorSendEmail::dispatch($adData, $user->toArray(), $deletedAt)
-                ->onQueue('delete-by-author-emails');
+                ->onQueue('emails');
         }
     }
 
@@ -49,7 +49,7 @@ class EmailService
 
         foreach ($users as $user) {
             DeletedByAdminSendEmail::dispatch($adData, $user->toArray(), $deletedAt)
-                ->onQueue('delete-by-admin-emails');
+                ->onQueue('emails');
         }
     }
 }

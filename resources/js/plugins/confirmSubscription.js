@@ -1,10 +1,11 @@
 import getDomain from '../common/getDomain';
 
 window.confirmSubscription = function () {
-    const result = confirm('Are you sure you want to subscribe weekly sending emails?');
+    const subscribeBtn = document.getElementById('adSubscriptionBtn1');
+    const result = confirm(`Are you sure you want to ${subscribeBtn.value} weekly sending emails?`);
     if (result) {
         event.preventDefault();
-        const subscribeBtn = document.getElementById('adSubscriptionBtn1');
+
         $.ajax({
             type: 'POST',
             dataType: 'json',

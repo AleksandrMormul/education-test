@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\URL;
  */
 class SubscriptionService
 {
+    public const SUBSCRIBED = 'SUBSCRIBED';
+    public const UNSUBSCRIBED = 'UNSUBSCRIBED';
 
     /**
      * @param User $user
@@ -25,19 +27,11 @@ class SubscriptionService
             Subscription::create([
                 'user_id' => $user->id,
             ]);
-            $user['isSubscribe'] = true;
-            return [
-                'success' => 'subscribe',
-                'message' => 'You was successfully subscribed on weekly sending emails :)',
-            ];
+            return [self::SUBSCRIBED => true];
         }
 
         self::unsubscribe($user);
-        $user['isSubscribe'] = false;
-        return [
-            'success' => 'unsubscribe',
-            'message' => 'You was successfully unsubscribed on weekly sending emails :('
-        ];
+        return [self::UNSUBSCRIBED => true];
     }
 
     /**

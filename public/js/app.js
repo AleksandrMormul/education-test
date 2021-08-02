@@ -48097,11 +48097,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 window.confirmSubscription = function () {
-  var result = confirm('Are you sure you want to subscribe weekly sending emails?');
+  var subscribeBtn = document.getElementById('adSubscriptionBtn1');
+  var result = confirm("Are you sure you want to ".concat(subscribeBtn.value, " weekly sending emails?"));
 
   if (result) {
     event.preventDefault();
-    var subscribeBtn = document.getElementById('adSubscriptionBtn1');
     $.ajax({
       type: 'POST',
       dataType: 'json',

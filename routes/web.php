@@ -19,7 +19,7 @@ Route::resource('ads', 'AdController');
 Route::get('/', function () {
     return view('welcome');
 });
-Route::middleware('signed')->get('/unsubscribe/{user}', 'Api\SubscriptionController@unsubscribe')
+Route::middleware('signed')->get('/unsubscribe/{user}', 'SubscriptionController@unsubscribe')
     ->name('unsubscribe');
 
 Route::get('/home', 'HomeController@index')->name('home');

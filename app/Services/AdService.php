@@ -3,8 +3,12 @@
 namespace App\Services;
 
 use App\Models\Ad;
+use App\Models\Favorite;
 use App\Models\User;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -34,9 +38,9 @@ class AdService
      * Get Ad
      *
      * @param int $id
-     * @return Ad
+     * @return Builder|Builder[]|Collection|Model
      */
-    public static function getAd(int $id): Ad
+    public static function getAd(int $id)
     {
         return Ad::with('user')->find($id);
     }
@@ -99,6 +103,7 @@ class AdService
     /**
      * @param Ad $ad
      * @return int
+     * @throws Exception
      */
     public static function deleteAd(Ad $ad): int
     {
@@ -108,6 +113,7 @@ class AdService
     /**
      * @param Ad $ad
      * @param User|null $user
+     * @return Ad|Favorite|Model|null
      */
     public static function isFavoriteForUser(Ad $ad, User $user)
     {

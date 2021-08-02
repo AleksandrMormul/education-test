@@ -24,7 +24,7 @@ class RoleService
      * @return int
      * @throws \RuntimeException
      */
-    public static function getRoleIdByName(string $name)
+    public static function getRoleIdByName(string $name): int
     {
         $key = self::CACHE_PREFIX . $name;
 

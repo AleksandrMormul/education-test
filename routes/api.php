@@ -18,6 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth')->post('/favorites/ads/{ad}/toggle', 'Api\FavoriteController@toggleFavorite');
-Route::middleware('auth')->post('/subscribe/', 'Api\SubscriptionController@subscribe')
-    ->name('subscribe');
+Route::middleware(['auth'])->group(function () {
+    Route::post('/favorites/ads/{ad}/toggle', 'Api\FavoriteController@toggleFavorite')
+        ->name('toggle-favorite');
+    Route::post('/subscribe/', 'Api\SubscriptionController@subscribe')
+        ->name('toggle-subscribe');
+});

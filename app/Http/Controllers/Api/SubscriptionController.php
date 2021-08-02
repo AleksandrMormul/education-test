@@ -9,6 +9,7 @@ use App\Services\SubscriptionService;
 use Exception;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class SubscriptionController
@@ -23,15 +24,30 @@ class SubscriptionController extends Controller
      */
     public function subscribe(SubscriptionRequest $request): JsonResponse
     {
-        if (auth()->user()) {
-            try {
-                $response = SubscriptionService::subscribe($request->user());
+        try {
+            $response = SubscriptionService::subscribe($request->user());
 
-                //back()->with('success', $response['message']);
-                return response()->json($response);
-            } catch (Exception $exception) {
-                back()->with('error', $exception->getMessage());
+            if (
+                array_key_exists(SubscriptionService::SUBSCRIBED, $response) &&
+                $response[SubscriptionService::SUBSCRIBED]
+            ) {
+                return response()->json([
+                    'success' => 'subscribe',
+                    'message' => 'You was successfully subscribed on weekly sending emails :)',
+                ]);
             }
+
+            if (
+                array_key_exists(SubscriptionService::UNSUBSCRIBED, $response) &&
+                $response[SubscriptionService::UNSUBSCRIBED]
+            ) {
+                return response()->json([
+                    'success' => 'unsubscribe',
+                    'message' => 'You was successfully unsubscribed on weekly sending emails :('
+                ]);
+            }
+        } catch (Exception $exception) {
+            Log::error($exception->getMessage());
         }
     }
 
