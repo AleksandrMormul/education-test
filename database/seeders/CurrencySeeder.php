@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Currency;
 use App\Services\UpdateCurrencyRate;
 use Illuminate\Database\Seeder;
@@ -10,7 +12,7 @@ use Illuminate\Database\Seeder;
 class CurrencySeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */

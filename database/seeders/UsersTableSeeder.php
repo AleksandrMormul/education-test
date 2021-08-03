@@ -15,7 +15,7 @@ class UsersTableSeeder extends Seeder
     public const ADMIN_USER_PASSWORD = 'admin';
 
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      * @throws Exception
