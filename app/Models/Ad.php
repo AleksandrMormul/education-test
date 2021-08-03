@@ -31,14 +31,13 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @property Carbon $end_date
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection|\App\Models\Favorite[] $favorites
- * @property int $price
  * @property-read Collection|Favorite[] $favorites
+ * @property int $price
  * @property-read int|null $favorites_count
  * @property-read string $full_name_country
  * @property-read string $image_url
- * @property-read \App\Models\User $user
- * @method static Builder|Ad favoritesForUser(\App\Models\User $user)
+ * @property-read User $user
+ * @method static Builder|Ad favoritesForUser(User $user)
  * @method static Builder|Ad newAds()
  * @method static Builder|Ad newModelQuery()
  * @method static Builder|Ad newQuery()
@@ -152,7 +151,7 @@ class Ad extends Model
             $join->where('favorites.favoriteable_type', self::class)
                     ->whereColumn('favorites.favoriteable_id', 'ads.id');
         })
-            ->where('favorites.user_id', $user->id);
+            ->where('favorites.user_id', $user->id)->select('ads.*', 'favorites.favoriteable_id');
     }
 
     /**

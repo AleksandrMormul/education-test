@@ -12,6 +12,8 @@ use App\Services\AdService;
 use App\Services\EmailService;
 use App\Services\SubscriptionService;
 use App\Services\CountryService;
+use App\Services\EmailService;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\RedirectResponse;
@@ -51,8 +53,22 @@ class AdController extends Controller
             $ads = $query->paginate(15);
 
             if (auth()->user()) {
-                foreach ($ads as $ad) {
-                    $ad['isFavorite'] = $ad->isFavoriteForUser($request->user());
+                $ids = $ads->pluck('id')->toArray();
+                $fav = AdService::isFavoriteForUser($ids, $request->user())->toArray();
+
+                if (count($fav) === 0) {
+                    foreach ($ads as $ad) {
+                        $ad['isFavorite'] = false;
+                    }
+                } else {
+                    foreach ($fav as $id) {
+                        foreach ($ads as $ad) {
+                            if ($ad->id === $id) {
+                                $ad['isFavorite'] = true;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -112,7 +128,7 @@ class AdController extends Controller
         $isFavorite = null;
 
         if ($user) {
-            $isFavorite = $ad->isFavoriteForUser($user);
+            $isFavorite = AdService::isFavoriteForUser([$ad->id], $user);
         }
 
         return view('ads/show', [
@@ -183,7 +199,7 @@ class AdController extends Controller
             }
 
             return redirect()->route('ads.index')->with('success', 'Deleting ad was success');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return back()->with('error', $exception->getMessage());
         }
     }
