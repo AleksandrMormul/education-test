@@ -142,9 +142,9 @@ class AdService
      */
     public static function convertCurrency(Ad $ad, string $currency): float
     {
-        $currency = self::getCurrencyRate($currency);
+        $currencyRate = self::getCurrencyRate($currency);
 
-        return round($ad->price / $currency[0]->rate, 2);
+        return round($ad->price / $currencyRate[0]->rate, 2);
     }
 
     /**
@@ -154,8 +154,9 @@ class AdService
     private static function getCurrencyRate(string $currency)
     {
         $key = self::CACHE_PREFIX . $currency;
+        $ttl = Carbon::now()->hour()->diffInSeconds();
 
-        return Cache::remember($key, Carbon::now()->hour()->diffInSeconds(), function () use ($currency) {
+        return Cache::remember($key, $ttl, function () use ($currency) {
             return Currency::whereCode($currency)->get();
         });
     }

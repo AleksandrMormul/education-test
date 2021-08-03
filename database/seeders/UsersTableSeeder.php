@@ -1,7 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\User;
 use App\Services\RoleService;
+use Exception;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,7 +30,6 @@ class UsersTableSeeder extends Seeder
             $roleIdAdmin = RoleService::getRoleIdByName(RoleService::ADMIN_ROLE);
             $roleIdUser = RoleService::getRoleIdByName(RoleService::USER_ROLE);
             $roleIdAuthor = RoleService::getRoleIdByName(RoleService::AUTHOR_ROLE);
-
             User::create(
                 [
                     'name' => self::ADMIN_USER_NAME,
@@ -37,8 +39,8 @@ class UsersTableSeeder extends Seeder
                 ]
             );
 
-            factory(User::class, 2)->create(['role_id' => $roleIdUser]);
-            factory(User::class, 2)->create(['role_id' => $roleIdAuthor]);
+            User::factory()->count(2)->create(['role_id' => $roleIdUser]);
+            User::factory()->count(2)->create(['role_id' => $roleIdAuthor]);
         }
     }
 }

@@ -1,28 +1,48 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Models\Ad;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Ad::class, function (Faker $faker) {
-    $title = $faker->sentence(2);
-    $description = $faker->sentence(10);
-    $price = $faker->numberBetween($min = 15000, $max = 600000);
-    $phoneNumber = $faker->e164PhoneNumber;
-    $latitude = $faker->latitude;
-    $longitude = $faker->longitude;
-    $countryCode = $faker->countryCode;
-    $endDate = $faker->dateTimeBetween('now', '+1 years');
+/**
+ * Class AdFactory
+ * @package Database\Factories
+ */
+class AdFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Ad::class;
 
-    return [
-        'title' => $title,
-        'description' => $description,
-        'price' => $price,
-        'phone_number' => $phoneNumber,
-        'latitude' => $latitude,
-        'longitude' => $longitude,
-        'country_code' => $countryCode,
-        'end_date' => $endDate,
-    ];
-});
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        $title = $this->faker->sentence(2);
+        $description = $this->faker->sentence(10);
+        $price = $this->faker->numberBetween($min = 15000, $max = 600000);
+        $phoneNumber = $this->faker->e164PhoneNumber;
+        $latitude =$this-> faker->latitude;
+        $longitude = $this->faker->longitude;
+        $countryCode = $this->faker->countryCode;
+        $endDate = $this->faker->dateTimeBetween('now', '+1 years');
+
+        return [
+            'title' => $title,
+            'description' => $description,
+            'price' => $price,
+            'phone_number' => $phoneNumber,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'country_code' => $countryCode,
+            'end_date' => $endDate,
+        ];
+    }
+}

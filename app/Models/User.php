@@ -6,6 +6,7 @@ use App\Services\UserService;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -28,14 +29,14 @@ use Illuminate\Support\Carbon;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection|\App\Models\Ad[] $ads
+ * @property-read Collection|Ad[] $ads
  * @property-read int|null $ads_count
- * @property-read Collection|\App\Models\Favorite[] $favorites
+ * @property-read Collection|Favorite[] $favorites
  * @property-read int|null $favorites_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
- * @property-read \App\Models\Role|null $role
- * @property-read \App\Models\Subscription|null $subscription
+ * @property-read Role|null $role
+ * @property-read Subscription|null $subscription
  * @method static Builder|User getUsersWhoHaveFavorites($ad)
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
@@ -55,6 +56,7 @@ use Illuminate\Support\Carbon;
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.

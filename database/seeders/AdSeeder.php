@@ -1,8 +1,11 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Ad;
 use App\Models\User;
 use App\Services\RoleService;
+use Exception;
 use Illuminate\Database\Seeder;
 
 /**
@@ -20,10 +23,10 @@ class AdSeeder extends Seeder
     {
         $roleId = RoleService::getRoleIdByName(RoleService::AUTHOR_ROLE);
 
-        factory(User::class, 5)->create()->each(
+        User::factory()->count(5)->create()->each(
             function ($user) use ($roleId) {
                 $user->update(['role_id' => $roleId]);
-                $user->ads()->saveMany(factory(Ad::class, 40)->make());
+                $user->ads()->saveMany(Ad::factory()->count(40)->make());
             }
         );
     }
