@@ -21,6 +21,7 @@ class AdDeleteByAdminSendMail extends Mailable
      */
     public $adData;
 
+    public $ad;
     /**
      * @var Carbon
      */
