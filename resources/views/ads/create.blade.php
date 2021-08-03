@@ -35,6 +35,13 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="price">Price(UAH)</label>
+                <input type="number" step="0.01" min="1" id="adPrice" class="@error('price') is-invalid @enderror form-control" required name="price" value="{{ old('price') }}">
+                @error('price')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
                 <label for="phone">Phone</label>
                 <input type="tel" class="@error('phone_number') is-invalid @enderror  form-control" value="{{ old('phone_number') }}"
                        id="adPhone" name="phone_number" required>

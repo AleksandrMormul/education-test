@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
  * Class StoreAdRequest
  * @property string title
  * @property string description
+ * @property integer price
  * @property string phone_number
  * @property string email
  * @property string endDate
@@ -39,6 +40,7 @@ class UpdateAdRequest extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string|max:1000',
+            'price' => 'required|integer',
             'phone_number' => 'required|string|regex:/\(?\+[0-9]{1,3}\)? ?-?[0-9]{1,3} ?-?[0-9]{3,5} ?-?[0-9]{4}( ?-?[0-9]{3})? ?(\w{1,10}\s?\d{1,6})?/',
             'email' => 'required|email:rfc',
             'end_date' => 'required|date|after_or_equal:today',
@@ -57,12 +59,25 @@ class UpdateAdRequest extends FormRequest
         return $this->only([
             'title',
             'description',
+            'price',
             'phone_number',
             'end_date',
             'email',
             'country_code',
             'latitude',
             'longitude',
+        ]);
+    }
+
+    /**
+     * Prepare the data for validation.
+     *
+     * @return void
+     */
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'price' => (int)$this->price,
         ]);
     }
 }

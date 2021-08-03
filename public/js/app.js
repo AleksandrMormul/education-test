@@ -48195,7 +48195,7 @@ __webpack_require__.r(__webpack_exports__);
 var form = document.getElementById('adForm');
 
 if (form) {
-  var _markers = [];
+  var markers = [];
   var map;
 
   if (typeof isEdit !== 'undefined' && lat && lng) {
@@ -48209,8 +48209,7 @@ if (form) {
       lat: lat,
       lng: lng
     });
-
-    _markers.push(marker);
+    markers.push(marker);
   } else {
     map = new gmaps__WEBPACK_IMPORTED_MODULE_0___default.a({
       div: '#adMap',
@@ -48223,36 +48222,34 @@ if (form) {
   map.addListener('click', function (e) {
     var coord = e.latLng.toJSON();
 
-    if (_markers.length === 0) {
+    if (markers.length === 0) {
       var _marker = map.addMarker({
         lat: coord.lat,
         lng: coord.lng
       });
 
-      _markers.push(_marker);
-    } else if (_markers.length === 1) {
-      _markers[0].setMap(null);
-
-      _markers.shift();
+      markers.push(_marker);
+    } else if (markers.length === 1) {
+      markers[0].setMap(null);
+      markers.shift();
 
       var _marker2 = map.addMarker({
         lat: coord.lat,
         lng: coord.lng
       });
 
-      _markers.push(_marker2);
+      markers.push(_marker2);
     }
   });
+  $(document).ready(function () {
+    $("#adBtnSubmit").click(function () {
+      Object(_prepareData__WEBPACK_IMPORTED_MODULE_1__["default"])(markers);
+    });
+    $("#adBtnSave").click(function () {
+      Object(_prepareData__WEBPACK_IMPORTED_MODULE_1__["default"])(markers);
+    });
+  });
 }
-
-$(document).ready(function () {
-  $("#adBtnSubmit").click(function () {
-    Object(_prepareData__WEBPACK_IMPORTED_MODULE_1__["default"])(markers);
-  });
-  $("#adBtnSave").click(function () {
-    Object(_prepareData__WEBPACK_IMPORTED_MODULE_1__["default"])(markers);
-  });
-});
 
 /***/ }),
 
@@ -48270,29 +48267,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(intl_tel_input__WEBPACK_IMPORTED_MODULE_0__);
 
 var form = document.getElementById('adForm');
+var phoneInput;
 
 if (form) {
   var input = document.getElementById('adPhone');
-
-  var _phoneInput = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(input, {
+  phoneInput = intl_tel_input__WEBPACK_IMPORTED_MODULE_0___default()(input, {
     formatOnDisplay: true,
     hiddenInput: "fullPhoneNumber",
     utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/12.0.3/js/utils.js'
   });
 
   if (typeof isEdit !== 'undefined') {
-    _phoneInput.setNumber(phoneNumber);
+    phoneInput.setNumber(phoneNumber);
   }
 
   var errorMap = ['Invalid number', 'Invalid country code', 'Too short', 'Too long', 'Invalid number'];
   var error = document.querySelector('.phone-error');
   error.style.display = 'none';
   input.addEventListener('change', function () {
-    if (_phoneInput.isValidNumber()) {
+    if (phoneInput.isValidNumber()) {
       error.style.display = 'none';
     } else {
-      var errorCode = _phoneInput.getValidationError();
-
+      var errorCode = phoneInput.getValidationError();
       error.style.display = '';
       error.style.color = 'red';
       error.innerHTML = errorMap[errorCode];
@@ -48324,23 +48320,34 @@ function prepareData(markers) {
   var formElement = document.getElementById("adForm");
   var formData = new FormData(formElement);
   var request = new XMLHttpRequest();
-  var coord = markers[0].getPosition();
+
+  if (markers.length > 0) {
+    var coord = markers[0].getPosition();
+    var inputLat = document.createElement("input");
+    inputLat.type = "hidden";
+    inputLat.name = "latitude";
+    inputLat.value = coord.lat();
+    var inputLng = document.createElement("input");
+    inputLng.type = "hidden";
+    inputLng.name = "longitude";
+    inputLng.value = coord.lng();
+    formElement.appendChild(inputLat);
+    formElement.appendChild(inputLng);
+  }
+
   var fullPhoneNumber = document.createElement("input");
   fullPhoneNumber.type = "hidden";
   fullPhoneNumber.name = "phone_number";
   fullPhoneNumber.value = Object(_phoneMask__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  var inputLat = document.createElement("input");
-  inputLat.type = "hidden";
-  inputLat.name = "latitude";
-  inputLat.value = coord.lat();
-  var inputLng = document.createElement("input");
-  inputLng.type = "hidden";
-  inputLng.name = "longitude";
-  inputLng.value = coord.lng();
+  var price = document.getElementById('adPrice').value;
+  var penny = document.createElement('input');
+  penny.type = "hidden";
+  penny.name = 'price';
+  penny.value = parseFloat(price) * 100;
+  console.log(penny.value);
   request.open("POST", "".concat(Object(_common_getDomain__WEBPACK_IMPORTED_MODULE_1__["default"])(), "/ads"));
-  formElement.appendChild(inputLat);
   formElement.appendChild(fullPhoneNumber);
-  formElement.appendChild(inputLng);
+  formElement.appendChild(penny);
   request.send(formData);
 }
 
