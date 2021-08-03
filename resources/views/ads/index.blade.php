@@ -45,6 +45,10 @@
                                 <p class="card-text">{{ $ad->description }}</p>
                                 <p class="card-text">Created at {{ optional($ad->created_at)->toDateString() }}</p>
                                 <p class="card-text">End date {{ optional($ad->end_date)->toDateString() }}</p>
+                                <p class="card-text">Price:</p>
+                                <p class="card-text">EURO: <span class="adPrice">{{$ad->price_currency_e_u_r}}</span></p>
+                                <p class="card-text">USD: <span class="adPrice">{{$ad->price_currency_u_s_d}}</span></p>
+                                <p class="card-text">UAH: <span class="adPrice">{{$ad->price_currency_u_a_h}}</span></p>
                                 <a href="{{ route('ads.show', $ad->id) }}" id="adDetail" class="btn btn-primary">Show details</a>
                             </div>
                         </div>

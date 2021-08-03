@@ -8,6 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(Ad::class, function (Faker $faker) {
     $title = $faker->sentence(2);
     $description = $faker->sentence(10);
+    $price = $faker->numberBetween($min = 15000, $max = 600000);
     $phoneNumber = $faker->e164PhoneNumber;
     $latitude = $faker->latitude;
     $longitude = $faker->longitude;
@@ -17,6 +18,7 @@ $factory->define(Ad::class, function (Faker $faker) {
     return [
         'title' => $title,
         'description' => $description,
+        'price' => $price,
         'phone_number' => $phoneNumber,
         'latitude' => $latitude,
         'longitude' => $longitude,

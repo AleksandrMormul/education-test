@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\AdService;
+use App\Services\UpdateCurrencyRate;
 use Countries;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -57,6 +58,9 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @method static Builder|Ad whereUpdatedAt($value)
  * @method static Builder|Ad whereUserId($value)
  * @mixin Eloquent
+ * @property-read float|int $price_currency_e_u_r
+ * @property-read float|int $price_currency_u_a_h
+ * @property-read float|int $price_currency_u_s_d
  */
 class Ad extends Model
 {
@@ -103,6 +107,7 @@ class Ad extends Model
 
     /**
      * @param $user
+     * @return Ad|Favorite|Model|null
      */
     public function isFavoriteForUser($user)
     {
@@ -165,5 +170,29 @@ class Ad extends Model
     public function getImageUrlAttribute(): string
     {
         return AdService::getImageUrl($this);
+    }
+
+    /**
+     * @return float
+     */
+    public function getPriceCurrencyUSDAttribute(): float
+    {
+        return AdService::convertCurrency($this, UpdateCurrencyRate::DOLLAR);
+    }
+
+    /**
+     * @return float
+     */
+    public function getPriceCurrencyEURAttribute(): float
+    {
+        return AdService::convertCurrency($this, UpdateCurrencyRate::EURO);
+    }
+
+    /**
+     * @return float
+     */
+    public function getPriceCurrencyUAHAttribute(): float
+    {
+        return AdService::convertCurrency($this, UpdateCurrencyRate::UAH);
     }
 }

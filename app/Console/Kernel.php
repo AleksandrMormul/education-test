@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Services\EmailService;
+use App\Console\Commands\UpdateCurrency;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
@@ -15,7 +16,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        UpdateCurrency::class,
     ];
 
     /**
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel
             EmailService::weeklyEmail();
         })->weeklyOn(7, '15:00');
 
+        $schedule->command('update:currency-rate')->hourly();
     }
 
     /**

@@ -48344,7 +48344,6 @@ function prepareData(markers) {
   penny.type = "hidden";
   penny.name = 'price';
   penny.value = parseFloat(price) * 100;
-  console.log(penny.value);
   request.open("POST", "".concat(Object(_common_getDomain__WEBPACK_IMPORTED_MODULE_1__["default"])(), "/ads"));
   formElement.appendChild(fullPhoneNumber);
   formElement.appendChild(penny);
