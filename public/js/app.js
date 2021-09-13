@@ -7442,7 +7442,7 @@ GMaps.prototype.drawOverlay = function(options) {
     if (!options.layer) {
       options.layer = 'overlayLayer';
     }
-
+    
     var panes = this.getPanes(),
         overlayLayer = panes[options.layer],
         stop_overlay_events = ['contextmenu', 'DOMMouseScroll', 'dblclick', 'mousedown'];
@@ -8307,7 +8307,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.markers.length > 0) {
     static_map_options['markers'] = [];
-
+    
     for (var i = 0; i < this.markers.length; i++) {
       static_map_options['markers'].push({
         lat: this.markers[i].getPosition().lat(),
@@ -8318,7 +8318,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.polylines.length > 0) {
     var polyline = this.polylines[0];
-
+    
     static_map_options['polyline'] = {};
     static_map_options['polyline']['path'] = google.maps.geometry.encoding.encodePath(polyline.getPath());
     static_map_options['polyline']['strokeColor'] = polyline.strokeColor
@@ -8342,7 +8342,7 @@ GMaps.staticMapURL = function(options){
   static_root += '?';
 
   var markers = options.markers;
-
+  
   delete options.markers;
 
   if (!markers && options.marker) {
@@ -8644,7 +8644,7 @@ GMaps.custom_events = ['marker_added', 'marker_removed', 'polyline_added', 'poly
 
 GMaps.on = function(event_name, object, handler) {
   if (GMaps.custom_events.indexOf(event_name) == -1) {
-    if(object instanceof GMaps) object = object.map;
+    if(object instanceof GMaps) object = object.map; 
     return google.maps.event.addListener(object, event_name, handler);
   }
   else {
@@ -8662,7 +8662,7 @@ GMaps.on = function(event_name, object, handler) {
 
 GMaps.off = function(event_name, object) {
   if (GMaps.custom_events.indexOf(event_name) == -1) {
-    if(object instanceof GMaps) object = object.map;
+    if(object instanceof GMaps) object = object.map; 
     google.maps.event.clearListeners(object, event_name);
   }
   else {
@@ -8731,7 +8731,7 @@ GMaps.geocode = function(options) {
   delete options.lat;
   delete options.lng;
   delete options.callback;
-
+  
   this.geocoder.geocode(options, function(results, status) {
     callback(results, status);
   });
@@ -47685,7 +47685,7 @@ function addStyle (obj, options) {
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
 	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css)
+		 ? options.transform(obj.css) 
 		 : options.transform.default(obj.css);
 
 	    if (result) {
@@ -48426,8 +48426,8 @@ $(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/html/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/html/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
