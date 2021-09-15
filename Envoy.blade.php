@@ -17,7 +17,6 @@ frontend_build
 remove_old_releases
 @endstory
 @task('php')
-alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
 php -v
 @endtask
 @task('preparation')
@@ -29,7 +28,6 @@ mkdir -p storage
 @endtask
 
 @task('run_composer')
-alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
 php -v
 echo "composer install"
 echo "{{ $releases_dir }}"
