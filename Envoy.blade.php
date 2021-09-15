@@ -1,8 +1,7 @@
 @servers(['web' => 'mormul_as@192.168.10.240'])
 
 @setup
-alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
-php -v
+
 $releases_dir = $server_dir . '/releases/' . $remove_dir . '';
 $releases_git_dir = $server_dir . '/releases/' . $remove_dir . '/.git';
 $app_dir = $server_dir . '/app';
