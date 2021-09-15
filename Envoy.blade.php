@@ -29,6 +29,8 @@ mkdir -p storage
 @endtask
 
 @task('run_composer')
+alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
+php -v
 echo "composer install"
 echo "{{ $releases_dir }}"
 cd {{ $releases_dir }} /
