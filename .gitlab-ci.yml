@@ -30,7 +30,7 @@ deploy:
       - current_dir=$(pwd)
       - remove_dir=$(date +'%m%d%Y%H%M%S')
       - scp -r "$current_dir" "$SSH_USER_NAME"@192.168.10.240:"$SERVER_DIR"/releases/"$remove_dir"
-      - envoy run deploy --remove_dir="$remove_dir" --server_dir="$SERVER_DIR"
+      - envoy run deploy --remove_dir="$remove_dir" --server_dir="$SERVER_DIR" alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
   except:
       - develop
   when: manual
