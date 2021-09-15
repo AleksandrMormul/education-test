@@ -1,7 +1,7 @@
 @servers(['web' => 'mormul_as@192.168.10.240'])
 
 @setup
-$releases_dir = $server_dir . '/releases/' . $remove_dir . '/';
+$releases_dir = $server_dir . '/releases/' . $remove_dir . '';
 $releases_git_dir = $server_dir . '/releases/' . $remove_dir . '/.git';
 $app_dir = $server_dir . '/app';
 @endsetup
@@ -26,7 +26,7 @@ mkdir -p storage
 echo "composer install"
 echo "{{ $releases_dir }}"
 cd {{ $releases_dir }} /
-composer install --prefer-dist --no-scripts -q -o
+composer install
 @endtask
 
 @task('update_symlinks')
