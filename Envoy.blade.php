@@ -24,6 +24,7 @@ mkdir -p storage
 
 @task('run_composer')
 echo "composer install"
+echo "{{ $releases_dir }}"
 cd {{ $releases_dir }} /
 composer install --prefer-dist --no-scripts -q -o
 @endtask
