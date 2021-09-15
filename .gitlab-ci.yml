@@ -3,7 +3,6 @@ deploy-develop:
   script:
       - eval $(ssh-agent -s)
       - ssh-add <(echo "$SSH_PRIVATE_KEY")
-      #- alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
       - php -v
       - mkdir -p ~/.ssh
       - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
@@ -23,7 +22,6 @@ deploy:
   script:
       - eval $(ssh-agent -s)
       - ssh-add <(echo "$SSH_PRIVATE_KEY")
-      #- alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
       - php -v
       - mkdir -p ~/.ssh
       - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
