@@ -26,7 +26,7 @@ mkdir -p storage
 echo "composer install"
 echo "{{ $releases_dir }}"
 cd {{ $releases_dir }} /
-composer install
+composer install --prefer-dist --no-scripts -q -o
 @endtask
 
 @task('update_symlinks')
