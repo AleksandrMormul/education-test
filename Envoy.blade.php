@@ -8,8 +8,7 @@ $app_dir = $server_dir . '/app';
 @endsetup
 
 @story('deploy')
-alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
-php -v
+php
 preparation
 run_composer
 update_symlinks
@@ -17,7 +16,10 @@ artisan_command
 frontend_build
 remove_old_releases
 @endstory
-
+@task('php')
+alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
+php -v
+@endtask
 @task('preparation')
 
 echo 'Move Folder'
