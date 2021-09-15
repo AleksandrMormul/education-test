@@ -16,6 +16,7 @@ remove_old_releases
 @endstory
 
 @task('preparation')
+alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
 echo 'Move Folder'
 rm -rf {{$releases_git_dir}}
 cd {{$server_dir}}
