@@ -1,14 +1,16 @@
 @servers(['web' => 'mormul_as@192.168.10.240'])
 
 @setup
-
+$alias = [
+'alias php='/var/www/mormul_as/data/php-bin-isp-php74/php',
+];
 $releases_dir = $server_dir . '/releases/' . $remove_dir . '';
 $releases_git_dir = $server_dir . '/releases/' . $remove_dir . '/.git';
 $app_dir = $server_dir . '/app';
 @endsetup
 
 @story('deploy')
-php
+alias
 preparation
 run_composer
 update_symlinks
@@ -17,10 +19,20 @@ frontend_build
 remove_old_releases
 @endstory
 @task('php')
+alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
 php -v
 @endtask
 @task('preparation')
+@task('alias')
 
+@foreach ($alias as $alia)
+    LINE='{{$alia}}'
+    FILE=.profile
+    grep -qF "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
+@endforeach
+alias
+echo "Done."
+@endtask
 echo 'Move Folder'
 rm -rf {{$releases_git_dir}}
 cd {{$server_dir}}
