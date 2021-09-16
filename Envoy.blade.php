@@ -18,7 +18,7 @@ remove_old_releases
 @endstory
 
 @task('php')
-alias php='/var/www/mormul_as/data/php-bin-isp-php74/php'
+alias php='/usr/bin/php74'
 php -v
 @endtask
 
