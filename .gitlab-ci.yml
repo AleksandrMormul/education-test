@@ -3,7 +3,6 @@ deploy-develop:
   script:
       - eval $(ssh-agent -s)
       - ssh-add <(echo "$SSH_PRIVATE_KEY")
-      - php -v
       - mkdir -p ~/.ssh
       - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
       - current_dir=$(pwd)
@@ -22,7 +21,6 @@ deploy:
   script:
       - eval $(ssh-agent -s)
       - ssh-add <(echo "$SSH_PRIVATE_KEY")
-      - php -v
       - mkdir -p ~/.ssh
       - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
       - current_dir=$(pwd)
