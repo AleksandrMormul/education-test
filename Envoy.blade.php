@@ -59,8 +59,11 @@ ln -s {{ $releases_dir }} {{ $app_dir }}
 @task('artisan_command')
 echo 'Artisan Command'
 php74 {{ $releases_dir }}/artisan view:clear --quiet
+echo 'view:clear --quiet'
 php74 {{ $releases_dir }}/artisan cache:clear --quiet
+echo 'cache:clear --quiet'
 php74 {{ $releases_dir }}/artisan config:cache --quiet
+echo 'config:cache --quiet'
 php74 {{ $releases_dir }}/artisan migrate --force
 php74 {{ $releases_dir }}/artisan storage:link
 php74 {{ $releases_dir }}/artisan queue:restart --quiet
