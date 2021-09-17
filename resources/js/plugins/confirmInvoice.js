@@ -1,6 +1,5 @@
 import getDomain from '../common/getDomain';
-console.log('Path of file in parent dir:', require('path').resolve(__dirname, '../config.json'));
-import * as config from '../../../config.json'
+const config = require('path').resolve(__dirname, '../config.json')
 
 $(function() {
     $('.btnApprove').click(function(event) {
