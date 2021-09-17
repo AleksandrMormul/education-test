@@ -2,6 +2,8 @@ require('./bootstrap');
 require('./plugins/confirmSubscription');
 require('./plugins/toggleFavoriteAd');
 require('./plugins/invoice');
+require('./plugins/confirmInvoice');
+require('./plugins/approveInvoice');
 require('./plugins/phoneMask');
 require('./plugins/gmaps');
 require('./plugins/datepicker');

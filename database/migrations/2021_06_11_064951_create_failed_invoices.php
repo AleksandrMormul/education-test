@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 /**
- * Class CreateInvoicesTable
+ * Class CreateFailedInvoices
  */
-class CreateInvoicesTable extends Migration
+class CreateFailedInvoices extends Migration
 {
     /**
      * Run the migrations.
@@ -16,12 +16,11 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('failed_invoices', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('invoice_id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('ad_id')->nullable();
-            $table->string('order_id');
-            $table->string('paypal_status')->nullable()->index();
             $table->timestamps();
         });
     }
@@ -33,6 +32,6 @@ class CreateInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoices');
+        Schema::dropIfExists('failed_invoices');
     }
 }

@@ -7,6 +7,7 @@ use App\Http\Requests\Api\CreateInvoiceRequest;
 use App\Services\InvoiceService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Log;
 use Throwable;
 
 /**
@@ -31,7 +32,7 @@ class InvoiceController extends Controller
      */
     public function handle(Request $request)
     {
-        \Log::info('handle run...........');
-        InvoiceService::updateStatusInvoice($request);
+        Log::info('handle run...........');
+        InvoiceService::updateInvoice($request);
     }
 }

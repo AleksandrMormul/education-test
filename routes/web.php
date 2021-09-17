@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::resource('ads', 'AdController');
+Route::middleware('auth')->get('user/invoices', 'UserController@showUserInvoices')->name('user.invoices');
 Route::get('/', function () {
     return view('welcome');
 });

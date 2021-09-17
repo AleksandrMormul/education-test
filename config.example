@@ -1,0 +1,6 @@
+{
+  "PAYPAL_URL": "https://example.com",
+  "PAYPAL_API_URL": "https://api.example.com",
+  "PAYPAL_CLIENT_ID": "",
+  "PAYPAL_CLIENT_SECRET": ""
+}

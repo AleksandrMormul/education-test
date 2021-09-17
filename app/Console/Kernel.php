@@ -4,10 +4,15 @@ namespace App\Console;
 
 use App\Services\EmailService;
 use App\Console\Commands\UpdateCurrency;
+use App\Services\InvoiceService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Log;
 
+/**
+ * Class Kernel
+ * @package App\Console
+ */
 class Kernel extends ConsoleKernel
 {
     /**
@@ -33,6 +38,12 @@ class Kernel extends ConsoleKernel
         })->weeklyOn(7, '15:00');
 
         $schedule->command('update:currency-rate')->hourly();
+        //$schedule->command('update:currency-rate')->hourly();
+        $schedule->call(function () {
+            Log::info('Validation schedule is running');
+            InvoiceService::validationInvoices();
+        })->everyMinute();
+
     }
 
     /**

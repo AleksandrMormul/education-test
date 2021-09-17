@@ -12654,3 +12654,15 @@ a.text-dark:focus {
   color: #c6e0f5;
 }
 
+.btnApprove {
+  background: #009926;
+}
+
+.orderPay {
+  cursor: pointer;
+}
+
+.buying {
+  cursor: pointer;
+}
+
