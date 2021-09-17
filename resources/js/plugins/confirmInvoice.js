@@ -1,5 +1,5 @@
 import getDomain from '../common/getDomain';
-import * as config from '../../../config.json';
+import * as config from './../../../config.json'
 
 $(function() {
     $('.btnApprove').click(function(event) {
