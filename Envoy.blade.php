@@ -77,7 +77,11 @@ echo "Cache cleared"
 @task('frontend_build')
 
 echo 'Frontend Build'
-
+curl -sL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh -o install_nvm.sh
+bash install_nvm.sh
+source ~/.bash_profile
+command -v nvm
+nvm install 16
 node -v
 cd {{ $releases_dir }}
 npm install && npm run dev
