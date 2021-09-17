@@ -49,6 +49,7 @@ rm -rf {{$releases_dir}}/storage
 ln -s {{$server_dir}}/storage {{$releases_dir}}/storage
 
 echo 'Linking .env file'
+cat {{$server_dir }}/.env
 ln -s {{$server_dir}}/.env {{$releases_dir }}/.env
 cat {{$releases_dir }}/.env
 
