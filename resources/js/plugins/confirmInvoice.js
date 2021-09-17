@@ -1,8 +1,7 @@
 import getDomain from '../common/getDomain';
-const config = require( '/../../../config.json');
+import * as config from '../../../config.json'
 
 $(function() {
-    console.log(config)
     $('.btnApprove').click(function(event) {
         let $target = $(event.target);
         let invoiceOrderId = $target.data('invoice-order-id');

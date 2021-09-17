@@ -50218,7 +50218,9 @@ $(function () {
     var $target = $(event.target);
     var invoiceOrderId = $target.data('invoice-order-id');
     var invoiceId = $target.data('invoice-id');
-    var credentials = "".concat(_config_json__WEBPACK_IMPORTED_MODULE_1__.PAYPAL_CLIENT_ID, ":").concat(_config_json__WEBPACK_IMPORTED_MODULE_1__.PAYPAL_CLIENT_SECRET);
+    var PAYPAL_CLIENT_ID = _config_json__WEBPACK_IMPORTED_MODULE_1__["PAYPAL_CLIENT_ID"];
+    var PAYPAL_CLIENT_SECRET = _config_json__WEBPACK_IMPORTED_MODULE_1__["PAYPAL_CLIENT_SECRET"];
+    var credentials = "".concat(PAYPAL_CLIENT_ID, ":").concat(PAYPAL_CLIENT_SECRET);
     var buff = new Buffer(credentials);
     var basicAuth = buff.toString('base64');
     $.ajax({
@@ -50228,7 +50230,7 @@ $(function () {
         'Authorization': "Basic ".concat(basicAuth),
         'Content-Type': 'application/json'
       },
-      url: "".concat(_config_json__WEBPACK_IMPORTED_MODULE_1__.PAYPAL_API_URL, "/v2/checkout/orders/").concat(invoiceOrderId, "/capture"),
+      url: "".concat(_config_json__WEBPACK_IMPORTED_MODULE_1__["PAYPAL_API_URL"], "/v2/checkout/orders/").concat(invoiceOrderId, "/capture"),
       success: function success(result) {
         console.log(result);
         var approveBtn = document.getElementById("payPalConfirm");
