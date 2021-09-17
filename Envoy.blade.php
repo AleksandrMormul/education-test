@@ -44,6 +44,7 @@ php74 ./composer.phar install --prefer-dist -q -o
 @task('update_symlinks')
 
 echo "Linking storage directory"
+echo "server_dir {{$server_dir}}"
 rm -rf {{$releases_dir}}/storage
 ln -s {{$server_dir}}/storage {{$releases_dir}}/storage
 
