@@ -50,6 +50,7 @@ ln -s {{$server_dir}}/storage {{$releases_dir}}/storage
 
 echo 'Linking .env file'
 ln -s {{$server_dir}}/.env {{$releases_dir }}/.env
+cat {{$releases_dir }}/.env
 
 echo 'Linking current release'
 rm -rf {{$app_dir}}
