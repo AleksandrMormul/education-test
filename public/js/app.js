@@ -9417,7 +9417,7 @@ GMaps.prototype.drawOverlay = function(options) {
     if (!options.layer) {
       options.layer = 'overlayLayer';
     }
-
+    
     var panes = this.getPanes(),
         overlayLayer = panes[options.layer],
         stop_overlay_events = ['contextmenu', 'DOMMouseScroll', 'dblclick', 'mousedown'];
@@ -10282,7 +10282,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.markers.length > 0) {
     static_map_options['markers'] = [];
-
+    
     for (var i = 0; i < this.markers.length; i++) {
       static_map_options['markers'].push({
         lat: this.markers[i].getPosition().lat(),
@@ -10293,7 +10293,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.polylines.length > 0) {
     var polyline = this.polylines[0];
-
+    
     static_map_options['polyline'] = {};
     static_map_options['polyline']['path'] = google.maps.geometry.encoding.encodePath(polyline.getPath());
     static_map_options['polyline']['strokeColor'] = polyline.strokeColor
@@ -10317,7 +10317,7 @@ GMaps.staticMapURL = function(options){
   static_root += '?';
 
   var markers = options.markers;
-
+  
   delete options.markers;
 
   if (!markers && options.marker) {
@@ -10619,7 +10619,7 @@ GMaps.custom_events = ['marker_added', 'marker_removed', 'polyline_added', 'poly
 
 GMaps.on = function(event_name, object, handler) {
   if (GMaps.custom_events.indexOf(event_name) == -1) {
-    if(object instanceof GMaps) object = object.map;
+    if(object instanceof GMaps) object = object.map; 
     return google.maps.event.addListener(object, event_name, handler);
   }
   else {
@@ -10637,7 +10637,7 @@ GMaps.on = function(event_name, object, handler) {
 
 GMaps.off = function(event_name, object) {
   if (GMaps.custom_events.indexOf(event_name) == -1) {
-    if(object instanceof GMaps) object = object.map;
+    if(object instanceof GMaps) object = object.map; 
     google.maps.event.clearListeners(object, event_name);
   }
   else {
@@ -10706,7 +10706,7 @@ GMaps.geocode = function(options) {
   delete options.lat;
   delete options.lng;
   delete options.callback;
-
+  
   this.geocoder.geocode(options, function(results, status) {
     callback(results, status);
   });
@@ -49772,7 +49772,7 @@ function addStyle (obj, options) {
 	// If a transform function was defined, run it on the css
 	if (options.transform && obj.css) {
 	    result = typeof options.transform === 'function'
-		 ? options.transform(obj.css)
+		 ? options.transform(obj.css) 
 		 : options.transform.default(obj.css);
 
 	    if (result) {
@@ -50174,6 +50174,92 @@ __webpack_require__.r(__webpack_exports__);
 function getDomain() {
   return window.location.origin;
 }
+
+/***/ }),
+
+/***/ "./resources/js/plugins/approveInvoice.js":
+/*!************************************************!*\
+  !*** ./resources/js/plugins/approveInvoice.js ***!
+  \************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _config_json__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../config.json */ "./config.json");
+var _config_json__WEBPACK_IMPORTED_MODULE_0___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../config.json */ "./config.json", 1);
+
+$(function () {
+  $('.orderPay').click(function (event) {
+    var $target = $(event.target);
+    var invoiceOrderId = $target.data('invoice-order-id');
+    window.location.href = "".concat(_config_json__WEBPACK_IMPORTED_MODULE_0__.PAYPAL_URL, "/checkoutnow?token=").concat(invoiceOrderId);
+  });
+});
+
+/***/ }),
+
+/***/ "./resources/js/plugins/confirmInvoice.js":
+/*!************************************************!*\
+  !*** ./resources/js/plugins/confirmInvoice.js ***!
+  \************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* WEBPACK VAR INJECTION */(function(Buffer) {/* harmony import */ var _common_getDomain__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../common/getDomain */ "./resources/js/common/getDomain.js");
+/* harmony import */ var _config_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../config.json */ "./config.json");
+var _config_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../../../config.json */ "./config.json", 1);
+
+
+$(function () {
+  $('.btnApprove').click(function (event) {
+    var $target = $(event.target);
+    var invoiceOrderId = $target.data('invoice-order-id');
+    var invoiceId = $target.data('invoice-id');
+    var credentials = "".concat(_config_json__WEBPACK_IMPORTED_MODULE_1__.PAYPAL_CLIENT_ID, ":").concat(_config_json__WEBPACK_IMPORTED_MODULE_1__.PAYPAL_CLIENT_SECRET);
+    var buff = new Buffer(credentials);
+    var basicAuth = buff.toString('base64');
+    $.ajax({
+      type: "POST",
+      dataType: 'json',
+      headers: {
+        'Authorization': "Basic ".concat(basicAuth),
+        'Content-Type': 'application/json'
+      },
+      url: "".concat(_config_json__WEBPACK_IMPORTED_MODULE_1__.PAYPAL_API_URL, "/v2/checkout/orders/").concat(invoiceOrderId, "/capture"),
+      success: function success(result) {
+        console.log(result);
+        var approveBtn = document.getElementById("payPalConfirm");
+        approveBtn.remove();
+        var tag = document.createElement("p");
+        var text = document.createTextNode(result['status']);
+        tag.appendChild(text);
+        var element = document.getElementById("handle-".concat(invoiceId));
+        element.appendChild(tag);
+        $.ajax({
+          type: "POST",
+          dataType: 'json',
+          data: {
+            'resource': result
+          },
+          url: "".concat(Object(_common_getDomain__WEBPACK_IMPORTED_MODULE_0__["default"])(), "/api/webhook"),
+          success: function success(result) {
+            console.log(result);
+          },
+          error: function error(jqxhr, status, exception) {
+            console.log(exception);
+          }
+        });
+      },
+      error: function error(jqxhr, status, exception) {
+        console.log(exception);
+      }
+    });
+  });
+});
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
