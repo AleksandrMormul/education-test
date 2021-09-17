@@ -77,6 +77,7 @@ echo "Cache cleared"
 @task('frontend_build')
 
 echo 'Frontend Build'
+nvm install 16
 node -v
 cd {{ $releases_dir }}
 npm install && npm run dev
