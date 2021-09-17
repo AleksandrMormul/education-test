@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Carbon;
@@ -24,6 +25,8 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @property int $user_id
  * @property string $title
  * @property string $description
+ * @property int $price
+ * @property string|null $status_paid
  * @property string $phone_number
  * @property mixed|null $latitude
  * @property mixed|null $longitude
@@ -37,11 +40,16 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @property-read int|null $favorites_count
  * @property-read string $full_name_country
  * @property-read string $image_url
+ * @property-read float $price_currency_e_u_r
+ * @property-read float $price_currency_u_a_h
+ * @property-read float $price_currency_u_s_d
+ * @property-read Invoice|null $invoice
  * @property-read User $user
  * @method static Builder|Ad favoritesForUser(User $user)
  * @method static Builder|Ad newAds()
  * @method static Builder|Ad newModelQuery()
  * @method static Builder|Ad newQuery()
+ * @method static Builder|Ad notPaid()
  * @method static Builder|Ad query()
  * @method static Builder|Ad visibleForDate()
  * @method static Builder|Ad whereCountryCode($value)
@@ -54,13 +62,11 @@ use Monarobase\CountryList\CountryNotFoundException;
  * @method static Builder|Ad whereLongitude($value)
  * @method static Builder|Ad wherePhoneNumber($value)
  * @method static Builder|Ad wherePrice($value)
+ * @method static Builder|Ad whereStatusPaid($value)
  * @method static Builder|Ad whereTitle($value)
  * @method static Builder|Ad whereUpdatedAt($value)
  * @method static Builder|Ad whereUserId($value)
  * @mixin Eloquent
- * @property-read float|int $price_currency_e_u_r
- * @property-read float|int $price_currency_u_a_h
- * @property-read float|int $price_currency_u_s_d
  */
 class Ad extends Model
 {
@@ -75,6 +81,7 @@ class Ad extends Model
         'description',
         'price',
         'user_id',
+        'status_paid',
         'phone_number',
         'country_code',
         'img_src',
@@ -104,6 +111,14 @@ class Ad extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function invoice(): HasOne
+    {
+        return $this->hasOne(Invoice::class, 'ad_id');
     }
 
     /**
@@ -137,6 +152,20 @@ class Ad extends Model
      * @param $query
      * @return mixed
      */
+    public function scopeNotPaid($query)
+    {
+        return $query->whereNull('status_paid')->orWhereIn('status_paid', [AdService::FREE])
+            ->leftJoin('invoices', 'invoices.ad_id', '=', 'ads.id')
+            ->whereNull(
+                'invoices.paypal_status'
+            )
+            ->select('ads.*');
+    }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
     public function scopeNewAds($query)
     {
         return $query->orderBy('created_at', 'asc')->limit(5);
@@ -151,7 +180,7 @@ class Ad extends Model
     {
         return $query->join('favorites', function (JoinClause $join) {
             $join->where('favorites.favoriteable_type', self::class)
-                    ->whereColumn('favorites.favoriteable_id', 'ads.id');
+                ->whereColumn('favorites.favoriteable_id', 'ads.id');
         })
             ->where('favorites.user_id', $user->id)->select('ads.*', 'favorites.favoriteable_id');
     }

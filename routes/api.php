@@ -23,4 +23,6 @@ Route::middleware(['auth'])->group(function () {
         ->name('toggle-favorite');
     Route::post('/subscribe/', 'Api\SubscriptionController@subscribe')
         ->name('toggle-subscribe');
+    Route::post('/create-invoice/', 'Api\InvoiceController@createInvoice')->name('create.invoice');
 });
+Route::post('webhook', 'Api\InvoiceController@handle');

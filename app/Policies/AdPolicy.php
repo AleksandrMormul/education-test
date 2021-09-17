@@ -4,6 +4,7 @@ namespace App\Policies;
 
 use App\Models\Ad;
 use App\Models\User;
+use App\Services\AdService;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 /**
@@ -34,7 +35,7 @@ class AdPolicy
      */
     public function view(?User $user, Ad $ad): bool
     {
-        return true;
+        return !($ad->status_paid === AdService::PAID || $ad->status_paid === AdService::RESERVATION);
     }
 
     /**
@@ -61,6 +62,9 @@ class AdPolicy
      */
     public function update(User $user, Ad $ad): bool
     {
+        if ($ad->status_paid === AdService::PAID || $ad->status_paid === AdService::RESERVATION) {
+            return false;
+        }
         return $user->id === $ad->user_id;
     }
 
@@ -75,6 +79,9 @@ class AdPolicy
     public function delete(User $user, Ad $ad): bool
     {
         $isAuthorAd = $user->id === $ad->user_id;
+        if ($ad->status_paid === AdService::PAID || $ad->status_paid === AdService::RESERVATION) {
+            return false;
+        }
         if ($user->isAdmin() || $isAuthorAd) {
             return true;
         }

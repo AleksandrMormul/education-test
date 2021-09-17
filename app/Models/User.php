@@ -33,6 +33,8 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $ads_count
  * @property-read Collection|Favorite[] $favorites
  * @property-read int|null $favorites_count
+ * @property-read Collection|Invoice[] $invoice
+ * @property-read int|null $invoice_count
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Role|null $role
@@ -97,6 +99,16 @@ class User extends Authenticatable
     public function ads(): HasMany
     {
         return $this->hasMany(Ad::class);
+    }
+
+    /**
+     * user
+     *
+     * @return HasMany
+     */
+    public function invoice(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'user_id');
     }
 
     /**
