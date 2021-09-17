@@ -1,13 +1,14 @@
 import getDomain from '../common/getDomain';
-import config from '../../../config.json';
+import * as config from '../../../config.json';
 
 $(function() {
     $('.btnApprove').click(function(event) {
         let $target = $(event.target);
         let invoiceOrderId = $target.data('invoice-order-id');
         let invoiceId = $target.data('invoice-id');
-
-        const credentials = `${config.PAYPAL_CLIENT_ID}:${config.PAYPAL_CLIENT_SECRET}`;
+        const {PAYPAL_CLIENT_ID} = config;
+        const {PAYPAL_CLIENT_SECRET} = config;
+        const credentials = `${PAYPAL_CLIENT_ID}:${PAYPAL_CLIENT_SECRET}`;
         let buff = new Buffer(credentials);
         const basicAuth = buff.toString('base64');
 
