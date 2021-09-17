@@ -1,9 +1,10 @@
-import config from '../../../config.json';
+const config = require('path').resolve(__dirname, '../config.json')
 $(function() {
     $('.orderPay').click(function(event) {
+        const {PAYPAL_URL} = config;
         let $target = $(event.target);
         let invoiceOrderId = $target.data('invoice-order-id');
 
-        window.location.href = `${config.PAYPAL_URL}/checkoutnow?token=${invoiceOrderId}`
+        window.location.href = `${PAYPAL_URL}/checkoutnow?token=${invoiceOrderId}`
     })
 });
