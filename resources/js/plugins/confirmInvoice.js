@@ -1,4 +1,5 @@
 import getDomain from '../common/getDomain';
+console.log('Path of file in parent dir:', require('path').resolve(__dirname, '../config.json'));
 import * as config from '../../../config.json'
 
 $(function() {
