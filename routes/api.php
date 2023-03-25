@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/favorites/ads/{ad}/toggle', 'Api\FavoriteController@toggleFavorite')
+        ->name('toggle-favorite');
+    Route::post('/subscribe/', 'Api\SubscriptionController@subscribe')
+        ->name('toggle-subscribe');
+    Route::post('/create-invoice/', 'Api\InvoiceController@createInvoice')->name('create.invoice');
+});
+Route::post('webhook', 'Api\InvoiceController@handle');

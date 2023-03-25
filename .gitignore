@@ -10,3 +10,11 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+.vs/
+.DS_Store/
+.idea/
+tools/php-cs-fixer/vendor/
+_ide_*.php
+.php*.php
+.php_*.cache
+config.json

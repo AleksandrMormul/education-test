@@ -55,6 +55,7 @@ return [
     'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
+    'google_api_key' => env('GOOGLE_API_KEY', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -101,7 +102,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | This locale will be used by the Faker PHP library when generating fake
-    | data for your database seeds. For example, this will be used to get
+    | data for your database seeders. For example, this will be used to get
     | localized telephone numbers, street address information and more.
     |
     */
@@ -166,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
         /*
          * Application Service Providers...
